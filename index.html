@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f7f2">
-  <meta name="description" content="Electrical &amp; Computer Engineering at Cornell University.">
+  <meta name="description" content="Cornell Electrical &amp; Computer Engineering student. Previously co-founded and scaled a $1M+ national nonprofit.">
   <link rel="canonical" href="https://anyadennison.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Anya Dennison">
-  <meta property="og:description" content="Electrical &amp; Computer Engineering at Cornell University.">
+  <meta property="og:description" content="Cornell Electrical &amp; Computer Engineering student. Previously co-founded and scaled a $1M+ national nonprofit.">
   <meta property="og:url" content="https://anyadennison.github.io/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://anyadennison.github.io/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Anya Dennison: Cornell Electrical &amp; Computer Engineering">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://anyadennison.github.io/og-image.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta name="twitter:title" content="Anya Dennison">
-  <meta name="twitter:description" content="Electrical &amp; Computer Engineering at Cornell University.">
+  <meta name="twitter:description" content="Cornell Electrical &amp; Computer Engineering student. Previously co-founded and scaled a $1M+ national nonprofit.">
   <meta name="twitter:url" content="https://anyadennison.github.io/">
   <title>Anya Dennison</title>
   <style>
@@ -30,7 +36,7 @@ h1,h2,h3,p {margin:0}
 h1,h2,h3 {font-weight:550;line-height:1.15;letter-spacing:-.04em}
 a {color:inherit;text-underline-offset:5px;text-decoration-thickness:1px}
 a:hover {color:var(--blue)}
-a:focus-visible,button:focus-visible,.stat:focus-visible {outline:2px solid var(--blue);outline-offset:5px;border-radius:4px}
+a:focus-visible,button:focus-visible {outline:2px solid var(--blue);outline-offset:5px;border-radius:4px}
 button {font:inherit}
 ::selection {background:#dce7ec}
 .wrap {width:min(var(--width),calc(100% - var(--gutter)*2));margin-inline:auto}
@@ -46,7 +52,7 @@ nav a {font-size:13px;text-decoration:none}.wordmark {font-weight:600}.nav-links
 .hero {display:grid;grid-template-columns:1.1fr 1fr;gap:65px;align-items:end;padding:55px 0 25px}
 h1 {font-size:clamp(54px,7vw,86px);line-height:.98;letter-spacing:-.06em}
 .degree {font-size:15px;margin-top:25px;max-width:310px}.location {font-size:13px;color:var(--muted);margin-top:7px}
-.hero-copy {max-width:360px}.links {display:flex;flex-wrap:wrap;gap:22px;margin-top:23px;font-size:14px}
+.hero-copy {max-width:400px;font-size:15px;color:var(--muted);margin-top:14px}.tagline {font-size:21px;line-height:1.35;letter-spacing:-.02em;max-width:400px}.links {display:flex;flex-wrap:wrap;gap:22px;margin-top:23px;font-size:14px}
 .section {padding-top:clamp(70px,8vw,110px)}
 h2 {font-size:34px;margin-bottom:35px}h3 {font-size:23px}.meta {font-size:13px;color:var(--muted);margin-top:10px}
 .now-list {display:grid;gap:32px}.current {display:grid;grid-template-columns:1fr 1.15fr;gap:65px;padding-bottom:30px;border-bottom:1px solid var(--line)}
@@ -56,7 +62,7 @@ h2 {font-size:34px;margin-bottom:35px}h3 {font-size:23px}.meta {font-size:13px;c
 .experience {display:grid;grid-template-columns:1fr 1fr;gap:50px}.past h3 {color:var(--green)}.title-icon {display:block}.past .description {margin-top:16px;font-size:14px}
 .stats {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 17px;margin-top:30px}
 .stat {min-width:0}.stat strong {display:block;font-size:clamp(30px,3vw,42px);font-weight:500;line-height:1.1;letter-spacing:-.055em;white-space:nowrap;transition:transform 250ms var(--ease);transform-origin:left center}
-.stat:hover strong,.stat:focus-visible strong {transform:scale(1.035)}.stat span {display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:9px;max-width:120px}
+.stat:hover strong {transform:scale(1.035)}.stat span {display:block;font-size:11px;color:var(--muted);line-height:1.5;margin-top:9px;max-width:120px}
 .farmlink .stats {grid-template-columns:1fr 1.35fr}
 .about-grid {display:grid;grid-template-columns:1fr 1fr;gap:65px}.about-copy {font-size:15px}.about-copy p+p {margin-top:12px}.credentials {color:var(--green);font-size:13px;padding-top:9px}
 .skills h3 {font-size:19px}.skills h4 {font-size:12px;font-weight:600;color:var(--blue);margin:20px 0 6px}.skills p {font-size:13px;color:var(--muted)}
@@ -69,7 +75,7 @@ footer {padding:65px 0 42px}.footer-main {display:flex;justify-content:space-bet
  .page-surface{width:calc(100% - 24px);margin:12px auto;border-radius:40px 12px 40px 12px}
  .wrap{width:calc(100% - 48px)}nav{min-height:68px;gap:12px}nav a{font-size:11px}.nav-links{gap:13px}
  .hero{grid-template-columns:1fr;gap:28px;padding-top:30px}h1{font-size:clamp(53px,14vw,76px)}.hero-copy{font-size:15px}.degree{font-size:14px}
- h2{font-size:29px;margin-bottom:26px}h3{font-size:22px}.current,.experience,.about-grid{grid-template-columns:1fr;gap:20px}.now-list{gap:28px}.experience{gap:45px}.about-grid{gap:30px}
+ h2{font-size:29px;margin-bottom:26px}.tagline{font-size:19px}h3{font-size:22px}.current,.experience,.about-grid{grid-template-columns:1fr;gap:20px}.now-list{gap:28px}.experience{gap:45px}.about-grid{gap:30px}
  .stats{gap:24px 15px}.stat strong{font-size:clamp(29px,8vw,39px)}
  .footer-main{flex-direction:column;gap:19px}.links{gap:18px;font-size:13px}
 }
@@ -81,21 +87,21 @@ footer {padding:65px 0 42px}.footer-main {display:flex;justify-content:space-bet
 /* Informational flows only. Text remains on the opaque ivory surface. */
 .course-status {font-size:13px;color:var(--muted);max-width:360px}
 .work-flow {margin:22px 0 0;max-width:470px}
-.workflow-list {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;list-style:none;padding:0;margin:0}
+.workflow-list {display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:26px;list-style:none;padding:0;margin:0}
 .workflow-list li {position:relative;font-size:11px;color:var(--muted);line-height:1.5;transition:color 180ms}
-.workflow-list li:not(:last-child)::after {content:"→";position:absolute;right:-13px;top:0;color:var(--muted)}
-.workflow-list li:hover,.workflow-list li:focus-visible {color:var(--blue)}
-.workflow-list li:focus-visible {outline:2px solid var(--blue);outline-offset:4px;border-radius:2px}
-.work-flow figcaption {font-size:10px;color:var(--muted);margin-top:12px}
+.workflow-list li:not(:last-child)::after {content:"→";position:absolute;right:-18px;top:0;color:var(--muted)}
+.work-flow figcaption {font-size:11px;color:var(--muted);margin-top:12px}
 .experience-notes {margin-top:22px;font-size:13px;color:var(--muted);line-height:1.65}
 .experience-notes p+p {margin-top:10px}
+.description.detail {margin-top:12px;font-size:14px;color:var(--muted)}
+.project-link {margin-top:20px;font-size:14px}
 .selected-press {margin-top:26px;font-size:12px;color:var(--muted)}
 .selected-press h4 {font-size:10px;letter-spacing:.04em;text-transform:uppercase;font-weight:550;margin:0 0 12px}
 .selected-press ul {display:flex;flex-wrap:wrap;gap:10px 20px;list-style:none;padding:0;margin:0}
 .selected-press a {text-decoration:none}
 .selected-press a:hover,.selected-press a:focus-visible {color:var(--blue);text-decoration:underline}
 @media(max-width:680px){.selected-press ul{flex-direction:column;align-items:flex-start}}
-@media(max-width:680px){.earlier-entries{grid-template-columns:1fr;gap:24px}.workflow-list{grid-template-columns:1fr;gap:20px}.workflow-list li:not(:last-child)::after{content:"↓";left:0;right:auto;top:100%;font-size:11px}}
+@media(max-width:680px){.earlier-entries{grid-template-columns:1fr;gap:24px}.workflow-list{grid-auto-flow:row;gap:20px}.workflow-list li:not(:last-child)::after{content:"↓";left:0;right:auto;top:100%;font-size:11px}}
 
   </style>
 </head>
@@ -110,39 +116,38 @@ footer {padding:65px 0 42px}.footer-main {display:flex;justify-content:space-bet
   </svg>
 
 <div class="page-surface">
-<header><nav class="wrap" aria-label="Main navigation"><a class="wordmark" href="#top">Anya Dennison</a><div class="nav-links"><a href="#work">Now</a><a href="#experience">Experience</a><a href="#contact">Contact</a></div></nav></header>
+<header><nav class="wrap" aria-label="Main navigation"><a class="wordmark" href="#top">Anya Dennison</a><div class="nav-links"><a href="#work">Now</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></div></nav></header>
 <main id="main" class="wrap">
 <!-- Hero and links. Keep resume.pdf in the same folder as this file. -->
-<section class="hero" aria-labelledby="hero-title"><div><h1 id="hero-title">Anya<br>Dennison</h1><p class="degree">Intended B.S. in Electrical &amp; Computer Engineering at Cornell</p><p class="location">Ithaca, NY</p></div><div><p class="hero-copy">I returned to Cornell in 2026 after spending three years working full time as Chief of Staff at a nonprofit I helped build.</p><div class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison">LinkedIn</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé</a></div></div></section>
+<section class="hero" aria-labelledby="hero-title"><div><h1 id="hero-title">Anya<br>Dennison</h1><p class="degree">Electrical &amp; Computer Engineering<br>Cornell Engineering · Class of 2029</p><p class="location">Ithaca, NY</p></div><div><p class="tagline">Engineering student at Cornell. Previously co-founded and scaled a $1M+ national nonprofit.</p><p class="hero-copy">As Chief of Staff, I built the operating systems behind 30 staff and 2,000 volunteers: hiring, finance, reporting, and programs. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p><div class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison">LinkedIn</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé</a></div></div></section>
 <section id="work" class="section" aria-labelledby="now-title"><h2 id="now-title">Now</h2><div class="now-list">
-<article class="current"><div><h3>Cornell University</h3><p class="meta">Electrical &amp; Computer Engineering</p><p class="meta">Fall 2026<br>Expected May 2029</p></div><div><p class="small-label">Current coursework</p><p class="course-status">Python · Physics · Calculus · Engineering Operations</p></div></article>
-<article id="food" class="current"><div><h3>Food Recovery Network</h3><p class="meta">Coordination App<br>Kappa Theta Pi<br>2026–Present</p></div><div><p class="description">Working with the Food Recovery Network on a tool for coordinating food donations and pickups without relying on group chats.</p>
-<figure class="work-flow" aria-label="Illustrative donation workflow"><ol class="workflow-list"><li tabindex="0">Donation posted</li><li tabindex="0">Pickup claimed</li><li tabindex="0">Handoff</li><li tabindex="0">Confirmed</li></ol></figure></div></article>
-<article id="nafsn" class="current"><div><h3>North American Food Systems Network</h3><p class="meta">Member Engagement Manager<br>2026–Present</p></div><div><p class="description">Setting up Circle as NAFSN’s digital community platform, including onboarding, permissions, groups, workflows, and automations.</p>
-<figure class="work-flow" aria-label="Illustrative community structure"><ol class="workflow-list"><li tabindex="0">Members</li><li tabindex="0">Groups</li><li tabindex="0">Events</li><li tabindex="0">Resources</li></ol></figure></div></article>
+<article id="freedge" class="current"><div><h3>Freedge</h3><p class="meta">Kappa Theta Pi × Food Recovery Network<br>Product &amp; user research · Team of 3<br>Fall 2026–Present</p></div><div><p class="description">A mobile-first web app that shows what’s in Cornell Food Recovery Network’s community free fridge right now. Today, people find out by scrolling a GroupMe thread. I run user interviews with FRN and turn what we hear into product requirements.</p>
+<p class="description detail">One design choice: the app records “take 2,” not “set to 8.” If two people grab food at the same time, both updates count instead of one overwriting the other.</p>
+<figure class="work-flow"><ol class="workflow-list" aria-label="Freedge architecture"><li>Phone browser<br>HTML · CSS · JS</li><li>REST API<br>Node.js · Express</li><li>Database<br>SQLite</li></ol><figcaption>Working MVP · deployment next</figcaption></figure>
+<p class="project-link"><a href="https://github.com/claregartz/KTPhoodRecovery" target="_blank" rel="noopener">View the code on GitHub ↗</a></p></div></article>
+<article id="nafsn" class="current"><div><h3>North American Food Systems Network</h3><p class="meta">Member Engagement Manager<br>Fall 2026–Present</p></div><div><p class="description">Leading NAFSN’s rollout of Circle as its online community platform. I map what members need onto the platform’s structure, onboarding, permissions, groups, and automations.</p></div></article>
+<article class="current"><div><h3>Cornell University</h3><p class="meta">Electrical &amp; Computer Engineering<br>Expected May 2029</p></div><div><p class="small-label">Current coursework</p><p class="course-status">CS 1110 Intro to Computing (Python)<br>MATH 1910 Calculus for Engineers<br>PHYS 1112 Physics I: Mechanics &amp; Heat<br>Engineering Operations: Data Science &amp; Decision Making</p></div></article>
 </div></section>
 <section id="experience" class="section" aria-labelledby="experience-title"><div class="section-head"><h2 id="experience-title">Experience</h2><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></div><div class="experience">
-      <article id="see" class="past see"><h3 class="title-icon"><span>SEE Alliance</span></h3><p class="meta">Chief of Staff &amp; Co-Founder<br>2022–2026</p><p class="description">Helped scale a student-led organization into a national nonprofit.</p><div class="stats" aria-label="SEE Alliance organization scale"><div class="stat"><strong>$1M+</strong><span>annual revenue</span></div><div class="stat"><strong>2,000</strong><span>volunteers</span></div><div class="stat"><strong>67</strong><span>Florida school districts</span></div></div><div class="experience-notes"><p>Built internal systems across hiring, finance, reporting, and programs.</p><p>Helped lead a 30-person staff and a network reaching thousands of students and partner organizations.</p></div>
+      <article id="see" class="past see"><h3 class="title-icon"><span>SEE Alliance</span></h3><p class="meta">Chief of Staff &amp; Co-Founder<br>2022–2026</p><p class="description">Co-founded a student initiative and scaled it into a national nonprofit, then ran its day-to-day operations.</p><div class="stats" aria-label="SEE Alliance organization scale"><div class="stat"><strong>$1M+</strong><span>annual revenue</span></div><div class="stat"><strong>2,000</strong><span>volunteers</span></div><div class="stat"><strong>67</strong><span>Florida school districts</span></div></div><div class="experience-notes"><p>Led operations, programs, and campaigns across 30 staff, 2,000 volunteers, and 6,000+ students and partner organizations.</p><p>Built the systems for hiring, training, finance, compliance, and reporting. Also ran SEE Space, a youth community and civic education center.</p><p>Secured a $1M grant as one of two founders. SEE’s work was recognized by the Biden White House and Secretary of Transportation Pete Buttigieg.</p></div>
 <!-- Organization coverage, not personal press. -->
 <div class="selected-press" aria-labelledby="press-title"><h4 id="press-title">SELECTED COVERAGE OF SEE ALLIANCE</h4><ul>
 <li><a href="https://abcnews.com/US/moms-liberty-founder-faces-calls-resignation-school-board/story?id=107071594" target="_blank" rel="noopener" aria-label="Read ABC News coverage related to SEE Alliance">ABC News ↗</a></li>
-<li><a href="https://www.teenvogue.com/story/florida-students-walkout-learn" target="_blank" rel="noopener" aria-label="Read Teen Vogue coverage of Walkout 2 Learn">Teen Vogue ↗</a></li>
-<li><a href="https://www.vanityfair.com/news/2023/05/florida-ground-zero-far-right-education-blitz" target="_blank" rel="noopener" aria-label="Read Vanity Fair coverage of Florida education politics">Vanity Fair ↗</a></li>
-</ul></div></article>
-      <article id="farmlink" class="past farmlink"><h3 class="title-icon"><span>The Farmlink Project</span></h3><p class="meta">Nationwide Food Program Lead<br>2022–2023</p><p class="description">Worked across outreach, operations, and logistics in a nationwide food recovery network.</p><div class="stats" aria-label="Farmlink team and partner outreach"><div class="stat"><strong>10 → 30</strong><span>team size</span></div><div class="stat"><strong>200 → 600</strong><span>weekly partner outreach</span></div></div><p class="experience-notes">Secured Farmlink’s largest individual food donation of 2022 and coordinated logistics for 21 truckloads totaling roughly one million pounds of avocados.</p>
+<li><a href="https://www.teenvogue.com/story/florida-students-walkout-learn" target="_blank" rel="noopener" aria-label="Read Teen Vogue coverage of Walkout 2 Learn">Teen Vogue ↗</a></li></ul></div></article>
+      <article id="farmlink" class="past farmlink"><h3 class="title-icon"><span>The Farmlink Project</span></h3><p class="meta">Nationwide Food Program Lead<br>2022–2023</p><p class="description">Redesigned the outreach workflows and task tracking for a nationwide food recovery network.</p><div class="stats" aria-label="Farmlink team and partner outreach"><div class="stat"><strong>10 → 30</strong><span>team size</span></div><div class="stat"><strong>200 → 600</strong><span>weekly partner outreach</span></div></div><div class="experience-notes"><p>Drove a 200% increase in quarterly food donations, helping Farmlink pass 100 million pounds of food distributed.</p><p>Secured Farmlink’s largest individual food donation of 2022 and coordinated logistics for 21 truckloads, roughly one million pounds of avocados.</p></div>
 <div class="selected-press" aria-labelledby="farmlink-press-title"><h4 id="farmlink-press-title">SELECTED COVERAGE OF FARMLINK</h4><ul>
 <li><a href="https://www.washingtonpost.com/food/2022/10/19/avocado-giveaway-surplus-philly/" target="_blank" rel="noopener" aria-label="Read The Washington Post coverage of Farmlink’s surplus avocado donation">The Washington Post ↗</a></li>
 <li><a href="https://www.vpm.org/npr-news/2022-10-20/avoggedon-strikes-philadelphia-one-nonprofit-gives-away-thousands-of-avocados/" target="_blank" rel="noopener" aria-label="Read NPR coverage of the Philadelphia avocado distribution">NPR ↗</a></li>
 </ul></div></article>
     </div></section>
 
-<section id="about" class="section" aria-labelledby="about-title"><h2 id="about-title">About</h2><div class="about-grid"><div class="about-copy"><p>Started at Cornell in 2022.</p><p>Spent roughly three years away working full time as Chief of Staff at SEE Alliance.</p><p>Returned in Fall 2026 to study Electrical and Computer Engineering.</p><p>Expected graduation May 2029.</p><p class="credentials">3.6 GPA · Dean’s List<br>Cornell Tradition Fellow</p></div><div class="skills"><h3>Skills &amp; tools</h3><h4>Technical</h4><p>Python <span class="course-context">Current coursework</span><br>DC circuit analysis · Circuit troubleshooting<br>Excel · Google Sheets · Airtable</p><h4>Product &amp; systems</h4><p>User research · Product requirements · Process design · Workflow design · Project management</p><h4>Languages</h4><p>Russian / native<br>French / intermediate</p></div></div></section>
+<section id="about" class="section" aria-labelledby="about-title"><h2 id="about-title">About</h2><div class="about-grid"><div class="about-copy"><p>I started at Cornell in 2022, then took time away to work full time on SEE Alliance as it grew. Running operations for a national organization showed me how much a team depends on its tools, and how often those tools don’t fit the work.</p><p>I came back in Fall 2026 to learn how to build them. I first got hooked on circuits in high school Science Olympiad, and Electrical &amp; Computer Engineering is where I want to go deeper.</p><p>On a team, I bring the habits of someone who has run things: clear plans, follow-through, and the ability to get people moving in the same direction.</p><p class="credentials">3.6 GPA · Dean’s List<br>Cornell Tradition Fellow</p></div><div class="skills"><h3>Skills &amp; tools</h3><h4>Technical</h4><p>Python <span class="course-context">CS 1110</span><br>HTML · CSS · JavaScript <span class="course-context">Built this site</span><br>DC circuit analysis · Circuit troubleshooting<br>Excel · Google Sheets · Airtable</p><h4>Product &amp; systems</h4><p>User research · Product requirements · Process design · Workflow design · Project management</p><h4>Tools</h4><p>Notion · Asana · Monday.com · Circle · QuickBooks · Mailchimp</p><h4>Languages</h4><p>Russian / native<br>French / intermediate</p></div></div></section>
 <section class="earlier" aria-labelledby="earlier-title"><h2 id="earlier-title">Earlier</h2><div class="earlier-entries"><article><p class="entry-date">2022</p><div><h3>Cornell Product Development</h3><p>Winning concept in a product design challenge, selected for production and sale at the Cornell Dairy Bar.</p></div></article><article><p class="entry-date">2021</p><div><h3>Science Olympiad</h3><p>Circuit Lab: 4th statewide / 3rd regional</p><p>Agricultural Biotechnology: 2nd statewide</p></div></article></div></section>
 <!-- Personal background, without graphics or interactive controls. -->
 <section id="elsewhere" class="section" aria-labelledby="elsewhere-title"><h2 id="elsewhere-title">Outside of school</h2><p class="elsewhere-copy">Outside of school, I play classical piano and have a background in competitive tennis. I also run, ski, hike, travel, and generally prefer being outside.</p></section>
-<section id="contact" class="section recruiting" aria-labelledby="contact-title"><h2 id="contact-title">Get in touch</h2><p>Currently looking for Summer 2027 internships in engineering and technology.</p><div class="links"><a href="mailto:aad238@cornell.edu">aad238@cornell.edu</a><a href="https://www.linkedin.com/in/anya-dennison">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></div></section>
+<section id="contact" class="section recruiting" aria-labelledby="contact-title"><h2 id="contact-title">Get in touch</h2><p>Looking for Summer 2027 internships and Cornell project teams in engineering and technology. I’m glad to talk about any of the work above.</p><div class="links"><a href="mailto:aad238@cornell.edu">aad238@cornell.edu</a><a href="https://www.linkedin.com/in/anya-dennison">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></div></section>
 </main>
-<footer class="wrap"><div class="footer-main"><div><p class="footer-name">Anya Dennison</p><p class="meta">Ithaca, NY</p></div><div class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison">LinkedIn</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé</a></div></div><p class="footer-bottom">Last updated October 2026</p></footer>
+<footer class="wrap"><div class="footer-main"><div><p class="footer-name">Anya Dennison</p><p class="meta">Ithaca, NY</p></div><div class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison">LinkedIn</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé</a></div></div><p class="footer-bottom">Designed and built from scratch in HTML, CSS &amp; JavaScript · <a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">View source ↗</a> · Last updated October 2026</p></footer>
 </div>
 <script>
 (() => {
@@ -203,7 +208,6 @@ footer {padding:65px 0 42px}.footer-main {display:flex;justify-content:space-bet
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(update)};
  addEventListener('scroll',schedule,{passive:true});addEventListener('resize',schedule,{passive:true});
  reduced.addEventListener('change',schedule);mobile.addEventListener('change',schedule);update();
- document.querySelectorAll('.stat').forEach(stat=>stat.tabIndex=0);
 })();
 
 </script>
