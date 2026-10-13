@@ -34,6 +34,36 @@
   state.keyNote = hz(midi); state.keyHit = 1; wake();
  };
 
+ /* ---------- Mediocre Melodies: a short sung chord, slightly off-key on purpose ----------
+    A sawtooth voice through three formant filters makes an "aah"; each note drifts a little flat or sharp. */
+ const voice = (midi, start, cents) => {
+  const t = audio.currentTime + start;
+  const f = hz(midi) * 2 ** (cents / 1200);
+  const osc = audio.createOscillator(), lfo = audio.createOscillator(), depth = audio.createGain(), env = audio.createGain();
+  osc.type = 'sawtooth'; osc.frequency.value = f;
+  lfo.frequency.value = 5 + Math.random(); depth.gain.value = f * .012;
+  lfo.connect(depth).connect(osc.frequency);
+  env.gain.setValueAtTime(0, t);
+  env.gain.linearRampToValueAtTime(.32, t + .12);
+  env.gain.setValueAtTime(.32, t + .7);
+  env.gain.exponentialRampToValueAtTime(.0005, t + 1.6);
+  env.connect(master);
+  [[800, 1], [1150, .5], [2900, .2]].forEach(([formant, level]) => {
+   const band = audio.createBiquadFilter(), g = audio.createGain();
+   band.type = 'bandpass'; band.frequency.value = formant; band.Q.value = 9; g.gain.value = level;
+   osc.connect(band).connect(g).connect(env);
+  });
+  osc.start(t); lfo.start(t); osc.stop(t + 1.7); lfo.stop(t + 1.7);
+ };
+ const hum = document.getElementById('hum');
+ hum.addEventListener('click', () => {
+  initAudio();
+  // C major, sung by three people who started at slightly different times and pitches.
+  [[60, 0, -18], [64, .05, 31], [67, .11, -42]].forEach(([m, start, cents]) => voice(m, start, cents + (Math.random() - .5) * 10));
+  hum.classList.add('on');
+  clearTimeout(hum._t); hum._t = setTimeout(() => hum.classList.remove('on'), 1500);
+ });
+
  /* ---------- Keys: C4 to C5, white and black, with the usual computer-keyboard layout ---------- */
  const keysEl = document.getElementById('keys');
  const readout = document.getElementById('readout');
