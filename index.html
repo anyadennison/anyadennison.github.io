@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#09090d">
+  <meta name="theme-color" content="#F4EFE3">
   <meta name="description" content="Cornell Electrical &amp; Computer Engineering student. Previously co-founded and scaled a $1M+ national nonprofit.">
   <link rel="canonical" href="https://anyadennison.github.io/">
   <meta property="og:type" content="website">
@@ -22,233 +22,210 @@
   <title>Anya Dennison</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=VT323&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap">
   <style>
 :root {
- color-scheme:dark;
- --bg:#09090d; --tile:#121218; --tile-2:#191920; --edge:#25252f; --edge-hi:#3a3a48;
- --text:#eeedf5; --muted:#9d9bad;
- --green:#d7ff3d; --green-dim:rgba(215,255,61,.13); --green-glow:rgba(215,255,61,.45);
- --lav:#c4b3ff; --lav-dim:rgba(196,179,255,.13); --lav-glow:rgba(196,179,255,.45);
- --radius:22px; --gap:14px;
+ /* Bench palette. The -text shades are the accents darkened to pass AA on cream. */
+ --cream:#F4EFE3; --panel:#E7E0CE; --module:#EFE9DA; --ink:#2B2A26; --muted:#57534A;
+ --olive:#6B7A3A; --olive-text:#525F2B; --terra:#C2643C; --terra-text:#9E4A28;
+ --sage:#A9B89A; --mustard:#D9A93B; --screen:#2E3420;
+ --rule:rgba(43,42,38,.24); --line:1.5px solid var(--ink);
  --font:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
- --led:"VT323","JetBrains Mono",ui-monospace,monospace;
  --ease:cubic-bezier(.2,.75,.25,1);
 }
 *,*::before,*::after {box-sizing:border-box}
-html {scroll-behavior:smooth;scroll-padding-top:84px}
-body {margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased;
- background-image:radial-gradient(900px 500px at 85% -10%,rgba(196,179,255,.10),transparent 60%),radial-gradient(700px 420px at -10% 30%,rgba(215,255,61,.05),transparent 60%);background-attachment:fixed}
+html {scroll-behavior:smooth;scroll-padding-top:76px}
+body {margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}
 h1,h2,h3,p {margin:0}
 a {color:inherit;text-underline-offset:4px;text-decoration-thickness:1px}
-a:hover {color:var(--green)}
+a:hover {color:var(--terra-text)}
 button {font:inherit;color:inherit}
-:focus-visible {outline:2px solid var(--lav);outline-offset:3px;border-radius:6px}
-::selection {background:var(--green);color:#111}
+:focus-visible {outline:2.5px solid var(--terra-text);outline-offset:3px;border-radius:4px}
+::selection {background:var(--mustard);color:var(--ink)}
 .sr-only {position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-.skip {position:fixed;top:12px;left:12px;z-index:50;padding:10px 16px;background:var(--green);color:#111;border-radius:8px;transform:translateY(-200%)}
+.skip {position:fixed;top:12px;left:12px;z-index:50;padding:10px 16px;background:var(--ink);color:var(--cream);border-radius:6px;transform:translateY(-200%)}
 .skip:focus {transform:none}
-.shell {width:min(1180px,calc(100% - 32px));margin-inline:auto}
+.shell {width:min(1180px,calc(100% - 40px));margin-inline:auto}
+.label {font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text)}
+.mono {font-family:var(--mono)}
 
 /* Top bar */
-.top {position:sticky;top:0;z-index:40;background:rgba(9,9,13,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05)}
-.top .shell {display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:64px}
-.logo {display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;letter-spacing:-.01em}
+.top {position:sticky;top:0;z-index:40;background:var(--cream);border-bottom:var(--line)}
+.top .shell {display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:60px}
+.logo {display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
 .top nav {display:flex;align-items:center;gap:22px;font-size:14px}
-.top nav a {text-decoration:none;color:var(--muted)}
-.top nav a:hover {color:var(--text)}
-.top nav .pill {color:#111;background:var(--green);padding:7px 14px;border-radius:999px;font-weight:500}
-.top nav .pill:hover {color:#111;box-shadow:0 0 18px var(--green-glow)}
+.top nav a {text-decoration:none}
+.top nav a:hover {text-decoration:underline}
+.top nav .resume {color:var(--cream);background:var(--olive-text);padding:6px 13px;border-radius:4px;font-weight:500}
+.top nav .resume:hover {color:var(--cream);background:var(--ink);text-decoration:none}
 
-/* Tennis ball: logo mark, hero toy, and the scoreboard's serve marker */
-.ball {position:relative;display:inline-block;flex:none;width:18px;height:18px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 35% 30%,#f4ffb0,var(--green) 48%,#a6cc12)}
-.ball::before,.ball::after {content:"";position:absolute;top:0;width:100%;height:100%;border-radius:50%;border:var(--seam,2px) solid rgba(255,255,255,.9)}
-.ball::before {left:-66%}.ball::after {left:66%}
+/* Knob: a cap with an indicator line inside an olive arc. Used for the logo, modules and the scope. */
+.knob {--v:.5;--cap:var(--mustard);position:relative;flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:conic-gradient(from 225deg,var(--olive) calc(var(--v) * 270deg),#CFC7B2 calc(var(--v) * 270deg) 270deg,transparent 270deg)}
+.knob::before {content:"";position:absolute;inset:4px;border-radius:50%;background:var(--module)}
+.knob i {position:relative;width:28px;height:28px;border-radius:50%;background:var(--cap);border:1.5px solid var(--ink);transform:rotate(calc(-135deg + var(--v) * 270deg));transition:transform 420ms var(--ease)}
+.knob i::after {content:"";position:absolute;left:50%;top:2px;width:2px;height:9px;margin-left:-1px;border-radius:1px;background:var(--ink)}
+.knob.sage {--cap:var(--sage)}
+.logo .knob {width:22px;height:22px;background:none}
+.logo .knob::before {display:none}
+.logo .knob i {width:20px;height:20px}
+.logo .knob i::after {height:6px;top:1px}
+.knob-wrap {display:flex;flex-direction:column;align-items:center;gap:4px;font:600 9px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);text-align:center}
+.knob-wrap b {font-weight:600;color:var(--ink);font-size:10px}
 
-/* Bento grid */
-.bento {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap);padding-block:22px 14px}
-.tile {position:relative;background:var(--tile);border:1px solid var(--edge);border-radius:var(--radius);padding:24px;min-width:0;transition:border-color 200ms}
-.tile:hover {border-color:var(--edge-hi)}
-.span-2 {grid-column:span 2}.span-4 {grid-column:span 4}.rows-2 {grid-row:span 2}
-.tile .label {display:flex;align-items:center;gap:8px;font:600 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 16px;max-width:none}
-.tile .label::before {content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green-glow)}
-.tile .label.lav::before {background:var(--lav);box-shadow:0 0 8px var(--lav-glow)}
-.tile-head {display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
-.tile-head .tile .label,.tile-head .label {margin-bottom:10px}
-.tile-head h2 {font-size:clamp(26px,3vw,34px);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+/* Hero: full bleed, graph paper, name in ink */
+.hero {border-bottom:var(--line);background-color:var(--cream);background-image:linear-gradient(rgba(43,42,38,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,42,38,.05) 1px,transparent 1px);background-size:28px 28px}
+.hero .shell {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(44px,7vw,84px)}
+.hero h1 {font-size:clamp(58px,8.6vw,118px);line-height:.88;letter-spacing:-.055em;font-weight:700;margin-top:16px}
+.lede {font-size:clamp(19px,1.9vw,24px);line-height:1.35;margin-top:28px;max-width:540px}
+.sub {color:var(--muted);font-size:16px;max-width:500px;margin-top:12px}
+.links {display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:15px}
+
+/* Scope housing */
+.bench-scope {position:relative;background:var(--panel);border:2px solid var(--ink);border-radius:10px;padding:12px 14px 14px;box-shadow:6px 6px 0 var(--ink)}
+.bench-scope::before,.bench-scope::after {content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,transparent 0 1px,transparent 1px),linear-gradient(45deg,transparent 45%,var(--ink) 45% 58%,transparent 58%),#CFC7B2;border:1px solid var(--ink)}
+.bench-scope::before {top:7px;left:7px}.bench-scope::after {top:7px;right:7px}
+.scope-head {display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 14px 10px;font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--ink)}
+.scope-head span:last-child {color:var(--olive-text)}
+.screen {position:relative;aspect-ratio:16/10;border-radius:6px;overflow:hidden;background:var(--screen);border:2px solid var(--ink)}
+.screen canvas {display:block;width:100%;height:100%}
+.screen .tag {position:absolute;left:10px;top:8px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--mustard)}
+.scope-foot {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:12px}
+.readout {font:12px/1.5 var(--mono);color:var(--ink);min-width:0}
+.readout span {display:block;color:var(--muted)}
+.scope-knobs {display:flex;gap:14px}
+.scope-knobs .knob {width:48px;height:48px;cursor:ns-resize;touch-action:none}
+.scope-knobs .knob i {width:33px;height:33px;transition:none}
+.knob-hint {font:10px/1.4 var(--mono);color:var(--muted);margin-top:8px;text-align:right}
+
+/* Section rhythm: quiet text sections separated by ink rules */
+.band {padding-block:clamp(52px,7vw,84px);border-bottom:var(--line)}
+.band-head {display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.band-head h2 {font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-top:8px}
 .hint {font:12px/1.5 var(--mono);color:var(--muted)}
+.cols {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.cols > * {padding-right:clamp(20px,4vw,48px)}
+.cols > * + * {border-left:1px solid var(--rule);padding-left:clamp(20px,4vw,48px);padding-right:0}
 
-/* Hero */
-.hero {display:flex;flex-direction:column;justify-content:space-between;gap:28px;overflow:hidden;min-height:440px;background:radial-gradient(520px 320px at 100% 100%,rgba(196,179,255,.16),transparent 70%),var(--tile)}
-.kicker {font:600 12px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lav)}
-.hero h1 {font-size:clamp(52px,7.4vw,96px);line-height:.92;letter-spacing:-.055em;font-weight:700;margin-top:18px}
-.hero h1 span {color:var(--green);text-shadow:0 0 28px rgba(215,255,61,.25)}
-.lede {font-size:clamp(19px,1.8vw,23px);line-height:1.35;max-width:520px;letter-spacing:-.01em;padding-right:90px}
-.lede mark {background:none;color:var(--green)}
-.sub {color:var(--muted);font-size:15px;max-width:470px;margin-top:12px;padding-right:90px}
-.links {display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.links a {display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:14px;padding:8px 14px;border:1px solid var(--edge-hi);border-radius:999px;transition:border-color 160ms,color 160ms,background 160ms}
-.links a:hover {border-color:var(--green);color:var(--green);background:var(--green-dim)}
-.hero-ball {position:absolute;right:28px;bottom:26px;width:88px;height:88px;--seam:5px;cursor:pointer;border:0;padding:0;box-shadow:0 18px 40px rgba(215,255,61,.18);animation:float 4s ease-in-out infinite}
-.hero-ball.hit {animation:hit 900ms var(--ease)}
-@keyframes float {50% {transform:translateY(-8px) rotate(8deg)}}
-@keyframes hit {0% {transform:none}35% {transform:translate(-70px,-120px) rotate(-220deg) scale(.82)}70% {transform:translate(-20px,10px) rotate(-320deg) scale(1.04)}100% {transform:rotate(-360deg)}}
+.status h2 {font-size:clamp(22px,2.4vw,28px);letter-spacing:-.02em;line-height:1.2;margin-top:10px;max-width:560px}
+.status p {color:var(--muted);margin-top:10px;max-width:520px}
+.open {display:flex;gap:12px;align-items:flex-start;font-size:18px;line-height:1.4;margin-top:10px}
+.open::before {content:"";flex:none;width:10px;height:10px;margin-top:8px;border-radius:50%;background:var(--olive);border:1.5px solid var(--ink)}
 
-/* Status */
-.status {display:flex;flex-direction:column;justify-content:space-between;gap:18px}
-.status h2 {font-size:24px;letter-spacing:-.02em;line-height:1.2}
-.status h2 a {text-decoration-color:rgba(215,255,61,.5)}
-.status p {color:var(--muted);font-size:14px;margin-top:8px;max-width:520px}
-.open {display:flex;align-items:center;gap:10px;font:12px/1.4 var(--mono);color:var(--text);padding:10px 12px;background:var(--green-dim);border:1px solid rgba(215,255,61,.25);border-radius:12px}
-.pulse {flex:none;width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.8s infinite}
-@keyframes pulse {0% {box-shadow:0 0 0 0 var(--green-glow)}70%,100% {box-shadow:0 0 0 9px rgba(215,255,61,0)}}
+.edu h2,.about h2 {font-size:24px;letter-spacing:-.02em;margin-top:10px}
+.edu .meta {color:var(--muted);margin-top:2px}
+.honors {font:600 12px/1.5 var(--mono);color:var(--olive-text);margin-top:12px}
+.courses {margin:18px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
+.courses b {display:inline-block;min-width:92px;font:600 12px var(--mono)}
+.about p:not(.label) {font-size:16px}
+.about p:not(.label) + p {margin-top:14px}
+.about .label + p {margin-top:12px}
 
-/* Big stat tiles */
-.stat {display:flex;flex-direction:column;justify-content:flex-end;min-height:170px}
-.stat strong {font-size:clamp(40px,4.6vw,58px);font-weight:700;letter-spacing:-.05em;line-height:1}
-.stat span {color:var(--muted);font-size:13px;margin-top:10px}
-.stat.green strong {color:var(--green)}.stat.lav strong {color:var(--lav)}
+/* Rack: one dense faceplate */
+.rack {position:relative;background:var(--panel);border:2px solid var(--ink);border-radius:8px;padding:10px;box-shadow:6px 6px 0 var(--ink)}
+.rail {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:7px 12px;margin-bottom:10px;background:var(--ink);color:var(--cream);border-radius:3px;font:600 10px/1.3 var(--mono);letter-spacing:.16em}
+.modules {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.module {--accent:var(--olive);position:relative;display:flex;flex-direction:column;gap:8px;padding:0 12px 12px;background:var(--module);border:1.5px solid var(--ink);border-radius:4px;transition:box-shadow 160ms}
+.module::before {content:"";display:block;height:7px;margin:0 -12px 4px;background:var(--accent);border-bottom:1.5px solid var(--ink);border-radius:2px 2px 0 0}
+.module.terra {--accent:var(--terra)}.module.mustard {--accent:var(--mustard)}.module.sage {--accent:var(--sage)}
+.module.patched {box-shadow:0 0 0 2.5px var(--olive-text)}
+.mod-top {display:flex;justify-content:space-between;align-items:center;font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--muted)}
+.led {width:10px;height:10px;border-radius:50%;background:#D6CFBC;border:1.5px solid var(--ink);transition:background 160ms}
+.module.patched .led {background:var(--accent)}
+.module h3 {font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.mod-sub {font:11px/1.4 var(--mono);color:var(--muted);margin-top:-4px}
+.mod-desc {font-size:14px;line-height:1.45;font-weight:500}
+.mod-detail {font-size:13px;line-height:1.5;color:var(--muted)}
+.dials {display:flex;gap:14px;margin-top:auto;padding-top:4px}
+.mod-foot {display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--rule)}
+.mod-foot a {font-size:13px}
+.patch {display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 7px;font:600 11px/1 var(--mono);letter-spacing:.06em;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;cursor:pointer}
+.patch .jack {width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 3px,#9C9585 3.5px 5px,var(--ink) 5.5px)}
+.patch:hover {background:#FFFDF6}
+.patch[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
+.module.empty {border-style:dashed;background:repeating-linear-gradient(-45deg,var(--module) 0 9px,#E6DFCD 9px 18px)}
+.module.empty::before {background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
 
-/* Education + about */
-.edu h2 {font-size:24px;letter-spacing:-.02em}
-.edu .meta {color:var(--muted);font-size:14px;margin-top:4px}
-.chips {display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;padding:0;list-style:none}
-.chips li {font:12px/1 var(--mono);padding:7px 10px;border-radius:999px;background:var(--tile-2);border:1px solid var(--edge)}
-.chips.hl li:nth-child(odd) {color:var(--green);border-color:rgba(215,255,61,.3)}
-.chips.hl li:nth-child(even) {color:var(--lav);border-color:rgba(196,179,255,.3)}
-.courses {margin:18px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:14px;color:var(--muted)}
-.courses b {display:inline-block;min-width:82px;font:600 12px var(--mono);color:var(--text)}
-.about p {font-size:15px;color:#d6d4e0}
-.about p+p {margin-top:12px}
+/* Experience: plain columns for now; mixer strips arrive in stage 4 */
+.roles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.roles > * {padding-right:clamp(18px,3vw,36px)}
+.roles > * + * {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
+.role h3 {font-size:22px;letter-spacing:-.02em;line-height:1.15}
+.role .meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:4px}
+.metrics {display:flex;flex-wrap:wrap;gap:12px 20px;margin:18px 0;padding:12px 0;border-block:1px solid var(--rule)}
+.metrics div {min-width:0}
+.metrics b {display:block;font-size:24px;line-height:1.1;letter-spacing:-.03em}
+.metrics span {display:block;font:600 10px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.role ul {margin:0;padding-left:18px;font-size:15px}
+.role li + li {margin-top:8px}
+.role li::marker {color:var(--terra-text)}
+.press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:14px}
+.press a {color:var(--ink);margin-right:12px}
 
-/* Synth rack */
-.rack {display:grid;grid-template-columns:minmax(0,1.9fr) minmax(280px,1fr);gap:14px;padding:14px;background:linear-gradient(#1a1a22,#141419);border:1px solid var(--edge-hi);border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-.rail {grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding:2px 6px;font:600 10px/1 var(--mono);letter-spacing:.16em;color:#6f6d80}
-.rail i {display:inline-block;width:9px;height:9px;border-radius:50%;background:#2c2c36;box-shadow:inset 0 1px 2px #000;vertical-align:middle}
-.rail span:first-child i {margin-right:8px}.rail span:last-child i {margin-left:8px}
-.modules {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.module {--c:var(--green);position:relative;display:flex;flex-direction:column;gap:10px;text-align:left;padding:14px 12px 12px;border-radius:10px;cursor:pointer;background:linear-gradient(#22222b,#1b1b22);border:1px solid #30303c;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:border-color 160ms,transform 160ms,box-shadow 160ms}
-.module:hover {border-color:#4a4a5a;transform:translateY(-2px)}
-.module[aria-pressed="true"] {border-color:var(--c);box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px var(--c),0 0 24px -6px var(--c)}
-.module.lav {--c:var(--lav)}
-.mod-top {display:flex;justify-content:space-between;align-items:center;font:600 10px/1 var(--mono);letter-spacing:.12em;color:#7e7c90}
-.led {width:8px;height:8px;border-radius:50%;background:#33333d;transition:background 160ms,box-shadow 160ms}
-.module[aria-pressed="true"] .led {background:var(--c);box-shadow:0 0 10px var(--c)}
-.mod-name {font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
-.mod-sub {font:11px/1.4 var(--mono);color:var(--muted);margin-top:-6px}
-.mod-desc {font-size:12.5px;line-height:1.5;color:#c9c7d4}
-.dials {display:flex;gap:12px;margin-top:auto;padding-top:4px}
-.dial-wrap {display:flex;flex-direction:column;align-items:center;gap:5px;font:600 9px/1.2 var(--mono);letter-spacing:.06em;color:#8d8b9e;text-align:center}
-.dial {--v:.5;--c:var(--green);position:relative;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(from 225deg,var(--c) calc(var(--v) * 270deg),#2b2b35 calc(var(--v) * 270deg) 270deg,transparent 270deg)}
-.dial::before {content:"";position:absolute;inset:4px;border-radius:50%;background:var(--tile-2)}
-.dial i {position:relative;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#4a4a58,#1d1d25 70%);box-shadow:0 2px 4px rgba(0,0,0,.6);transform:rotate(calc(-135deg + var(--v) * 270deg))}
-.dial i::after {content:"";position:absolute;left:50%;top:3px;width:2px;height:9px;margin-left:-1px;border-radius:2px;background:var(--text)}
-.dial-wrap b {font-weight:600;color:var(--text);font-size:10px}
-.jacks {display:flex;gap:8px}
-.jacks span {width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#000 0 3px,#5a5a68 3.5px 5px,#2a2a33 5.5px)}
-.module.empty {border-style:dashed;background:repeating-linear-gradient(-45deg,#17171d 0 10px,#1b1b22 10px 20px)}
-.module.empty .mod-name {color:var(--muted)}
-.blink {color:var(--green);animation:blink 1.2s steps(2) infinite}
-@keyframes blink {50% {opacity:.2}}
-
-.scope {display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:10px;background:#0d0d12;border:1px solid #2c2c37}
-.screen {position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:#06070a;box-shadow:inset 0 0 30px rgba(0,0,0,.9),inset 0 0 0 1px #1d1f26}
-.screen canvas {width:100%;height:100%;display:block}
-.screen .tag {position:absolute;left:10px;top:8px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--green);opacity:.85}
-.readout {font:12px/1.55 var(--mono);color:var(--muted);min-height:96px}
-.readout strong {display:block;color:var(--text);font-weight:600;font-size:13px;margin-bottom:4px}
-.readout a {color:var(--green)}
-.controls {display:flex;align-items:flex-end;gap:16px;border-top:1px solid #23232c;padding-top:12px}
-.controls .dial {width:50px;height:50px;cursor:ns-resize;touch-action:none}
-.controls .dial i {width:36px;height:36px}
-.controls .lav-dial {--c:var(--lav)}
-.controls .hint {margin-left:auto;text-align:right;font-size:10px;max-width:130px}
-
-/* Scoreboard */
-.board-frame {padding:14px;border-radius:16px;background:linear-gradient(#17171c,#0f0f13);border:1px solid var(--edge-hi);box-shadow:inset 0 0 0 4px #0b0b0e}
-.board-top {display:flex;justify-content:space-between;align-items:center;gap:12px;padding:4px 8px 12px;font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--lav)}
-.board-top .clock {font:24px/1 var(--led);letter-spacing:.06em;color:var(--green);text-shadow:0 0 10px var(--green-glow)}
-.board-scroll {overflow-x:auto;border-radius:10px}
-.board {width:100%;min-width:700px;border-collapse:separate;border-spacing:0 6px;font-family:var(--led)}
-.board th,.board td {padding:0}
-.board thead th {font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#77758a;text-align:center;padding:4px 8px}
-.board thead th:first-child {text-align:left;padding-left:40px}
-.board tbody th,.board tbody td {background:#060608;border-top:1px solid #1d1d24;border-bottom:1px solid #1d1d24;transition:background 160ms,border-color 160ms}
-.board tbody th {border-left:1px solid #1d1d24;border-radius:8px 0 0 8px;text-align:left;width:38%}
-.board tbody td:last-child {border-right:1px solid #1d1d24;border-radius:0 8px 8px 0}
-.board tbody tr.selected th,.board tbody tr.selected td {border-color:rgba(215,255,61,.45);background:#0b0c07}
-.player {display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;background:none;border:0;text-align:left;cursor:pointer}
-.serve {width:12px;height:12px;--seam:1.5px;visibility:hidden}
-.serving .serve {visibility:visible}
-.player-name {display:block;font-size:30px;line-height:.9;letter-spacing:.04em}
-.player-role {display:block;font:11px/1.3 var(--mono);color:var(--muted);margin-top:4px}
-.season {font-size:26px;color:var(--lav);text-align:center;text-shadow:0 0 10px var(--lav-glow);padding:0 10px}
-.set {text-align:center;padding:10px 8px}
-.set b {display:block;font-weight:400;font-size:38px;line-height:.9;color:var(--green);text-shadow:0 0 12px var(--green-glow);white-space:nowrap}
-.set small {display:block;font:10px/1.2 var(--mono);color:#8a889c;margin-top:5px;text-transform:uppercase;letter-spacing:.08em}
-.notes {margin-top:12px;padding:16px 18px;border-radius:10px;background:#0c0c10;border:1px solid #23232c}
-.notes-head {font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--green);margin-bottom:10px}
-.notes ul {margin:0;padding-left:18px;color:#d3d1de;font-size:14px}
-.notes li+li {margin-top:6px}
-.notes li::marker {color:var(--lav)}
-.press {display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font:12px/1.4 var(--mono);color:var(--muted)}
-.press a {color:var(--lav)}
-
-/* Piano pads */
-.pads {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.pad {--c:var(--green);--g:var(--green-glow);aspect-ratio:1.7;display:flex;align-items:flex-end;justify-content:space-between;padding:8px 10px;border-radius:12px;cursor:pointer;font:600 11px/1 var(--mono);color:#77758a;background:linear-gradient(145deg,#1e1e26,#16161c);border:1px solid #2a2a34;box-shadow:inset 0 1px 0 rgba(255,255,255,.05);transition:background 260ms,box-shadow 260ms,color 260ms,transform 90ms;-webkit-tap-highlight-color:transparent}
-.pad.alt {--c:var(--lav);--g:var(--lav-glow)}
-.pad kbd {font:inherit;opacity:.55}
-.pad span {color:var(--c);opacity:.75}
-.pad.on span {color:inherit;opacity:1}
-.pad:hover {border-color:#3d3d4b;color:var(--text)}
-.pad.on {transition:none;background:var(--c);color:#111;box-shadow:0 0 26px -2px var(--g);transform:scale(.96)}
+/* Play row: the pad machine plus two quiet lists */
+.play-row {display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.8fr);gap:0}
+.play-row > * + * {border-left:1px solid var(--rule);padding-left:clamp(20px,3vw,40px)}
+.play-row > :first-child {padding-right:clamp(20px,3vw,40px)}
+.machine {background:var(--panel);border:2px solid var(--ink);border-radius:8px;padding:14px;box-shadow:6px 6px 0 var(--ink)}
+.machine-head {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.modes {display:flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.mode {font:600 11px/1 var(--mono);padding:7px 12px;border:0;background:var(--cream);cursor:pointer}
+.mode + .mode {border-left:1.5px solid var(--ink)}
+.mode[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
+.pads {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.pad {aspect-ratio:1.45;display:flex;align-items:flex-end;justify-content:space-between;padding:7px 9px;border:1.5px solid var(--ink);border-radius:6px;box-shadow:0 3px 0 var(--ink);cursor:pointer;font:600 11px/1 var(--mono);transition:transform 80ms,box-shadow 80ms;-webkit-tap-highlight-color:transparent}
+.pad.c0 {background:var(--terra-text);color:var(--cream)}.pad.c1 {background:var(--mustard);color:var(--ink)}
+.pad.c2 {background:var(--sage);color:var(--ink)}.pad.c3 {background:var(--olive-text);color:var(--cream)}
+.pad kbd {font:inherit;opacity:.8}
+.pad.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--ink);color:var(--cream)}
 .pad-foot {display:flex;justify-content:space-between;gap:12px;margin-top:14px;font:12px/1.5 var(--mono);color:var(--muted)}
-.pad-foot output {color:var(--green);min-width:4ch;text-align:right}
-.play-head {display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.modes {display:flex;padding:3px;border-radius:999px;background:var(--tile-2);border:1px solid var(--edge);margin-top:-6px}
-.mode {font:600 11px/1 var(--mono);padding:7px 11px;border:0;border-radius:999px;background:none;color:var(--muted);cursor:pointer}
-.mode[aria-pressed="true"] {background:var(--lav);color:#111}
-.mode[data-mode="piano"][aria-pressed="true"] {background:var(--green)}
-.off li span {flex:none}
+.pad-foot output {font-weight:600;color:var(--ink);min-width:4ch;text-align:right}
+.list {list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.list li {display:flex;gap:12px;font-size:15px;line-height:1.45;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.list li:last-child {border-bottom:0}
+.list span {flex:none;min-width:58px;font:600 11px/1.9 var(--mono);color:var(--olive-text);text-transform:uppercase;letter-spacing:.06em}
 
-/* Small tiles */
-.off ul {list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.off li {display:flex;gap:12px;align-items:baseline;font-size:15px}
-.off li span {font:11px/1 var(--mono);color:var(--muted);min-width:56px}
-.earlier ol {list-style:none;margin:0;padding:0;display:grid;gap:16px}
-.earlier b {display:block;font:600 11px/1 var(--mono);color:var(--lav);margin-bottom:5px}
-.earlier p {font-size:14px;line-height:1.45}
-.skills h3 {font:600 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
-.skills .label + h3 {margin-top:0}
-.skills .chips {margin-top:0}
-.contact {display:flex;flex-direction:column;justify-content:space-between;gap:22px;background:radial-gradient(500px 260px at 0% 100%,rgba(215,255,61,.12),transparent 70%),var(--tile)}
-.contact h2 {font-size:clamp(30px,3.6vw,44px);letter-spacing:-.04em;line-height:1.05;font-weight:700}
-.contact p {color:var(--muted);font-size:15px;margin-top:10px;max-width:460px}
-.email {font-size:clamp(18px,2vw,22px);color:var(--green);text-decoration:none;border-bottom:1px solid rgba(215,255,61,.4)}
+.toolkit {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.toolkit > div + div {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
+.toolkit > div {padding-right:clamp(18px,3vw,36px)}
+.toolkit h3 {font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text);margin-bottom:10px}
+.toolkit p {font-size:15px;line-height:1.7}
 
-footer {display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;padding:18px 4px 40px;font:12px/1.5 var(--mono);color:#77758a}
-footer a {color:var(--muted)}
+/* Contact: full-bleed terracotta band (darkened so cream text passes AA) */
+.contact {background:var(--terra-text);color:var(--cream);border-bottom:var(--line)}
+.contact .shell {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:end;padding-block:clamp(52px,7vw,84px)}
+.contact .label {color:var(--cream)}
+.contact h2 {font-size:clamp(34px,4.6vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-top:10px}
+.contact p {margin-top:14px;max-width:480px}
+.contact a:hover {color:var(--mustard)}
+.email {display:inline-block;font-size:clamp(19px,2vw,24px);font-weight:500}
+.contact .links {margin-top:14px}
+
+footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-block:20px 36px;font:12px/1.5 var(--mono);color:var(--muted)}
 
 @media (max-width:1000px){
- .bento {grid-template-columns:repeat(2,minmax(0,1fr))}
- .span-4 {grid-column:span 2}
- .rack {grid-template-columns:minmax(0,1fr)}
  .modules {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .play-row {grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .play-row > :first-child {grid-column:1/-1;padding-right:0;padding-bottom:36px;margin-bottom:28px;border-bottom:1px solid var(--rule)}
+ .play-row > :nth-child(2) {border-left:0;padding-left:0;padding-right:clamp(20px,3vw,40px)}
 }
-@media (max-width:640px){
- .bento {grid-template-columns:minmax(0,1fr);gap:12px}
- .span-2,.span-4 {grid-column:auto}.rows-2 {grid-row:auto}
- .tile {padding:20px;border-radius:18px}
+@media (max-width:760px){
+ .hero .shell,.cols,.roles,.contact .shell,.toolkit {grid-template-columns:minmax(0,1fr)}
+ .cols > *,.roles > *,.toolkit > div {padding-right:0}
+ .cols > * + *,.roles > * + *,.toolkit > div + div {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
  .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
- .hero {min-height:0;padding-bottom:112px}.hero-ball {width:72px;height:72px;right:20px;bottom:20px}
- .lede,.sub {padding-right:0}
- .stat {min-height:130px}
+}
+@media (max-width:560px){
+ .shell {width:calc(100% - 32px)}
  .modules {grid-template-columns:minmax(0,1fr)}
- .rack {padding:10px}
+ .play-row {grid-template-columns:minmax(0,1fr)}
+ .play-row > :nth-child(2) {padding-right:0}
+ .play-row > :nth-child(3) {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
  .pad kbd {display:none}
- .board {min-width:560px}.player-name {font-size:24px}.set b {font-size:30px}.season {font-size:22px}.player {padding:10px 12px;gap:10px}
+ .bench-scope,.rack,.machine {box-shadow:4px 4px 0 var(--ink)}
+ .scope-foot {flex-direction:column;align-items:stretch}
+ .scope-knobs {justify-content:flex-start}
+ .knob-hint {text-align:left}
 }
 @media (prefers-reduced-motion:reduce){
  html {scroll-behavior:auto}
@@ -258,170 +235,193 @@ footer a {color:var(--muted)}
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="shell"><a class="logo" href="#top"><span class="ball" aria-hidden="true"></span>Anya Dennison</a><nav aria-label="Main navigation"><a href="#rack">Projects</a><a href="#record">Record</a><a class="hide-sm" href="#play">Play</a><a class="hide-sm" href="#contact">Contact</a><a class="pill" href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></nav></div></header>
+<header class="top"><div class="shell"><a class="logo" href="#top"><span class="knob" aria-hidden="true" style="--v:.62"><i></i></span>Anya Dennison</a><nav aria-label="Main navigation"><a href="#rack">Projects</a><a href="#record">Record</a><a class="hide-sm" href="#play">Play</a><a class="hide-sm" href="#contact">Contact</a><a class="resume" href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></nav></div></header>
 
-<main id="main" class="shell bento">
+<main id="main">
 
- <section class="tile hero span-2 rows-2" aria-labelledby="hero-title">
-  <div>
-   <p class="kicker">Electrical &amp; Computer Engineering · Cornell ’29</p>
-   <h1 id="hero-title">Anya<br><span>Dennison</span></h1>
-  </div>
-  <div>
-   <p class="lede">Engineering student at Cornell. Previously co-founded and scaled a <mark>$1M+ national nonprofit</mark>.</p>
-   <p class="sub">As Chief of Staff, I built the operating systems behind 30 staff and 2,000 volunteers. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p>
-   <div class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></div>
-  </div>
-  <button class="ball hero-ball" type="button" aria-label="Hit the tennis ball"></button>
- </section>
-
- <section class="tile status span-2" aria-labelledby="status-title">
-  <div>
-   <p class="label">Now building</p>
-   <h2 id="status-title"><a href="#rack">Freedge</a>, a live inventory app for Cornell’s community free fridge</h2>
-   <p>Kappa Theta Pi × Food Recovery Network. I lead user research and product requirements on a team of three.</p>
-  </div>
-  <p class="open"><span class="pulse" aria-hidden="true"></span>Open to Summer 2027 internships and Cornell project teams</p>
- </section>
-
- <div class="tile stat green"><strong>$1M+</strong><span>annual revenue at SEE Alliance, the nonprofit I co-founded</span></div>
- <div class="tile stat lav"><strong>2,000</strong><span>volunteers across all 67 Florida school districts</span></div>
-
- <section class="tile edu span-2" aria-labelledby="edu-title">
-  <p class="label lav">Education</p>
-  <h2 id="edu-title">Cornell University</h2>
-  <p class="meta">B.S. Electrical &amp; Computer Engineering · Expected May 2029</p>
-  <ul class="chips hl"><li>3.6 GPA</li><li>Dean’s List</li><li>Cornell Tradition Fellow</li></ul>
-  <ul class="courses"><li><b>CS 1110</b>Intro to Computing (Python)</li><li><b>MATH 1910</b>Calculus for Engineers</li><li><b>PHYS 1112</b>Physics I: Mechanics &amp; Heat</li><li><b>ENGR</b>Engineering Operations: Data Science &amp; Decision Making</li></ul>
- </section>
-
- <section class="tile about span-2" aria-labelledby="about-title">
-  <p class="label" id="about-title">About</p>
-  <p>I started at Cornell in 2022, then took time away to work full time on SEE Alliance as it grew. Running operations for a national organization showed me how much a team depends on its tools, and how often those tools don’t fit the work.</p>
-  <p>I came back in Fall 2026 to learn how to build them. I first got hooked on circuits in high school Science Olympiad, and Electrical &amp; Computer Engineering is where I want to go deeper. On a team, I bring the habits of someone who has run things: clear plans, follow-through, and getting people moving in the same direction.</p>
- </section>
-
- <!-- Projects as a modular synth: each module is a project; the scope shows the selected one. -->
- <section class="tile span-4" id="rack" aria-labelledby="rack-title">
-  <div class="tile-head"><div><p class="label">Projects</p><h2 id="rack-title">The build rack</h2></div><p class="hint">Select a module to patch it into the scope.<br>Turn the knobs, then play the pads below.</p></div>
-  <div class="rack">
-   <div class="rail" aria-hidden="true"><span><i></i>AD-01 MODULAR</span><span>4 SLOTS · 1 OPEN<i></i></span></div>
-   <div class="modules">
-    <button class="module" type="button" aria-pressed="true" data-wave="square" data-name="Circuit Lab" data-detail="Science Olympiad, 2021. DC circuit analysis, measurement, Ohm’s and Kirchhoff’s laws, resistor networks, RC circuits. Placed 4th statewide and 3rd regionally.">
-     <span class="mod-top">MOD 01<span class="led"></span></span>
-     <span class="mod-name">Circuit Lab</span><span class="mod-sub">Science Olympiad · 2021</span>
-     <span class="mod-desc">DC and RC circuit analysis under competition time limits.</span>
-     <span class="dials" aria-hidden="true"><span class="dial-wrap"><span class="dial" style="--v:.85"><i></i></span>STATE<b>4TH</b></span><span class="dial-wrap"><span class="dial" style="--v:.92;--c:var(--lav)"><i></i></span>REGION<b>3RD</b></span></span>
-     <span class="jacks" aria-hidden="true"><span></span><span></span></span>
-    </button>
-    <button class="module lav" type="button" aria-pressed="false" data-wave="sine" data-name="Freedge" data-detail="Kappa Theta Pi × Food Recovery Network, Fall 2026. A mobile-first app showing what’s in the community free fridge, replacing a GroupMe thread. Three tiers: HTML/CSS/JS client, Node.js + Express REST API, SQLite. It records “take 2,” not “set to 8,” so simultaneous pickups never overwrite each other. I run user interviews and write requirements." data-link="https://github.com/claregartz/KTPhoodRecovery">
-     <span class="mod-top">MOD 02<span class="led"></span></span>
-     <span class="mod-name">Freedge</span><span class="mod-sub">KTP × FRN · 2026</span>
-     <span class="mod-desc">Live fridge inventory. Node, Express, SQLite. Working MVP.</span>
-     <span class="dials" aria-hidden="true"><span class="dial-wrap"><span class="dial" style="--v:.33;--c:var(--lav)"><i></i></span>TEAM<b>3</b></span><span class="dial-wrap"><span class="dial" style="--v:.7"><i></i></span>STAGE<b>MVP</b></span></span>
-     <span class="jacks" aria-hidden="true"><span></span><span></span></span>
-    </button>
-    <button class="module" type="button" aria-pressed="false" data-wave="saw" data-name="This site" data-detail="Hand-built in HTML, CSS and JavaScript with no framework. The pads are a real Web Audio synth: three oscillators per note through a low-pass filter and a piano-style envelope. This scope is drawn live on a canvas." data-link="https://github.com/anyadennison/anyadennison.github.io">
-     <span class="mod-top">MOD 03<span class="led"></span></span>
-     <span class="mod-name">This site</span><span class="mod-sub">Personal · 2026</span>
-     <span class="mod-desc">From scratch: Web Audio synth, canvas scope, no framework.</span>
-     <span class="dials" aria-hidden="true"><span class="dial-wrap"><span class="dial" style="--v:0"><i></i></span>DEPS<b>0</b></span><span class="dial-wrap"><span class="dial" style="--v:.6;--c:var(--lav)"><i></i></span>OSC<b>3</b></span></span>
-     <span class="jacks" aria-hidden="true"><span></span><span></span></span>
-    </button>
-    <button class="module empty" type="button" aria-pressed="false" data-wave="flat" data-name="Open slot" data-detail="Reserved for my first hardware build at Cornell, Spring 2027. If your project team needs another pair of hands, this slot is yours.">
-     <span class="mod-top">MOD 04<span class="led"></span></span>
-     <span class="mod-name">Open slot</span><span class="mod-sub">Next hardware build</span>
-     <span class="mod-desc">Spring 2027. <span class="blink" aria-hidden="true">▮</span> Patch me in.</span>
-     <span class="jacks" aria-hidden="true"><span></span><span></span></span>
-    </button>
+ <!-- Hero: full bleed. The scope lives here. -->
+ <section class="hero" aria-labelledby="hero-title">
+  <div class="shell">
+   <div>
+    <p class="label">Electrical &amp; Computer Engineering · Cornell ’29</p>
+    <h1 id="hero-title">Anya<br>Dennison</h1>
+    <p class="lede">Engineering student at Cornell. Previously co-founded and scaled a $1M+ national nonprofit.</p>
+    <p class="sub">As Chief of Staff, I built the operating systems behind 30 staff and 2,000 volunteers. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p>
+    <p class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p>
    </div>
-   <div class="scope">
+   <div class="bench-scope">
+    <div class="scope-head" aria-hidden="true"><span>AD-01 OSCILLOSCOPE</span><span>CH1 · CH2</span></div>
     <div class="screen"><canvas id="scope" aria-hidden="true"></canvas><span class="tag" id="scope-tag" aria-hidden="true">CH1 · SQUARE</span></div>
-    <div class="readout" id="readout" aria-live="polite"></div>
-    <div class="controls">
-     <span class="dial-wrap"><span class="dial" id="k-freq" role="slider" tabindex="0" aria-label="Scope frequency" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" style="--v:.45"><i></i></span>FREQ</span>
-     <span class="dial-wrap"><span class="dial lav-dial" id="k-amp" role="slider" tabindex="0" aria-label="Amplitude and volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" style="--v:.7"><i></i></span>AMP · VOL</span>
-     <span class="hint">Drag up/down, scroll, or use arrow keys</span>
+    <div class="scope-foot">
+     <p class="readout" id="readout" aria-live="polite"></p>
+     <div>
+      <div class="scope-knobs">
+       <span class="knob-wrap"><span class="knob" id="k-freq" role="slider" tabindex="0" aria-label="Scope frequency" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" style="--v:.45"><i></i></span>FREQ</span>
+       <span class="knob-wrap"><span class="knob sage" id="k-amp" role="slider" tabindex="0" aria-label="Amplitude and volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" style="--v:.7"><i></i></span>AMP · VOL</span>
+      </div>
+      <p class="knob-hint">Drag up/down, scroll, or use arrow keys</p>
+     </div>
     </div>
    </div>
   </div>
  </section>
 
- <!-- Experience as a tennis scoreboard. -->
- <section class="tile span-4" id="record" aria-labelledby="record-title">
-  <div class="tile-head"><div><p class="label lav">Experience</p><h2 id="record-title">The record</h2></div><p class="hint">Select a player for match notes.<br>The ball marks who’s serving now.</p></div>
-  <div class="board-frame">
-   <div class="board-top"><span>CAREER · SINGLES</span><span class="clock" id="clock" aria-hidden="true">--:--</span></div>
-   <div class="board-scroll">
-    <table class="board">
-     <caption class="sr-only">Experience, with key results for each role</caption>
-     <thead><tr><th scope="col">Player</th><th scope="col">Season</th><th scope="col">Set 1</th><th scope="col">Set 2</th><th scope="col">Set 3</th></tr></thead>
-     <tbody>
-      <tr class="selected" data-notes="notes-see"><th scope="row"><button class="player" type="button" aria-expanded="true" aria-controls="notes-see"><span class="ball serve" aria-hidden="true"></span><span><span class="player-name">SEE ALLIANCE</span><span class="player-role">Chief of Staff &amp; Co-Founder</span></span></button></th><td class="season">22–26</td><td class="set"><b>$1M+</b><small>revenue</small></td><td class="set"><b data-count="2000">2,000</b><small>volunteers</small></td><td class="set"><b data-count="67">67</b><small>districts</small></td></tr>
-      <tr data-notes="notes-farmlink"><th scope="row"><button class="player" type="button" aria-expanded="false" aria-controls="notes-farmlink"><span class="ball serve" aria-hidden="true"></span><span><span class="player-name">FARMLINK</span><span class="player-role">Nationwide Food Program Lead</span></span></button></th><td class="season">22–23</td><td class="set"><b>10→30</b><small>team</small></td><td class="set"><b data-count="600">600</b><small>calls / week</small></td><td class="set"><b>+200%</b><small>donations</small></td></tr>
-      <tr class="serving" data-notes="notes-nafsn"><th scope="row"><button class="player" type="button" aria-expanded="false" aria-controls="notes-nafsn"><span class="ball serve" aria-hidden="true"></span><span><span class="player-name">NAFSN</span><span class="player-role">Member Engagement Manager · now</span></span></button></th><td class="season">26–</td><td class="set"><b>CIRCLE</b><small>platform</small></td><td class="set"><b>LIVE</b><small>status</small></td><td class="set"><b>—</b><small>in play</small></td></tr>
-     </tbody>
-    </table>
+ <section class="band" aria-labelledby="status-title">
+  <div class="shell cols status">
+   <div>
+    <p class="label">Now building</p>
+    <h2 id="status-title"><a href="#rack">Freedge</a>, a live inventory app for Cornell’s community free fridge</h2>
+    <p>Kappa Theta Pi × Food Recovery Network. I lead user research and product requirements on a team of three.</p>
    </div>
-   <div class="notes" id="notes-see">
-    <p class="notes-head">MATCH NOTES · SEE ALLIANCE</p>
-    <ul><li>Co-founded a student initiative and scaled it into a national nonprofit. Led operations, programs and campaigns across 30 staff, 2,000 volunteers and 6,000+ students and partner organizations.</li><li>Built the systems for hiring, training, finance, compliance and reporting. Ran SEE Space, a youth community and civic education center.</li><li>Secured a $1M grant as one of two founders. Recognized by the Biden White House and Secretary of Transportation Pete Buttigieg.</li></ul>
-    <p class="press">Coverage: <a href="https://abcnews.com/US/moms-liberty-founder-faces-calls-resignation-school-board/story?id=107071594" target="_blank" rel="noopener">ABC News ↗</a><a href="https://www.teenvogue.com/story/florida-students-walkout-learn" target="_blank" rel="noopener">Teen Vogue ↗</a></p>
+   <div><p class="label">Status</p><p class="open">Open to Summer 2027 internships and Cornell project teams</p></div>
+  </div>
+ </section>
+
+ <section class="band" aria-label="Education and about">
+  <div class="shell cols">
+   <div class="edu">
+    <p class="label">Education</p>
+    <h2>Cornell University</h2>
+    <p class="meta">B.S. Electrical &amp; Computer Engineering · Expected May 2029</p>
+    <p class="honors">3.6 GPA · Dean’s List · Cornell Tradition Fellow</p>
+    <ul class="courses"><li><b>CS 1110</b>Intro to Computing (Python)</li><li><b>MATH 1910</b>Calculus for Engineers</li><li><b>PHYS 1112</b>Physics I: Mechanics &amp; Heat</li><li><b>ENGR</b>Engineering Operations: Data Science &amp; Decision Making</li></ul>
    </div>
-   <div class="notes" id="notes-farmlink" hidden>
-    <p class="notes-head">MATCH NOTES · THE FARMLINK PROJECT</p>
-    <ul><li>Redesigned outreach workflows and task tracking to scale a student team from 10 to 30, taking weekly partner outreach from about 200 to 600 calls.</li><li>Drove a 200% increase in quarterly food donations, helping Farmlink pass 100 million pounds of food distributed.</li><li>Secured Farmlink’s largest individual food donation of 2022 and coordinated 21 truckloads, roughly one million pounds of avocados.</li></ul>
-    <p class="press">Coverage: <a href="https://www.washingtonpost.com/food/2022/10/19/avocado-giveaway-surplus-philly/" target="_blank" rel="noopener">The Washington Post ↗</a><a href="https://www.vpm.org/npr-news/2022-10-20/avoggedon-strikes-philadelphia-one-nonprofit-gives-away-thousands-of-avocados/" target="_blank" rel="noopener">NPR ↗</a></p>
-   </div>
-   <div class="notes" id="notes-nafsn" hidden>
-    <p class="notes-head">MATCH NOTES · NORTH AMERICAN FOOD SYSTEMS NETWORK</p>
-    <ul><li>Leading the rollout of Circle as NAFSN’s online community platform, starting Fall 2026.</li><li>Mapping what members need onto the platform’s structure, onboarding, permissions, groups and automations.</li></ul>
+   <div class="about">
+    <p class="label" id="about-title">About</p>
+    <p>I started at Cornell in 2022, then left to work full time on SEE Alliance as it grew. I was good at the people side of running an organization, but the work I kept wanting more of was the systems: the data, the processes, figuring out why something broke and fixing it so it stayed fixed.</p>
+    <p>I came back in Fall 2026 to do that work at a deeper level. I’ve liked circuits since high school Science Olympiad, and I’m most interested in the layer everything else runs on: computer architecture, networks, and distributed systems.</p>
    </div>
   </div>
  </section>
 
- <!-- Piano pads: C major pentatonic, so any combination sounds good. -->
- <section class="tile span-2" id="play" aria-labelledby="play-title">
-  <div class="play-head"><p class="label" id="play-title">Play</p><div class="modes" role="group" aria-label="Sound"><button type="button" class="mode" data-mode="piano" aria-pressed="true">Piano</button><button type="button" class="mode" data-mode="voice" aria-pressed="false">A cappella</button></div></div>
-  <div class="pads" id="pads" role="group" aria-label="Piano pads, C major pentatonic"></div>
-  <div class="pad-foot"><span><span id="mode-note">Classically trained. Your turn.</span><br>Keys 1–4 · Q–R · A–F · Z–V</span><output id="note-out">—</output></div>
+ <!-- Projects as a dense synth rack. Every module's full description is visible; Patch routes it to the scope. -->
+ <section class="band" id="rack" aria-labelledby="rack-title">
+  <div class="shell">
+   <div class="band-head"><div><p class="label">Projects</p><h2 id="rack-title">The build rack</h2></div><p class="hint">Patch a module to send its signal to the scope.</p></div>
+   <div class="rack">
+    <div class="rail" aria-hidden="true"><span>AD-01 MODULAR</span><span>4 SLOTS · 1 OPEN</span></div>
+    <div class="modules">
+     <article class="module patched" data-wave="square" aria-labelledby="m1">
+      <p class="mod-top">MOD 01<span class="led" aria-hidden="true"></span></p>
+      <h3 id="m1">Circuit Lab</h3><p class="mod-sub">Science Olympiad · 2021</p>
+      <p class="mod-desc">DC and RC circuit analysis under competition time limits.</p>
+      <p class="mod-detail">DC circuit analysis, measurement, Ohm’s and Kirchhoff’s laws, resistor networks, RC circuits. Placed 4th statewide and 3rd regionally.</p>
+      <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob" style="--v:.85"><i></i></span>STATE<b>4TH</b></span><span class="knob-wrap"><span class="knob sage" style="--v:.92"><i></i></span>REGION<b>3RD</b></span></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="true"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patched</span><span class="sr-only"> Circuit Lab to the scope</span></button></div>
+     </article>
+     <article class="module terra" data-wave="sine" aria-labelledby="m2">
+      <p class="mod-top">MOD 02<span class="led" aria-hidden="true"></span></p>
+      <h3 id="m2">Freedge</h3><p class="mod-sub">KTP × FRN · 2026</p>
+      <p class="mod-desc">Live fridge inventory. Node, Express, SQLite. Working MVP.</p>
+      <p class="mod-detail">A mobile-first app showing what’s in the community free fridge, replacing a GroupMe thread. Three tiers: HTML/CSS/JS client, Node.js + Express REST API, SQLite. It records “take 2,” not “set to 8,” so simultaneous pickups never overwrite each other. I run user interviews and write requirements.</p>
+      <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob sage" style="--v:.33"><i></i></span>TEAM<b>3</b></span><span class="knob-wrap"><span class="knob" style="--v:.7"><i></i></span>STAGE<b>MVP</b></span></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> Freedge to the scope</span></button><a href="https://github.com/claregartz/KTPhoodRecovery" target="_blank" rel="noopener">Code ↗</a></div>
+     </article>
+     <article class="module mustard" data-wave="saw" aria-labelledby="m3">
+      <p class="mod-top">MOD 03<span class="led" aria-hidden="true"></span></p>
+      <h3 id="m3">This site</h3><p class="mod-sub">Personal · 2026</p>
+      <p class="mod-desc">From scratch: Web Audio synth, canvas scope, no framework.</p>
+      <p class="mod-detail">Hand-built in HTML, CSS and JavaScript with no framework. The pads are a real Web Audio synth: three oscillators per note through a low-pass filter and a piano-style envelope. The scope is drawn live on a canvas.</p>
+      <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob" style="--v:0"><i></i></span>DEPS<b>0</b></span><span class="knob-wrap"><span class="knob sage" style="--v:.6"><i></i></span>OSC<b>3</b></span></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> this site to the scope</span></button><a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">Code ↗</a></div>
+     </article>
+     <article class="module sage empty" data-wave="flat" aria-labelledby="m4">
+      <p class="mod-top">MOD 04<span class="led" aria-hidden="true"></span></p>
+      <h3 id="m4">Open slot</h3><p class="mod-sub">Next hardware build</p>
+      <p class="mod-desc">Spring 2027. Patch me in.</p>
+      <p class="mod-detail">Reserved for my first hardware build at Cornell, Spring 2027. If your project team needs another pair of hands, this slot is yours.</p>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> the open slot to the scope</span></button></div>
+     </article>
+    </div>
+   </div>
+  </div>
  </section>
 
- <section class="tile off" aria-labelledby="off-title">
-  <p class="label lav" id="off-title">Off the clock</p>
-  <ul><li><span>Snow</span>Cornell Nordic ski team</li><li><span>Sings</span>Mediocre Melodies, Cornell’s comedy a cappella group. Bad singers, good cause.</li><li><span>Court</span>Competitive tennis</li><li><span>Keys</span>Classical piano</li><li><span>Trail</span>Run · hike · travel</li><li><span>Speaks</span>Russian · French</li></ul>
+ <!-- Experience. Stage 4 turns these into mixer channel strips. -->
+ <section class="band" id="record" aria-labelledby="record-title">
+  <div class="shell">
+   <div class="band-head"><div><p class="label">Experience</p><h2 id="record-title">The record</h2></div></div>
+   <div class="roles">
+    <article class="role" aria-labelledby="r-see">
+     <h3 id="r-see">SEE Alliance</h3><p class="meta">Chief of Staff &amp; Co-Founder · 2022–2026</p>
+     <div class="metrics"><div><b>$1M+</b><span>revenue</span></div><div><b>2,000</b><span>volunteers</span></div><div><b>67</b><span>districts</span></div></div>
+     <ul><li>Processed Florida statewide voter files for text and phone outreach for a campaign that reached 5.25 million voters.</li><li>Built and maintained outreach spreadsheets of 10,000+ rows tracking contacts, volunteers, and follow-ups.</li><li>Built internal systems for hiring, training, finance, and reporting across 30 staff, 2,000 volunteers, and all 67 Florida school districts.</li></ul>
+     <p class="press">Coverage: <a href="https://abcnews.com/US/moms-liberty-founder-faces-calls-resignation-school-board/story?id=107071594" target="_blank" rel="noopener">ABC News ↗</a><a href="https://www.teenvogue.com/story/florida-students-walkout-learn" target="_blank" rel="noopener">Teen Vogue ↗</a></p>
+    </article>
+    <article class="role" aria-labelledby="r-farmlink">
+     <h3 id="r-farmlink">The Farmlink Project</h3><p class="meta">Nationwide Food Program Lead · 2022–2023</p>
+     <div class="metrics"><div><b>10→30</b><span>team</span></div><div><b>600</b><span>calls / week</span></div><div><b>+200%</b><span>donations</span></div></div>
+     <ul><li>Cleaned and restructured the outreach CRM after a poor HubSpot import, reimporting contact records so the team could sort, segment, and target partners.</li><li>Maintained outreach tracking across HubSpot and shared spreadsheets as weekly partner calls tripled, from 200 to 600.</li><li>Coordinated logistics for 21 truckloads, about one million pounds of surplus avocados, the organization’s largest donation of 2022.</li></ul>
+     <p class="press">Coverage: <a href="https://www.washingtonpost.com/food/2022/10/19/avocado-giveaway-surplus-philly/" target="_blank" rel="noopener">The Washington Post ↗</a><a href="https://www.vpm.org/npr-news/2022-10-20/avoggedon-strikes-philadelphia-one-nonprofit-gives-away-thousands-of-avocados/" target="_blank" rel="noopener">NPR ↗</a></p>
+    </article>
+    <article class="role" aria-labelledby="r-nafsn">
+     <h3 id="r-nafsn">North American Food Systems Network</h3><p class="meta">Member Engagement Manager · 2026–now</p>
+     <div class="metrics"><div><b>Circle</b><span>platform</span></div><div><b>Live</b><span>status</span></div><div><b>Ongoing</b><span>in play</span></div></div>
+     <ul><li>Leading the rollout of Circle as NAFSN’s online community platform, starting Fall 2026.</li><li>Mapping what members need onto the platform’s structure, onboarding, permissions, groups and automations.</li></ul>
+    </article>
+   </div>
+  </div>
  </section>
 
- <section class="tile earlier" aria-labelledby="earlier-title">
-  <p class="label" id="earlier-title">Earlier wins</p>
-  <ol><li><b>2022</b><p>Winning product concept, produced and sold at the Cornell Dairy Bar</p></li><li><b>2021</b><p>Science Olympiad: Agricultural Biotechnology, 2nd statewide</p></li></ol>
+ <section class="band" id="play" aria-label="Play, off the clock, and earlier wins">
+  <div class="shell play-row">
+   <!-- Piano pads: C major pentatonic, so any combination sounds good. -->
+   <div class="machine">
+    <div class="machine-head"><p class="label" id="play-title">Play</p><div class="modes" role="group" aria-label="Sound"><button type="button" class="mode" data-mode="piano" aria-pressed="true">Piano</button><button type="button" class="mode" data-mode="voice" aria-pressed="false">A cappella</button></div></div>
+    <div class="pads" id="pads" role="group" aria-labelledby="play-title"></div>
+    <div class="pad-foot"><span><span id="mode-note">Classically trained. Your turn.</span><br>Keys 1–4 · Q–R · A–F · Z–V</span><output id="note-out"></output></div>
+   </div>
+   <div>
+    <p class="label" id="off-title">Off the clock</p>
+    <ul class="list" aria-labelledby="off-title"><li><span>Snow</span>Cornell Nordic ski team</li><li><span>Sings</span>Mediocre Melodies, Cornell’s comedy a cappella group. Bad singers, good cause.</li><li><span>Court</span>Competitive tennis</li><li><span>Keys</span>Classical piano</li><li><span>Trail</span>Run · hike · travel</li><li><span>Speaks</span>Russian · French</li></ul>
+   </div>
+   <div>
+    <p class="label" id="earlier-title">Earlier wins</p>
+    <ul class="list" aria-labelledby="earlier-title"><li><span>2022</span>Winning product concept, produced and sold at the Cornell Dairy Bar</li><li><span>2021</span>Science Olympiad: Agricultural Biotechnology, 2nd statewide</li></ul>
+   </div>
+  </div>
  </section>
 
- <section class="tile skills span-2" aria-labelledby="skills-title">
-  <p class="label lav" id="skills-title">Toolkit</p>
-  <h3>Technical</h3><ul class="chips"><li>Python</li><li>HTML · CSS · JS</li><li>Web Audio</li><li>DC circuit analysis</li><li>Circuit troubleshooting</li><li>Excel · Sheets</li><li>Airtable</li></ul>
-  <h3>Product &amp; systems</h3><ul class="chips"><li>User research</li><li>Product requirements</li><li>Process design</li><li>Project management</li></ul>
-  <h3>Tools</h3><ul class="chips"><li>Notion</li><li>Asana</li><li>Monday.com</li><li>Circle</li><li>QuickBooks</li><li>Mailchimp</li></ul>
+ <section class="band" aria-labelledby="skills-title">
+  <div class="shell">
+   <div class="band-head"><div><p class="label" id="skills-title">Toolkit</p></div></div>
+   <div class="toolkit">
+    <div><h3>Technical</h3><p>Python · HTML · CSS · JS · Web Audio · DC circuit analysis · Circuit troubleshooting · Excel · Sheets · Airtable</p></div>
+    <div><h3>Product &amp; systems</h3><p>User research · Product requirements · Process design · Project management</p></div>
+    <div><h3>Tools</h3><p>Notion · Asana · Monday.com · Circle · QuickBooks · Mailchimp</p></div>
+   </div>
+  </div>
  </section>
 
- <section class="tile contact span-2" id="contact" aria-labelledby="contact-title">
-  <div><p class="label">Contact</p><h2 id="contact-title">Let’s build something.</h2><p>Looking for Summer 2027 internships and Cornell project teams in engineering and technology. Glad to talk about any of the work above.</p></div>
-  <div><a class="email" href="mailto:aad238@cornell.edu">aad238@cornell.edu</a><div class="links"><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></div></div>
+ <section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="shell">
+   <div><p class="label">Contact</p><h2 id="contact-title">Let’s build something.</h2><p>Looking for Summer 2027 internships and Cornell project teams in engineering and technology. Glad to talk about any of the work above.</p></div>
+   <div><a class="email" href="mailto:aad238@cornell.edu">aad238@cornell.edu</a><p class="links"><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p></div>
+  </div>
  </section>
 </main>
 
-<footer class="shell"><span>Anya Dennison · Ithaca, NY</span><span>Built from scratch in HTML, CSS, JS &amp; Web Audio · <a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">source ↗</a> · Rev 2026.10</span></footer>
+<footer><div class="shell"><span>Anya Dennison · Ithaca, NY</span><span>Built from scratch in HTML, CSS, JS &amp; Web Audio · <a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">source ↗</a> · Rev 2026.10</span></div></footer>
 
 <script>
 (() => {
  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
  const state = { freq: .45, amp: .7, wave: 'square', note: 0, hit: 0 };
 
- /* ---------- Audio: a small piano-style voice. Sound only starts from a click or key press. ---------- */
+ /* ---------- Audio. Sound only starts from a click or key press. ---------- */
  let audio, master;
  const volume = () => .15 + state.amp * .55;
+ const initAudio = () => {
+  if (!audio) {
+   audio = new (window.AudioContext || window.webkitAudioContext)();
+   master = audio.createGain();
+   master.connect(audio.destination);
+  }
+  if (audio.state === 'suspended') audio.resume();
+  master.gain.value = volume();
+ };
  const pianoTone = midi => {
-  pianoTone.init();
+  initAudio();
   const t = audio.currentTime, f = 440 * 2 ** ((midi - 69) / 12);
   const env = audio.createGain(), tone = audio.createBiquadFilter();
   tone.type = 'lowpass';
@@ -439,21 +439,10 @@ footer a {color:var(--muted)}
   });
   state.note = f; state.hit = 1; wake();
  };
-
- pianoTone.init = () => {
-  if (!audio) {
-   audio = new (window.AudioContext || window.webkitAudioContext)();
-   master = audio.createGain();
-   master.connect(audio.destination);
-  }
-  if (audio.state === 'suspended') audio.resume();
-  master.gain.value = volume();
- };
-
  /* A cappella mode: a sung "aah"/"ooh" from formant filters, a little off-key on purpose. */
  const vowels = [[800, 1150, 2900], [450, 800, 2830], [350, 600, 2700]];
  const voiceTone = midi => {
-  pianoTone.init();
+  initAudio();
   const t = audio.currentTime;
   const cents = (Math.random() - .5) * 70; // Mediocre by design.
   const f = 440 * 2 ** ((midi - 69) / 12) * 2 ** (cents / 1200);
@@ -495,7 +484,7 @@ footer a {color:var(--muted)}
  layout.forEach((m, i) => {
   const b = document.createElement('button');
   b.type = 'button';
-  b.className = 'pad' + ((Math.floor(i / 4) + i) % 2 ? ' alt' : '');
+  b.className = 'pad c' + (i % 4); // one color per column, like an old drum machine
   b.dataset.note = m;
   b.innerHTML = `<span>${label(m)}</span><kbd aria-hidden="true">${keyRows[i].toUpperCase()}</kbd>`;
   b.setAttribute('aria-label', `Play ${label(m)}, key ${keyRows[i].toUpperCase()}`);
@@ -506,7 +495,7 @@ footer a {color:var(--muted)}
   (mode === 'voice' ? voiceTone : pianoTone)(Number(pad.dataset.note));
   out.textContent = pad.firstChild.textContent;
   pad.classList.remove('on'); void pad.offsetWidth; pad.classList.add('on');
-  clearTimeout(pad._t); pad._t = setTimeout(() => pad.classList.remove('on'), 160);
+  clearTimeout(pad._t); pad._t = setTimeout(() => pad.classList.remove('on'), 140);
  };
  padsEl.addEventListener('pointerdown', e => { const p = e.target.closest('.pad'); if (p) strike(p); });
  padsEl.addEventListener('click', e => { const p = e.target.closest('.pad'); if (p && e.detail === 0) strike(p); });
@@ -525,22 +514,23 @@ footer a {color:var(--muted)}
  const readout = document.getElementById('readout');
  const scopeTag = document.getElementById('scope-tag');
  const select = mod => {
-  modules.forEach(m => m.setAttribute('aria-pressed', String(m === mod)));
+  modules.forEach(m => {
+   const on = m === mod, btn = m.querySelector('.patch');
+   m.classList.toggle('patched', on);
+   btn.setAttribute('aria-pressed', String(on));
+   btn.querySelector('.patch-text').textContent = on ? 'Patched' : 'Patch';
+  });
   state.wave = mod.dataset.wave;
   scopeTag.textContent = 'CH1 · ' + (state.wave === 'flat' ? 'NO SIGNAL' : state.wave.toUpperCase());
-  readout.replaceChildren();
-  const name = document.createElement('strong');
-  name.textContent = mod.dataset.name;
-  readout.append(name, mod.dataset.detail);
-  if (mod.dataset.link) {
-   const a = Object.assign(document.createElement('a'), { href: mod.dataset.link, target: '_blank', rel: 'noopener', textContent: 'Code ↗' });
-   readout.append(' ', a);
-  }
+  readout.replaceChildren(mod.querySelector('h3').textContent);
+  const sub = document.createElement('span');
+  sub.textContent = mod.querySelector('.mod-sub').textContent;
+  readout.append(sub);
   wake();
  };
- modules.forEach(m => m.addEventListener('click', () => select(m)));
+ modules.forEach(m => m.querySelector('.patch').addEventListener('click', () => select(m)));
 
- /* ---------- Knobs ---------- */
+ /* ---------- Scope knobs ---------- */
  const knob = (el, key) => {
   const set = v => {
    state[key] = Math.max(0, Math.min(1, v));
@@ -563,9 +553,10 @@ footer a {color:var(--muted)}
  knob(document.getElementById('k-freq'), 'freq');
  knob(document.getElementById('k-amp'), 'amp');
 
- /* ---------- Oscilloscope ---------- */
+ /* ---------- Oscilloscope (stage 2 makes it react to cursor and scroll) ---------- */
  const canvas = document.getElementById('scope');
  const ctx = canvas.getContext('2d');
+ const MUSTARD = '#D9A93B', SAGE = '#A9B89A';
  let w = 0, h = 0, phase = 0, raf = 0, visible = true, last = 0;
  const size = () => {
   const r = canvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
@@ -580,33 +571,32 @@ footer a {color:var(--muted)}
   if (wave === 'saw') return 2 * p - 1;
   return Math.sin(2 * Math.PI * x);
  };
- const stroke = (color, glow, width) => { ctx.strokeStyle = color; ctx.lineWidth = width; ctx.shadowColor = glow; ctx.shadowBlur = 12; ctx.stroke(); ctx.shadowBlur = 0; };
- const trace = (wave, cycles, a, color, glow, width) => {
+ const trace = (wave, cycles, a, color, width) => {
   ctx.beginPath();
   for (let px = 0; px <= w; px += 1.5) {
    const y = h / 2 - shape(wave, px / w * cycles + phase) * a;
    px ? ctx.lineTo(px, y) : ctx.moveTo(px, y);
   }
-  stroke(color, glow, width);
+  ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineJoin = 'round'; ctx.stroke();
  };
  const draw = () => {
   ctx.clearRect(0, 0, w, h);
-  ctx.strokeStyle = 'rgba(196,179,255,.09)'; ctx.lineWidth = 1;
+  ctx.strokeStyle = 'rgba(169,184,154,.16)'; ctx.lineWidth = 1;
   ctx.beginPath();
   for (let i = 1; i < 10; i++) { const x = Math.round(w * i / 10) + .5; ctx.moveTo(x, 0); ctx.lineTo(x, h); }
   for (let i = 1; i < 8; i++) { const y = Math.round(h * i / 8) + .5; ctx.moveTo(0, y); ctx.lineTo(w, y); }
   ctx.stroke();
-  ctx.strokeStyle = 'rgba(196,179,255,.22)';
+  ctx.strokeStyle = 'rgba(169,184,154,.38)';
   ctx.beginPath(); ctx.moveTo(0, h / 2 + .5); ctx.lineTo(w, h / 2 + .5); ctx.stroke();
   if (state.wave === 'flat') {
    ctx.beginPath();
    for (let px = 0; px <= w; px += 3) { const y = h / 2 + (Math.random() - .5) * 3; px ? ctx.lineTo(px, y) : ctx.moveTo(px, y); }
-   stroke('#d7ff3d', 'rgba(215,255,61,.7)', 1.5);
+   ctx.strokeStyle = MUSTARD; ctx.lineWidth = 1.5; ctx.stroke();
   } else {
-   trace(state.wave, 1.5 + state.freq * 7, h * .36 * (.25 + state.amp * .75), '#d7ff3d', 'rgba(215,255,61,.75)', 2);
+   trace(state.wave, 1.5 + state.freq * 7, h * .36 * (.25 + state.amp * .75), MUSTARD, 2.25);
   }
-  // The last note played rides on channel 2 in lavender and fades out.
-  if (state.hit > .01) trace('sine', state.note / 65, h * .32 * state.hit, `rgba(196,179,255,${.35 + state.hit * .6})`, 'rgba(196,179,255,.8)', 1.8);
+  // The last note played rides on channel 2 in sage and fades out.
+  if (state.hit > .01) { ctx.globalAlpha = .35 + state.hit * .65; trace('sine', state.note / 65, h * .32 * state.hit, SAGE, 1.8); ctx.globalAlpha = 1; }
  };
  const frame = now => {
   raf = 0;
@@ -621,43 +611,6 @@ footer a {color:var(--muted)}
  addEventListener('resize', size, { passive: true });
  size();
  select(modules[0]);
-
- /* ---------- Scoreboard ---------- */
- const boardRows = [...document.querySelectorAll('.board tbody tr')];
- boardRows.forEach(row => row.querySelector('.player').addEventListener('click', () => {
-  boardRows.forEach(r => {
-   const on = r === row;
-   r.classList.toggle('selected', on);
-   r.querySelector('.player').setAttribute('aria-expanded', String(on));
-   document.getElementById(r.dataset.notes).hidden = !on;
-  });
- }));
- const clock = document.getElementById('clock');
- const tickClock = () => { const d = new Date(); clock.textContent = String(d.getHours()).padStart(2, '0') + (d.getSeconds() % 2 ? ' ' : ':') + String(d.getMinutes()).padStart(2, '0'); };
- tickClock(); setInterval(tickClock, 1000);
- // Count the numeric sets up the first time the scoreboard comes into view.
- const counters = [...document.querySelectorAll('[data-count]')];
- const countUp = () => counters.forEach(el => {
-  const end = Number(el.dataset.count), start = performance.now();
-  const step = now => {
-   const p = Math.min(1, (now - start) / 1100);
-   el.textContent = Math.round(end * (1 - (1 - p) ** 3)).toLocaleString('en-US');
-   if (p < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
- });
- if (!reduced.matches && 'IntersectionObserver' in window) {
-  const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); countUp(); } }, { threshold: .4 });
-  io.observe(document.querySelector('.board'));
- }
-
- /* ---------- Hero tennis ball ---------- */
- const ball = document.querySelector('.hero-ball');
- ball.addEventListener('click', () => {
-  ball.classList.remove('hit'); void ball.offsetWidth; ball.classList.add('hit');
-  pianoTone(84);
- });
- ball.addEventListener('animationend', e => { if (e.animationName === 'hit') ball.classList.remove('hit'); });
 })();
 </script>
 </body>
