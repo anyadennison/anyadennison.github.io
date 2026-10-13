@@ -149,7 +149,8 @@ button {font:inherit;color:inherit}
 .mod-desc {font-size:14px;line-height:1.45;font-weight:500}
 .mod-detail {font-size:13px;line-height:1.5;color:var(--muted)}
 .dials {display:flex;gap:14px;margin-top:auto;padding-top:4px}
-.mod-foot {display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--rule)}
+.dials + .mod-foot {margin-top:0}
+.mod-foot {margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--rule)}
 .mod-foot a {font-size:13px}
 .patch {display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 7px;font:600 11px/1 var(--mono);letter-spacing:.06em;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;cursor:pointer}
 .patch .jack {width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 3px,#9C9585 3.5px 5px,var(--ink) 5.5px)}
@@ -157,6 +158,21 @@ button {font:inherit;color:inherit}
 .patch[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
 .module.empty {border-style:dashed;background:repeating-linear-gradient(-45deg,var(--module) 0 9px,#E6DFCD 9px 18px)}
 .module.empty::before {background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
+.monitor {position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:center;margin-top:64px;padding:16px;background:var(--module);border:1.5px solid var(--ink);border-radius:4px}
+.monitor-in {position:absolute;z-index:1;top:-10px;left:50%;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 4px,#9C9585 4.5px 6.5px,var(--ink) 7px)}
+.monitor-in::after {content:"IN";position:absolute;left:50%;top:-17px;transform:translateX(-50%);font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--ink)}
+.monitor-screen {position:relative;aspect-ratio:4.2/1;background:var(--screen);border:2px solid var(--ink);border-radius:5px;overflow:hidden}
+.monitor-screen canvas {display:block;width:100%;height:100%}
+.monitor-screen .tag {position:absolute;left:9px;top:7px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--mustard)}
+.monitor-name {font-size:22px;font-weight:700;letter-spacing:-.02em;margin-top:6px}
+.monitor-meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:2px}
+.cable {position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none}
+.cable.off {display:none}
+.cable path {fill:none;stroke-linecap:round}
+.cable .cable-shadow {stroke:var(--ink);stroke-width:7.5}
+.cable .cable-line {stroke:var(--terra);stroke-width:4}
+.cable .plug {fill:var(--ink)}
+.cable.drawing path {transition:stroke-dashoffset 520ms var(--ease)}
 
 /* Experience: plain columns for now; mixer strips arrive in stage 4 */
 .roles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -229,6 +245,7 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
 }
 @media (max-width:560px){
  .shell {width:calc(100% - 32px)}
+ .monitor {grid-template-columns:minmax(0,1fr);margin-top:30px}
  .modules {grid-template-columns:minmax(0,1fr)}
  .play-row {grid-template-columns:minmax(0,1fr)}
  .play-row > :nth-child(2) {padding-right:0}
@@ -324,7 +341,7 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
  <!-- Projects as a dense synth rack. Every module's full description is visible; Patch routes it to the scope. -->
  <section class="band" id="rack" aria-labelledby="rack-title">
   <div class="shell">
-   <div class="band-head"><div><p class="label">Projects</p><h2 id="rack-title">The build rack</h2></div><p class="hint">Patch a module to send its signal to the scope.</p></div>
+   <div class="band-head"><div><p class="label">Projects</p><h2 id="rack-title">The build rack</h2></div><p class="hint">Patch a module to send its signal to the monitor.</p></div>
    <div class="rack">
     <div class="rail" aria-hidden="true"><span>AD-01 MODULAR</span><span>4 SLOTS · 1 OPEN</span></div>
     <div class="modules">
@@ -334,7 +351,7 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
       <p class="mod-desc">DC and RC circuit analysis under competition time limits.</p>
       <p class="mod-detail">DC circuit analysis, measurement, Ohm’s and Kirchhoff’s laws, resistor networks, RC circuits. Placed 4th statewide and 3rd regionally.</p>
       <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob" style="--v:.85"><i></i></span>STATE<b>4TH</b></span><span class="knob-wrap"><span class="knob sage" style="--v:.92"><i></i></span>REGION<b>3RD</b></span></div>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="true"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patched</span><span class="sr-only"> Circuit Lab to the scope</span></button></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="true"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patched</span><span class="sr-only"> Circuit Lab to the monitor</span></button></div>
      </article>
      <article class="module terra" data-wave="sine" aria-labelledby="m2">
       <p class="mod-top">MOD 02<span class="led" aria-hidden="true"></span></p>
@@ -342,7 +359,7 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
       <p class="mod-desc">Live fridge inventory. Node, Express, SQLite. Working MVP.</p>
       <p class="mod-detail">A mobile-first app showing what’s in the community free fridge, replacing a GroupMe thread. Three tiers: HTML/CSS/JS client, Node.js + Express REST API, SQLite. It records “take 2,” not “set to 8,” so simultaneous pickups never overwrite each other. I run user interviews and write requirements.</p>
       <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob sage" style="--v:.33"><i></i></span>TEAM<b>3</b></span><span class="knob-wrap"><span class="knob" style="--v:.7"><i></i></span>STAGE<b>MVP</b></span></div>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> Freedge to the scope</span></button><a href="https://github.com/claregartz/KTPhoodRecovery" target="_blank" rel="noopener">Code ↗</a></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> Freedge to the monitor</span></button><a href="https://github.com/claregartz/KTPhoodRecovery" target="_blank" rel="noopener">Code ↗</a></div>
      </article>
      <article class="module mustard" data-wave="saw" aria-labelledby="m3">
       <p class="mod-top">MOD 03<span class="led" aria-hidden="true"></span></p>
@@ -350,16 +367,23 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
       <p class="mod-desc">From scratch: Web Audio synth, canvas scope, no framework.</p>
       <p class="mod-detail">Hand-built in HTML, CSS and JavaScript with no framework. The pads are a real Web Audio synth: three oscillators per note through a low-pass filter and a piano-style envelope. The scope is drawn live on a canvas.</p>
       <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob" style="--v:0"><i></i></span>DEPS<b>0</b></span><span class="knob-wrap"><span class="knob sage" style="--v:.6"><i></i></span>OSC<b>3</b></span></div>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> this site to the scope</span></button><a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">Code ↗</a></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> this site to the monitor</span></button><a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">Code ↗</a></div>
      </article>
      <article class="module sage empty" data-wave="flat" aria-labelledby="m4">
       <p class="mod-top">MOD 04<span class="led" aria-hidden="true"></span></p>
       <h3 id="m4">Open slot</h3><p class="mod-sub">Next hardware build</p>
       <p class="mod-desc">Spring 2027. Patch me in.</p>
       <p class="mod-detail">Reserved for my first hardware build at Cornell, Spring 2027. If your project team needs another pair of hands, this slot is yours.</p>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> the open slot to the scope</span></button></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> the open slot to the monitor</span></button></div>
      </article>
     </div>
+    <!-- Monitor: shows whichever module is patched. The cable is drawn only when the modules sit in one row. -->
+    <div class="monitor">
+     <span class="monitor-in" id="monitor-in" aria-hidden="true"></span>
+     <div class="monitor-screen"><canvas id="monitor" aria-hidden="true"></canvas><span class="tag" id="monitor-tag" aria-hidden="true">IN · SQUARE</span></div>
+     <div class="monitor-read"><p class="label">Monitor</p><p class="monitor-name" id="monitor-name" aria-live="polite">Circuit Lab</p><p class="monitor-meta" id="monitor-meta">MOD 01 · Square wave</p></div>
+    </div>
+    <svg class="cable off" id="cable" aria-hidden="true" focusable="false"><path class="cable-shadow"/><path class="cable-line"/><circle class="plug" r="6.5"/><circle class="plug" r="6.5"/></svg>
    </div>
   </div>
  </section>
@@ -579,16 +603,16 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
 
  /* ---------- Rack modules ---------- */
  const modules = [...document.querySelectorAll('.module')];
- const select = mod => {
+ const select = (mod, animate) => {
   modules.forEach(m => {
    const on = m === mod, btn = m.querySelector('.patch');
    m.classList.toggle('patched', on);
    btn.setAttribute('aria-pressed', String(on));
    btn.querySelector('.patch-text').textContent = on ? 'Patched' : 'Patch';
   });
-  wake();
+  patchMonitor(mod, animate);
  };
- modules.forEach(m => m.querySelector('.patch').addEventListener('click', () => select(m)));
+ modules.forEach(m => m.querySelector('.patch').addEventListener('click', () => select(m, true)));
 
  /* ---------- Scope knobs ---------- */
  const knob = (el, key) => {
@@ -679,6 +703,93 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) wake(); }).observe(canvas);
  addEventListener('resize', size, { passive: true });
  size();
+
+ /* ---------- Rack monitor and patch cable ---------- */
+ const rack = document.querySelector('.rack');
+ const monCanvas = document.getElementById('monitor');
+ const mctx = monCanvas.getContext('2d');
+ const cable = document.getElementById('cable');
+ const [cableShadow, cableLine] = cable.querySelectorAll('path');
+ const plugs = cable.querySelectorAll('.plug');
+ const inJack = document.getElementById('monitor-in');
+ const WAVE_NAME = { square: 'Square wave', sine: 'Sine wave', saw: 'Sawtooth wave', flat: 'No signal yet' };
+ const mon = { wave: 'square', phase: 0, w: 0, h: 0, raf: 0, last: 0, visible: true, patched: null };
+ const sizeMonitor = () => {
+  const r = monCanvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+  mon.w = r.width; mon.h = r.height;
+  monCanvas.width = Math.round(mon.w * dpr); monCanvas.height = Math.round(mon.h * dpr);
+  mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+ };
+ const drawMonitor = () => {
+  const { w: mw, h: mh } = mon;
+  mctx.clearRect(0, 0, mw, mh);
+  mctx.strokeStyle = 'rgba(169,184,154,.16)'; mctx.lineWidth = 1; mctx.beginPath();
+  for (let i = 1; i < 12; i++) { const x = Math.round(mw * i / 12) + .5; mctx.moveTo(x, 0); mctx.lineTo(x, mh); }
+  for (let i = 1; i < 4; i++) { const y = Math.round(mh * i / 4) + .5; mctx.moveTo(0, y); mctx.lineTo(mw, y); }
+  mctx.stroke();
+  mctx.beginPath();
+  for (let px = 0; px <= mw; px += 1.5) {
+   const y = mon.wave === 'flat' ? mh / 2 + (Math.random() - .5) * 3 : mh / 2 - shape(mon.wave, px / mw * 4 + mon.phase) * mh * .32;
+   px ? mctx.lineTo(px, y) : mctx.moveTo(px, y);
+  }
+  mctx.strokeStyle = MUSTARD; mctx.lineWidth = 2; mctx.lineJoin = 'round'; mctx.stroke();
+ };
+ const monFrame = now => {
+  mon.raf = 0;
+  const dt = Math.min(50, now - (mon.last || now)); mon.last = now;
+  mon.phase += dt * .0006;
+  drawMonitor();
+  if (mon.visible && !reduced.matches) mon.raf = requestAnimationFrame(monFrame); else mon.last = 0;
+ };
+ const wakeMonitor = () => { if (reduced.matches) drawMonitor(); else if (!mon.raf) mon.raf = requestAnimationFrame(monFrame); };
+
+ // The cable runs from the patched module's jack to the monitor's IN jack.
+ // It only makes sense when the modules sit side by side; when they stack, the lit module and the readout carry it.
+ const routeCable = animate => {
+  const mod = mon.patched;
+  const tops = modules.map(m => m.offsetTop);
+  if (!mod || Math.max(...tops) !== Math.min(...tops)) { cable.classList.add('off'); return; }
+  cable.classList.remove('off');
+  const box = rack.getBoundingClientRect();
+  const a = mod.querySelector('.patch .jack').getBoundingClientRect();
+  const b = inJack.getBoundingClientRect();
+  const x1 = a.left + a.width / 2 - box.left, y1 = a.top + a.height / 2 - box.top;
+  const x2 = b.left + b.width / 2 - box.left, y2 = b.top + b.height / 2 - box.top;
+  // Drop straight out of the module, sweep through the gap, and settle into the IN jack from above.
+  const d = `M${x1} ${y1} C${x1} ${y1 + 62} ${x2 + (x1 - x2) * .32} ${y2 + 8} ${x2} ${y2}`;
+  [cableShadow, cableLine].forEach(p => p.setAttribute('d', d));
+  plugs[0].setAttribute('cx', x1); plugs[0].setAttribute('cy', y1);
+  plugs[1].setAttribute('cx', x2); plugs[1].setAttribute('cy', y2);
+  cable.classList.remove('drawing');
+  if (animate && !reduced.matches) {
+   const len = cableLine.getTotalLength();
+   [cableShadow, cableLine].forEach(p => { p.style.strokeDasharray = len; p.style.strokeDashoffset = len; });
+   cable.getBoundingClientRect();
+   cable.classList.add('drawing');
+   [cableShadow, cableLine].forEach(p => { p.style.strokeDashoffset = 0; });
+  } else {
+   [cableShadow, cableLine].forEach(p => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; });
+  }
+ };
+ const patchMonitor = (mod, animate) => {
+  mon.patched = mod;
+  mon.wave = mod.dataset.wave;
+  document.getElementById('monitor-tag').textContent = mon.wave === 'flat' ? 'IN · NO SIGNAL' : 'IN · ' + mon.wave.toUpperCase();
+  document.getElementById('monitor-name').textContent = mod.querySelector('h3').textContent;
+  document.getElementById('monitor-meta').textContent = mod.querySelector('.mod-top').textContent.trim() + ' · ' + WAVE_NAME[mon.wave];
+  // Feedback: the patched module's knobs sweep up from zero.
+  if (animate && !reduced.matches) mod.querySelectorAll('.dials .knob').forEach(k => {
+   const v = k.style.getPropertyValue('--v');
+   k.style.setProperty('--v', 0); k.getBoundingClientRect(); k.style.setProperty('--v', v);
+  });
+  routeCable(animate);
+  wakeMonitor();
+ };
+ if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { mon.visible = e.isIntersecting; if (mon.visible) wakeMonitor(); }).observe(monCanvas);
+ const relayout = () => { sizeMonitor(); routeCable(false); wakeMonitor(); };
+ if ('ResizeObserver' in window) new ResizeObserver(relayout).observe(rack);
+ document.fonts && document.fonts.ready.then(relayout);
+ sizeMonitor();
  select(modules[0]);
 })();
 </script>
