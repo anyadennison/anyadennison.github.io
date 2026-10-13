@@ -1,0 +1,227 @@
+:root {
+ /* Bench palette. The -text shades are the accents darkened to pass AA on cream. */
+ --cream:#F4EFE3; --panel:#E7E0CE; --module:#EFE9DA; --ink:#2B2A26; --muted:#57534A;
+ --olive:#6B7A3A; --olive-text:#525F2B; --terra:#C2643C; --terra-text:#9E4A28;
+ --sage:#A9B89A; --mustard:#D9A93B; --screen:#2E3420;
+ --rule:rgba(43,42,38,.24); --line:1.5px solid var(--ink);
+ /* Signal path geometry: content sits right of the rail; the trace runs at --trace-x inside it. */
+ --edge:20px; --rail-w:84px; --trace-x:30px;
+ --bg-local:var(--cream); /* what a node "cuts" the trace with */
+ --font:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+ --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+ --ease:cubic-bezier(.2,.75,.25,1);
+}
+*,*::before,*::after {box-sizing:border-box}
+html {scroll-behavior:smooth;scroll-padding-top:72px}
+body {margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+h1,h2,h3,p {margin:0}
+a {color:inherit;text-underline-offset:4px;text-decoration-thickness:1px}
+a:hover {color:var(--terra-text)}
+button {font:inherit;color:inherit}
+:focus-visible {outline:2.5px solid var(--terra-text);outline-offset:3px;border-radius:4px}
+::selection {background:var(--mustard);color:var(--ink)}
+.sr-only {position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip {position:fixed;top:12px;left:12px;z-index:50;padding:10px 16px;background:var(--ink);color:var(--cream);border-radius:6px;transform:translateY(-200%)}
+.skip:focus {transform:none}
+.shell {width:min(1180px,calc(100% - var(--edge) * 2));margin-inline:auto}
+.rail {padding-left:var(--rail-w)}
+.mini {font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text)}
+
+/* Top bar */
+.top {position:sticky;top:0;z-index:40;background:var(--cream);border-bottom:var(--line)}
+.top .shell {display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:58px}
+.logo {display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
+.top nav {display:flex;align-items:center;gap:22px;font-size:14px}
+.top nav a {text-decoration:none}
+.top nav a:hover {text-decoration:underline}
+.top nav .resume {color:var(--cream);background:var(--olive-text);padding:6px 13px;border-radius:4px;font-weight:500}
+.top nav .resume:hover {color:var(--cream);background:var(--ink);text-decoration:none}
+
+/* Knob */
+.knob {--v:.5;--cap:var(--mustard);position:relative;flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:conic-gradient(from 225deg,var(--olive) calc(var(--v) * 270deg),#CFC7B2 calc(var(--v) * 270deg) 270deg,transparent 270deg)}
+.knob::before {content:"";position:absolute;inset:4px;border-radius:50%;background:var(--panel)}
+.knob i {position:relative;width:28px;height:28px;border-radius:50%;background:var(--cap);border:1.5px solid var(--ink);transform:rotate(calc(-135deg + var(--v) * 270deg))}
+.knob i::after {content:"";position:absolute;left:50%;top:2px;width:2px;height:9px;margin-left:-1px;border-radius:1px;background:var(--ink)}
+.knob.sage {--cap:var(--sage)}
+.logo .knob {width:22px;height:22px;background:none}
+.logo .knob::before {display:none}
+.logo .knob i {width:20px;height:20px}
+.logo .knob i::after {height:6px;top:1px}
+.knob-wrap {display:flex;flex-direction:column;align-items:center;gap:4px;font:600 9px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);text-align:center}
+
+/* ---------- The signal path ---------- */
+.path {position:relative}
+/* The spine is drawn in script from the instrument's output to the OUT node. */
+.spine {position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:visible;pointer-events:none}
+.spine path {fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+
+/* Each stage's padding lives on its rail so the divider rule can start right of the trace. */
+.stage .rail {padding-block:clamp(56px,7vw,92px)}
+.stage:not(.hero):not(.contact) .rail {background:linear-gradient(var(--rule),var(--rule)) var(--rail-w) 0/calc(100% - var(--rail-w)) 1px no-repeat}
+.stage + .contact .rail {padding-top:clamp(56px,7vw,92px)}
+
+/* Silkscreen label with its node sitting on the trace */
+.silk {position:relative;display:flex;align-items:center;min-height:22px;font:600 11px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:22px}
+.node {position:absolute;z-index:2;top:50%;left:calc(var(--trace-x) - var(--rail-w));transform:translate(-50%,-50%)}
+.node.jack {width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 4px,#9C9585 4.5px 6.5px,var(--ink) 7px);box-shadow:0 0 0 3px var(--bg-local)}
+.node.led {width:14px;height:14px;border-radius:50%;background:#D6CFBC;border:1.5px solid var(--ink);box-shadow:0 0 0 3px var(--bg-local)}
+.node.led.lit {background:var(--olive)}
+.node.res {width:12px;height:34px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 34'%3E%3Crect width='12' height='34' fill='%23F4EFE3'/%3E%3Cpath d='M6 0V5L11 8L1 13L11 18L1 23L11 26L6 29V34' fill='none' stroke='%232B2A26' stroke-width='1.7' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.node.cap {width:24px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Crect width='24' height='16' fill='%23F4EFE3'/%3E%3Cpath d='M12 0V6M2 6H22M2 10H22M12 10V16' fill='none' stroke='%232B2A26' stroke-width='2'/%3E%3C/svg%3E")}
+.node.end {width:28px;height:28px;background:radial-gradient(circle,var(--ink) 0 6px,#9C9585 6.5px 9px,var(--ink) 9.5px)}
+
+/* ---------- Hero ---------- */
+.hero {background-color:var(--cream);background-image:linear-gradient(rgba(43,42,38,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,42,38,.05) 1px,transparent 1px);background-size:28px 28px;border-bottom:var(--line)}
+.hero .rail {padding-block:40px 84px}
+.hero-grid {display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(28px,4.5vw,60px);align-items:end}
+.kicker {font:600 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text)}
+.hero h1 {font-size:clamp(56px,8vw,112px);line-height:.88;letter-spacing:-.055em;font-weight:700;margin-top:14px}
+.lede {font-size:clamp(19px,1.9vw,24px);line-height:1.35;margin-top:26px;max-width:540px}
+.sub {color:var(--muted);font-size:16px;max-width:500px;margin-top:12px}
+.links {display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:15px}
+
+/* Instrument panel */
+.instrument {position:relative;z-index:2;background:var(--panel);border:2px solid var(--ink);border-radius:10px;padding:12px 14px 16px;box-shadow:6px 6px 0 var(--ink)}
+.panel-head {display:flex;justify-content:space-between;gap:12px;padding:0 2px 10px;font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.panel-head span:last-child {color:var(--olive-text)}
+.screen {position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:var(--screen);border:2px solid var(--ink)}
+.screen canvas {display:block;width:100%;height:100%}
+.screen .tag {position:absolute;left:10px;top:8px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--mustard)}
+.wave-select {display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 0;padding:0;border:0;min-width:0}
+.wave-select legend {float:left;margin-right:4px;padding:0;font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.wave-select label {position:relative;cursor:pointer}
+.wave-select input {position:absolute;opacity:0;width:1px;height:1px}
+.wave-select span {display:inline-flex;align-items:center;gap:6px;padding:5px 9px;font:600 11px/1 var(--mono);background:var(--cream);border:1.5px solid var(--ink);border-radius:4px}
+.wave-select svg {width:20px;height:10px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;overflow:visible}
+.wave-select input:checked + span {background:var(--ink);color:var(--cream)}
+.wave-select input:focus-visible + span {outline:2.5px solid var(--terra-text);outline-offset:2px}
+.keys {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:10px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.key {height:46px;display:flex;align-items:flex-end;justify-content:center;padding:0 0 6px;font:600 10px/1 var(--mono);color:var(--ink);background:#FBF8F0;border:1.5px solid var(--ink);border-radius:0 0 5px 5px;box-shadow:0 3px 0 var(--ink);cursor:pointer;transition:transform 80ms,box-shadow 80ms,background 80ms;-webkit-tap-highlight-color:transparent}
+.key.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--mustard)}
+.panel-foot {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:12px}
+.readout {font:12px/1.5 var(--mono)}
+.readout span {display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.readout output {display:block;font-size:15px;font-weight:600}
+.panel-knobs {display:flex;gap:14px}
+.panel-knobs .knob {width:48px;height:48px;cursor:ns-resize;touch-action:none}
+.panel-knobs .knob i {width:33px;height:33px}
+/* The page's trace starts here. */
+.out-jack {position:absolute;left:50%;bottom:-12px;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 4.5px,#9C9585 5px 7px,var(--ink) 7.5px)}
+.out-jack b {position:absolute;left:30px;top:4px;white-space:nowrap;font:600 9px/1 var(--mono);letter-spacing:.14em;color:var(--ink)}
+
+/* ---------- Sections ---------- */
+.stage-head {display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.stage-head h2,.edu h2,.contact h2 {font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+.hint {font:12px/1.5 var(--mono);color:var(--muted)}
+.prose {max-width:720px}
+.prose p {font-size:18px;line-height:1.6}
+.prose p + p {margin-top:16px}
+
+.edu .meta {color:var(--muted);margin-top:6px}
+.honors {font:600 12px/1.5 var(--mono);color:var(--olive-text);margin-top:12px}
+.courses {margin:18px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
+.courses b {display:inline-block;min-width:92px;font:600 12px var(--mono)}
+
+.now {max-width:720px;margin-bottom:28px;padding-left:14px;border-left:3px solid var(--olive)}
+.now-title {font-size:21px;line-height:1.3;font-weight:500;margin-top:6px}
+.now-sub {color:var(--muted);margin-top:6px}
+
+/* Rack */
+.rack {position:relative;z-index:2;background:var(--panel);border:2px solid var(--ink);border-radius:8px;padding:10px;box-shadow:6px 6px 0 var(--ink)}
+.rail-strip {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:7px 12px;margin-bottom:10px;background:var(--ink);color:var(--cream);border-radius:3px;font:600 10px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.modules {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.module {--accent:var(--olive);display:flex;flex-direction:column;gap:8px;padding:0 12px 12px;background:var(--module);border:1.5px solid var(--ink);border-radius:4px;transition:box-shadow 160ms}
+.module::before {content:"";display:block;height:7px;margin:0 -12px 4px;background:var(--accent);border-bottom:1.5px solid var(--ink);border-radius:2px 2px 0 0}
+.module.terra {--accent:var(--terra)}.module.mustard {--accent:var(--mustard)}.module.sage {--accent:var(--sage)}
+.module.patched {box-shadow:0 0 0 2.5px var(--olive-text)}
+.mod-top {display:flex;justify-content:space-between;align-items:center;font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--muted)}
+.led {width:10px;height:10px;border-radius:50%;background:#D6CFBC;border:1.5px solid var(--ink);transition:background 160ms}
+.module.patched .led {background:var(--accent)}
+.module h3 {font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.mod-sub {font:11px/1.4 var(--mono);color:var(--muted);margin-top:-4px}
+.mod-desc {font-size:14px;line-height:1.45;font-weight:500}
+.mod-detail {font-size:13px;line-height:1.5;color:var(--muted)}
+.mod-foot {margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--rule)}
+.mod-foot a {font-size:13px}
+.patch {display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 7px;font:600 11px/1 var(--mono);letter-spacing:.06em;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;cursor:pointer}
+.patch .jack {width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 3px,#9C9585 3.5px 5px,var(--ink) 5.5px)}
+.patch:hover {background:#FFFDF6}
+.patch[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
+.module.empty {border-style:dashed;background:repeating-linear-gradient(-45deg,var(--module) 0 9px,#E6DFCD 9px 18px)}
+.module.empty::before {background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
+
+/* Experience (channel strips arrive in stage 4) */
+.roles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.roles > * {padding-right:clamp(18px,3vw,36px)}
+.roles > * + * {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
+.role h3 {font-size:22px;letter-spacing:-.02em;line-height:1.15}
+.role .meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:4px}
+.metrics {display:flex;flex-wrap:wrap;gap:12px 20px;margin:18px 0;padding:12px 0;border-block:1px solid var(--rule)}
+.metrics b {display:block;font-size:24px;line-height:1.1;letter-spacing:-.03em}
+.metrics span {display:block;font:600 10px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.role ul {margin:18px 0 0;padding-left:18px;font-size:15px}
+.metrics + ul {margin-top:0}
+.role li + li {margin-top:8px}
+.role li::marker {color:var(--terra-text)}
+.press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:14px}
+.press a {color:var(--ink);margin-right:12px}
+
+/* Notebook (graph paper arrives in stage 5) */
+.notebook {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,4vw,56px)}
+.list {list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.notebook .mini + .list {margin-top:12px}
+.list li {display:flex;gap:12px;font-size:15px;line-height:1.45;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+.list li:last-child {border-bottom:0}
+.list span {flex:none;min-width:58px;font:600 11px/1.9 var(--mono);color:var(--olive-text);text-transform:uppercase;letter-spacing:.06em}
+
+.toolkit {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.toolkit > div {padding-right:clamp(18px,3vw,36px)}
+.toolkit > div + div {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
+.toolkit h3 {font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text);margin-bottom:10px}
+.toolkit p {font-size:15px;line-height:1.7}
+
+/* Contact: darkened terracotta so cream text passes AA */
+.contact {--bg-local:var(--terra-text);background:var(--terra-text);color:var(--cream)}
+.contact .silk {color:var(--cream)}
+.contact .rail {background:none}
+.contact-grid {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:end}
+.contact h2 {font-size:clamp(34px,4.6vw,58px);letter-spacing:-.04em;line-height:1}
+.contact p {margin-top:14px;max-width:480px}
+.contact a:hover {color:var(--mustard)}
+.email {display:inline-block;font-size:clamp(19px,2vw,24px);font-weight:500}
+.contact .links {margin-top:14px}
+
+footer {border-top:var(--line)}
+footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-block:20px 36px;font:12px/1.5 var(--mono);color:var(--muted)}
+
+@media (max-width:1000px){
+ .modules {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero-grid {grid-template-columns:minmax(0,1fr)}
+ .instrument {max-width:620px}
+}
+@media (max-width:760px){
+ .roles,.contact-grid,.toolkit,.notebook {grid-template-columns:minmax(0,1fr)}
+ .roles > *,.toolkit > div {padding-right:0}
+ .roles > * + *,.toolkit > div + div {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
+ .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
+}
+@media (max-width:560px){
+ /* Phone: the trace keeps a narrow gutter of its own and never shares space with text. */
+ :root {--edge:12px;--rail-w:36px;--trace-x:12px}
+ .modules {grid-template-columns:minmax(0,1fr)}
+ .node.jack {width:18px;height:18px}
+ .node.end {width:22px;height:22px}
+ .instrument,.rack {box-shadow:4px 4px 0 var(--ink)}
+ .panel-foot {flex-direction:column;align-items:stretch}
+ .prose p {font-size:17px}
+}
+@media print {
+ html,body,* {-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .top,.skip {display:none!important}
+ .instrument,.module,.role,.rack .rail-strip,.contact-grid > div,.toolkit > div,.notebook > * {break-inside:avoid;page-break-inside:avoid}
+ .stage .rail {padding-block:32px}
+}
+@media (prefers-reduced-motion:reduce){
+ html {scroll-behavior:auto}
+ *,*::before,*::after {animation:none!important;transition:none!important}
+}

@@ -23,418 +23,157 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap">
-  <style>
-:root {
- /* Bench palette. The -text shades are the accents darkened to pass AA on cream. */
- --cream:#F4EFE3; --panel:#E7E0CE; --module:#EFE9DA; --ink:#2B2A26; --muted:#57534A;
- --olive:#6B7A3A; --olive-text:#525F2B; --terra:#C2643C; --terra-text:#9E4A28;
- --sage:#A9B89A; --mustard:#D9A93B; --screen:#2E3420;
- --rule:rgba(43,42,38,.24); --line:1.5px solid var(--ink);
- --font:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
- --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
- --ease:cubic-bezier(.2,.75,.25,1);
-}
-*,*::before,*::after {box-sizing:border-box}
-html {scroll-behavior:smooth;scroll-padding-top:76px}
-body {margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}
-h1,h2,h3,p {margin:0}
-a {color:inherit;text-underline-offset:4px;text-decoration-thickness:1px}
-a:hover {color:var(--terra-text)}
-button {font:inherit;color:inherit}
-:focus-visible {outline:2.5px solid var(--terra-text);outline-offset:3px;border-radius:4px}
-::selection {background:var(--mustard);color:var(--ink)}
-.sr-only {position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-.skip {position:fixed;top:12px;left:12px;z-index:50;padding:10px 16px;background:var(--ink);color:var(--cream);border-radius:6px;transform:translateY(-200%)}
-.skip:focus {transform:none}
-.shell {width:min(1180px,calc(100% - 40px));margin-inline:auto}
-.label {font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text)}
-.mono {font-family:var(--mono)}
-
-/* Top bar */
-.top {position:sticky;top:0;z-index:40;background:var(--cream);border-bottom:var(--line)}
-.top .shell {display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:60px}
-.logo {display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none}
-.top nav {display:flex;align-items:center;gap:22px;font-size:14px}
-.top nav a {text-decoration:none}
-.top nav a:hover {text-decoration:underline}
-.top nav .resume {color:var(--cream);background:var(--olive-text);padding:6px 13px;border-radius:4px;font-weight:500}
-.top nav .resume:hover {color:var(--cream);background:var(--ink);text-decoration:none}
-
-/* Knob: a cap with an indicator line inside an olive arc. Used for the logo, modules and the scope. */
-.knob {--v:.5;--cap:var(--mustard);position:relative;flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:conic-gradient(from 225deg,var(--olive) calc(var(--v) * 270deg),#CFC7B2 calc(var(--v) * 270deg) 270deg,transparent 270deg)}
-.knob::before {content:"";position:absolute;inset:4px;border-radius:50%;background:var(--module)}
-.knob i {position:relative;width:28px;height:28px;border-radius:50%;background:var(--cap);border:1.5px solid var(--ink);transform:rotate(calc(-135deg + var(--v) * 270deg));transition:transform 420ms var(--ease)}
-.knob i::after {content:"";position:absolute;left:50%;top:2px;width:2px;height:9px;margin-left:-1px;border-radius:1px;background:var(--ink)}
-.knob.sage {--cap:var(--sage)}
-.logo .knob {width:22px;height:22px;background:none}
-.logo .knob::before {display:none}
-.logo .knob i {width:20px;height:20px}
-.logo .knob i::after {height:6px;top:1px}
-.knob-wrap {display:flex;flex-direction:column;align-items:center;gap:4px;font:600 9px/1.2 var(--mono);letter-spacing:.06em;color:var(--muted);text-align:center}
-.knob-wrap b {font-weight:600;color:var(--ink);font-size:10px}
-
-/* Hero: full bleed, graph paper, name in ink */
-.hero {border-bottom:var(--line);background-color:var(--cream);background-image:linear-gradient(rgba(43,42,38,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(43,42,38,.05) 1px,transparent 1px);background-size:28px 28px}
-.hero .shell {display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(44px,7vw,84px)}
-.hero h1 {font-size:clamp(58px,8.6vw,118px);line-height:.88;letter-spacing:-.055em;font-weight:700;margin-top:16px}
-.lede {font-size:clamp(19px,1.9vw,24px);line-height:1.35;margin-top:28px;max-width:540px}
-.sub {color:var(--muted);font-size:16px;max-width:500px;margin-top:12px}
-.links {display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:15px}
-
-/* Scope housing */
-.bench-scope {position:relative;background:var(--panel);border:2px solid var(--ink);border-radius:10px;padding:12px 14px 14px;box-shadow:6px 6px 0 var(--ink)}
-.bench-scope::before,.bench-scope::after {content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle,transparent 0 1px,transparent 1px),linear-gradient(45deg,transparent 45%,var(--ink) 45% 58%,transparent 58%),#CFC7B2;border:1px solid var(--ink)}
-.bench-scope::before {top:7px;left:7px}.bench-scope::after {top:7px;right:7px}
-.scope-head {display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 14px 10px;font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--ink)}
-.scope-head span:last-child {color:var(--olive-text)}
-.screen {position:relative;aspect-ratio:16/10;border-radius:6px;overflow:hidden;background:var(--screen);border:2px solid var(--ink)}
-.screen canvas {display:block;width:100%;height:100%}
-.screen .tag {position:absolute;left:10px;top:8px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--mustard)}
-.scope-foot {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:12px}
-.readout {font:12px/1.5 var(--mono);color:var(--ink);min-width:0}
-.readout span {display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.readout output {display:block;font-size:15px;font-weight:600;color:var(--ink)}
-.wave-select {display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:10px 0 0;padding:0;border:0;min-width:0}
-.wave-select legend {float:left;margin-right:4px;padding:0;font:600 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.wave-select label {position:relative;cursor:pointer}
-.wave-select input {position:absolute;opacity:0;width:1px;height:1px}
-.wave-select span {display:inline-flex;align-items:center;gap:6px;padding:5px 9px;font:600 11px/1 var(--mono);background:var(--cream);border:1.5px solid var(--ink);border-radius:4px}
-.wave-select svg {width:20px;height:10px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;overflow:visible}
-.wave-select input:checked + span {background:var(--ink);color:var(--cream)}
-.wave-select input:focus-visible + span {outline:2.5px solid var(--terra-text);outline-offset:2px}
-.keys {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:10px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.key {height:46px;display:flex;align-items:flex-end;justify-content:center;padding:0 0 6px;font:600 10px/1 var(--mono);color:var(--ink);background:#FBF8F0;border:1.5px solid var(--ink);border-radius:0 0 5px 5px;box-shadow:0 3px 0 var(--ink);cursor:pointer;transition:transform 80ms,box-shadow 80ms,background 80ms;-webkit-tap-highlight-color:transparent}
-.key.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--mustard)}
-.scope-knobs {display:flex;gap:14px}
-.scope-knobs .knob {width:48px;height:48px;cursor:ns-resize;touch-action:none}
-.scope-knobs .knob i {width:33px;height:33px;transition:none}
-.knob-hint {font:10px/1.4 var(--mono);color:var(--muted);margin-top:8px;text-align:right}
-
-/* Section rhythm: quiet text sections separated by ink rules */
-.band {padding-block:clamp(52px,7vw,84px);border-bottom:var(--line)}
-.band-head {display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
-.band-head h2 {font-size:clamp(28px,3.4vw,40px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-top:8px}
-.hint {font:12px/1.5 var(--mono);color:var(--muted)}
-.cols {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-.cols > * {padding-right:clamp(20px,4vw,48px)}
-.cols > * + * {border-left:1px solid var(--rule);padding-left:clamp(20px,4vw,48px);padding-right:0}
-
-.status h2 {font-size:clamp(22px,2.4vw,28px);letter-spacing:-.02em;line-height:1.2;margin-top:10px;max-width:560px}
-.status p {color:var(--muted);margin-top:10px;max-width:520px}
-.open {display:flex;gap:12px;align-items:flex-start;font-size:18px;line-height:1.4;margin-top:10px}
-.open::before {content:"";flex:none;width:10px;height:10px;margin-top:8px;border-radius:50%;background:var(--olive);border:1.5px solid var(--ink)}
-
-.edu h2,.about h2 {font-size:24px;letter-spacing:-.02em;margin-top:10px}
-.edu .meta {color:var(--muted);margin-top:2px}
-.honors {font:600 12px/1.5 var(--mono);color:var(--olive-text);margin-top:12px}
-.courses {margin:18px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
-.courses b {display:inline-block;min-width:92px;font:600 12px var(--mono)}
-.about p:not(.label) {font-size:16px}
-.about p:not(.label) + p {margin-top:14px}
-.about .label + p {margin-top:12px}
-
-/* Rack: one dense faceplate */
-.rack {position:relative;background:var(--panel);border:2px solid var(--ink);border-radius:8px;padding:10px;box-shadow:6px 6px 0 var(--ink)}
-.rail {display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:7px 12px;margin-bottom:10px;background:var(--ink);color:var(--cream);border-radius:3px;font:600 10px/1.3 var(--mono);letter-spacing:.16em}
-.modules {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.module {--accent:var(--olive);position:relative;display:flex;flex-direction:column;gap:8px;padding:0 12px 12px;background:var(--module);border:1.5px solid var(--ink);border-radius:4px;transition:box-shadow 160ms}
-.module::before {content:"";display:block;height:7px;margin:0 -12px 4px;background:var(--accent);border-bottom:1.5px solid var(--ink);border-radius:2px 2px 0 0}
-.module.terra {--accent:var(--terra)}.module.mustard {--accent:var(--mustard)}.module.sage {--accent:var(--sage)}
-.module.patched {box-shadow:0 0 0 2.5px var(--olive-text)}
-.mod-top {display:flex;justify-content:space-between;align-items:center;font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--muted)}
-.led {width:10px;height:10px;border-radius:50%;background:#D6CFBC;border:1.5px solid var(--ink);transition:background 160ms}
-.module.patched .led {background:var(--accent)}
-.module h3 {font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
-.mod-sub {font:11px/1.4 var(--mono);color:var(--muted);margin-top:-4px}
-.mod-desc {font-size:14px;line-height:1.45;font-weight:500}
-.mod-detail {font-size:13px;line-height:1.5;color:var(--muted)}
-.dials {display:flex;gap:14px;margin-top:auto;padding-top:4px}
-.dials + .mod-foot {margin-top:0}
-.mod-foot {margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--rule)}
-.mod-foot a {font-size:13px}
-.patch {display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 7px;font:600 11px/1 var(--mono);letter-spacing:.06em;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;cursor:pointer}
-.patch .jack {width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 3px,#9C9585 3.5px 5px,var(--ink) 5.5px)}
-.patch:hover {background:#FFFDF6}
-.patch[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
-.module.empty {border-style:dashed;background:repeating-linear-gradient(-45deg,var(--module) 0 9px,#E6DFCD 9px 18px)}
-.module.empty::before {background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
-.monitor {position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:18px;align-items:center;margin-top:64px;padding:16px;background:var(--module);border:1.5px solid var(--ink);border-radius:4px}
-.monitor-in {position:absolute;z-index:1;top:-10px;left:50%;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 4px,#9C9585 4.5px 6.5px,var(--ink) 7px)}
-.monitor-in::after {content:"IN";position:absolute;left:50%;top:-17px;transform:translateX(-50%);font:600 10px/1 var(--mono);letter-spacing:.12em;color:var(--ink)}
-.monitor-screen {position:relative;aspect-ratio:4.2/1;background:var(--screen);border:2px solid var(--ink);border-radius:5px;overflow:hidden}
-.monitor-screen canvas {display:block;width:100%;height:100%}
-.monitor-screen .tag {position:absolute;left:9px;top:7px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--mustard)}
-.monitor-name {font-size:22px;font-weight:700;letter-spacing:-.02em;margin-top:6px}
-.monitor-meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:2px}
-.cable {position:absolute;inset:0;z-index:2;width:100%;height:100%;overflow:visible;pointer-events:none}
-.cable.off {display:none}
-.cable path {fill:none;stroke-linecap:round}
-.cable .cable-shadow {stroke:var(--ink);stroke-width:7.5}
-.cable .cable-line {stroke:var(--terra);stroke-width:4}
-.cable .plug {fill:var(--ink)}
-.cable.drawing path {transition:stroke-dashoffset 520ms var(--ease)}
-
-/* Experience: plain columns for now; mixer strips arrive in stage 4 */
-.roles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.roles > * {padding-right:clamp(18px,3vw,36px)}
-.roles > * + * {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
-.role h3 {font-size:22px;letter-spacing:-.02em;line-height:1.15}
-.role .meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:4px}
-.metrics {display:flex;flex-wrap:wrap;gap:12px 20px;margin:18px 0;padding:12px 0;border-block:1px solid var(--rule)}
-.metrics div {min-width:0}
-.metrics b {display:block;font-size:24px;line-height:1.1;letter-spacing:-.03em}
-.metrics span {display:block;font:600 10px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
-.role ul {margin:0;padding-left:18px;font-size:15px}
-.role li + li {margin-top:8px}
-.role li::marker {color:var(--terra-text)}
-.press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:14px}
-.press a {color:var(--ink);margin-right:12px}
-
-/* Play row: the pad machine plus two quiet lists */
-.play-row {display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,.8fr);gap:0}
-.play-row > * + * {border-left:1px solid var(--rule);padding-left:clamp(20px,3vw,40px)}
-.play-row > :first-child {padding-right:clamp(20px,3vw,40px)}
-.machine {background:var(--panel);border:2px solid var(--ink);border-radius:8px;padding:14px;box-shadow:6px 6px 0 var(--ink)}
-.machine-head {display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
-.modes {display:flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
-.mode {font:600 11px/1 var(--mono);padding:7px 12px;border:0;background:var(--cream);cursor:pointer}
-.mode + .mode {border-left:1.5px solid var(--ink)}
-.mode[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
-.pads {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px 10px 13px;background:var(--ink);border-radius:6px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.pad {aspect-ratio:2.9;display:flex;align-items:center;justify-content:space-between;padding:4px 9px;border:1.5px solid var(--ink);border-radius:5px;box-shadow:0 3px 0 #11110F;cursor:pointer;font:600 11px/1 var(--mono);transition:transform 80ms,box-shadow 80ms;-webkit-tap-highlight-color:transparent}
-.pad.c0 {background:var(--terra-text);color:var(--cream)}.pad.c1 {background:var(--mustard);color:var(--ink)}
-.pad.c2 {background:var(--sage);color:var(--ink)}.pad.c3 {background:var(--olive-text);color:var(--cream)}
-.pad kbd {font:inherit;opacity:.8}
-.pad.on {transform:translateY(3px);box-shadow:0 0 0 #11110F;background:var(--cream);color:var(--ink)}
-.pad-foot {display:flex;justify-content:space-between;gap:12px;margin-top:14px;font:12px/1.5 var(--mono);color:var(--muted)}
-.pad-foot output {font-weight:600;color:var(--ink);min-width:4ch;text-align:right}
-.list {list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
-.list li {display:flex;gap:12px;font-size:15px;line-height:1.45;padding-bottom:10px;border-bottom:1px solid var(--rule)}
-.list li:last-child {border-bottom:0}
-.list span {flex:none;min-width:58px;font:600 11px/1.9 var(--mono);color:var(--olive-text);text-transform:uppercase;letter-spacing:.06em}
-
-.toolkit {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.toolkit > div + div {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
-.toolkit > div {padding-right:clamp(18px,3vw,36px)}
-.toolkit h3 {font:600 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text);margin-bottom:10px}
-.toolkit p {font-size:15px;line-height:1.7}
-
-/* Contact: full-bleed terracotta band (darkened so cream text passes AA) */
-.contact {background:var(--terra-text);color:var(--cream);border-bottom:var(--line)}
-.contact .shell {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:end;padding-block:clamp(52px,7vw,84px)}
-.contact .label {color:var(--cream)}
-.contact h2 {font-size:clamp(34px,4.6vw,58px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-top:10px}
-.contact p {margin-top:14px;max-width:480px}
-.contact a:hover {color:var(--mustard)}
-.email {display:inline-block;font-size:clamp(19px,2vw,24px);font-weight:500}
-.contact .links {margin-top:14px}
-
-footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-block:20px 36px;font:12px/1.5 var(--mono);color:var(--muted)}
-
-@media (max-width:1000px){
- .modules {grid-template-columns:repeat(2,minmax(0,1fr))}
- .play-row {grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
- .play-row > :first-child {grid-column:1/-1;padding-right:0;padding-bottom:36px;margin-bottom:28px;border-bottom:1px solid var(--rule)}
- .play-row > :nth-child(2) {border-left:0;padding-left:0;padding-right:clamp(20px,3vw,40px)}
-}
-@media (max-width:760px){
- .hero .shell,.cols,.roles,.contact .shell,.toolkit {grid-template-columns:minmax(0,1fr)}
- .cols > *,.roles > *,.toolkit > div {padding-right:0}
- .cols > * + *,.roles > * + *,.toolkit > div + div {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
- .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
-}
-@media (max-width:560px){
- .shell {width:calc(100% - 32px)}
- .monitor {grid-template-columns:minmax(0,1fr);margin-top:30px}
- .modules {grid-template-columns:minmax(0,1fr)}
- .play-row {grid-template-columns:minmax(0,1fr)}
- .play-row > :nth-child(2) {padding-right:0}
- .play-row > :nth-child(3) {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
- .pad kbd {display:none}
- .bench-scope,.rack,.machine {box-shadow:4px 4px 0 var(--ink)}
- .scope-foot {flex-direction:column;align-items:stretch}
- .scope-knobs {justify-content:flex-start}
- .knob-hint {text-align:left}
-}
-@media print {
- html,body,* {-webkit-print-color-adjust:exact;print-color-adjust:exact}
- html {scroll-padding-top:0}
- .top,.skip {display:none!important}
- .bench-scope,.machine,.module,.role,.rack .rail,.contact .shell > div,.toolkit > div,.play-row > * {break-inside:avoid;page-break-inside:avoid}
- .band,.contact .shell {padding-block:32px}
- .hero .shell {padding-block:32px}
-}
-@media (prefers-reduced-motion:reduce){
- html {scroll-behavior:auto}
- *,*::before,*::after {animation:none!important;transition:none!important}
-}
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
-<header class="top"><div class="shell"><a class="logo" href="#top"><span class="knob" aria-hidden="true" style="--v:.62"><i></i></span>Anya Dennison</a><nav aria-label="Main navigation"><a href="#rack">Projects</a><a href="#record">Record</a><a class="hide-sm" href="#play">Play</a><a class="hide-sm" href="#contact">Contact</a><a class="resume" href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></nav></div></header>
+<header class="top"><div class="shell"><a class="logo" href="#top"><span class="knob" aria-hidden="true" style="--v:.62"><i></i></span>Anya Dennison</a><nav aria-label="Main navigation"><a class="hide-sm" href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Record</a><a class="hide-sm" href="#contact">Contact</a><a class="resume" href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></nav></div></header>
 
-<main id="main">
+<!-- The signal path: one trace runs from the hero instrument's output, down the left rail, to the OUT jack at Contact. -->
+<main id="main" class="path">
+ <svg class="spine" id="spine" aria-hidden="true" focusable="false"><path id="spine-path"/></svg>
 
- <!-- Hero: full bleed. The scope lives here. -->
- <section class="hero" aria-labelledby="hero-title">
-  <div class="shell">
-   <div>
-    <p class="label">Electrical &amp; Computer Engineering · Cornell ’29</p>
-    <h1 id="hero-title">Anya<br>Dennison</h1>
-    <p class="lede">Engineering student at Cornell. Previously co-founded and scaled a $1M+ national nonprofit.</p>
-    <p class="sub">As Chief of Staff, I built the internal systems behind 30 staff and 2,000 volunteers. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p>
-    <p class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p>
-   </div>
-   <div class="bench-scope">
-    <div class="scope-head" aria-hidden="true"><span>AD-01 OSCILLOSCOPE</span><span>CH1 · CH2</span></div>
-    <div class="screen"><canvas id="scope" aria-hidden="true"></canvas><span class="tag" id="scope-tag" aria-hidden="true">CH1 · SINE</span></div>
-    <fieldset class="wave-select"><legend>Wave</legend>
-     <label><input type="radio" name="wave" value="sine" checked><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 5 C4 -1 6 -1 10 5 S16 11 19 5"/></svg>Sine</span></label>
-     <label><input type="radio" name="wave" value="square"><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 8 V2 H10 V8 H19 V2"/></svg>Square</span></label>
-     <label><input type="radio" name="wave" value="triangle"><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 8 L5.5 2 L10 8 L14.5 2 L19 8"/></svg>Triangle</span></label>
-     <label><input type="radio" name="wave" value="saw"><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 8 L10 2 V8 L19 2 V8"/></svg>Saw</span></label>
-    </fieldset>
-    <div class="keys" id="keys" role="group" aria-label="Playable keys, C4 to C5"></div>
-    <div class="scope-foot">
-     <p class="readout"><span>Note</span><output id="readout">Play a key</output></p>
-     <div>
-      <div class="scope-knobs">
+ <section class="stage hero" id="hero" aria-labelledby="hero-title">
+  <div class="shell rail">
+   <p class="silk"><span class="node jack" aria-hidden="true"></span>IN · Hero</p>
+   <div class="hero-grid">
+    <div>
+     <p class="kicker">Electrical &amp; Computer Engineering · Cornell ’29</p>
+     <h1 id="hero-title">Anya<br>Dennison</h1>
+     <p class="lede">Engineering student at Cornell. Previously co-founded and scaled a $1M+ national nonprofit.</p>
+     <p class="sub">As Chief of Staff, I built the internal systems that kept it running. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p>
+     <p class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p>
+    </div>
+    <div class="instrument">
+     <div class="panel-head" aria-hidden="true"><span>AD-01 Signal generator</span><span>CH1</span></div>
+     <div class="screen"><canvas id="scope" aria-hidden="true"></canvas><span class="tag" id="scope-tag" aria-hidden="true">CH1 · SINE</span></div>
+     <fieldset class="wave-select"><legend>Wave</legend>
+      <label><input type="radio" name="wave" value="sine" checked><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 5 C4 -1 6 -1 10 5 S16 11 19 5"/></svg>Sine</span></label>
+      <label><input type="radio" name="wave" value="square"><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 8 V2 H10 V8 H19 V2"/></svg>Square</span></label>
+      <label><input type="radio" name="wave" value="triangle"><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 8 L5.5 2 L10 8 L14.5 2 L19 8"/></svg>Triangle</span></label>
+      <label><input type="radio" name="wave" value="saw"><span><svg viewBox="0 0 20 10" aria-hidden="true"><path d="M1 8 L10 2 V8 L19 2 V8"/></svg>Saw</span></label>
+     </fieldset>
+     <div class="keys" id="keys" role="group" aria-label="Playable keys, C4 to C5"></div>
+     <div class="panel-foot">
+      <p class="readout"><span>Note</span><output id="readout">Play a key</output></p>
+      <div class="panel-knobs">
        <span class="knob-wrap"><span class="knob" id="k-freq" role="slider" tabindex="0" aria-label="Scope frequency" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" style="--v:.45"><i></i></span>FREQ</span>
        <span class="knob-wrap"><span class="knob sage" id="k-amp" role="slider" tabindex="0" aria-label="Amplitude and volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" style="--v:.7"><i></i></span>AMP · VOL</span>
       </div>
-      <p class="knob-hint">Drag up/down, scroll, or use arrow keys</p>
      </div>
+     <span class="out-jack" id="out-jack" aria-hidden="true"><b>SIG OUT</b></span>
     </div>
    </div>
   </div>
  </section>
 
- <section class="band" aria-labelledby="status-title">
-  <div class="shell cols status">
-   <div>
-    <p class="label">Now building</p>
-    <h2 id="status-title"><a href="#rack">Freedge</a>, a live inventory app for Cornell’s community free fridge</h2>
-    <p>Kappa Theta Pi × Food Recovery Network. I lead user research and product requirements on a team of three.</p>
-   </div>
-   <div><p class="label">Status</p><p class="open">Open to Summer 2027 internships and Cornell project teams</p></div>
-  </div>
- </section>
-
- <section class="band" aria-label="Education and about">
-  <div class="shell cols">
-   <div class="edu">
-    <p class="label">Education</p>
-    <h2>Cornell University</h2>
-    <p class="meta">B.S. Electrical &amp; Computer Engineering · Expected May 2029</p>
-    <p class="honors">3.6 GPA · Dean’s List · Cornell Tradition Fellow</p>
-    <ul class="courses"><li><b>CS 1110</b>Intro to Computing (Python)</li><li><b>MATH 1910</b>Calculus for Engineers</li><li><b>PHYS 1112</b>Physics I: Mechanics &amp; Heat</li><li><b>ENGR</b>Engineering Operations: Data Science &amp; Decision Making</li></ul>
-   </div>
-   <div class="about">
-    <p class="label" id="about-title">About</p>
+ <section class="stage" id="about" aria-labelledby="about-title">
+  <div class="shell rail">
+   <h2 class="silk" id="about-title"><span class="node led" aria-hidden="true"></span>IN 01 · About</h2>
+   <div class="prose">
     <p>I started at Cornell in 2022, then left to work full time on SEE Alliance as it grew. I was good at the people side of running an organization, but the work I kept wanting more of was the systems: the data, the processes, figuring out why something broke and fixing it so it stayed fixed.</p>
     <p>I came back in Fall 2026 to do that work at a deeper level. I’ve liked circuits since high school Science Olympiad, and I’m most interested in the layer everything else runs on: computer architecture, networks, and distributed systems.</p>
    </div>
   </div>
  </section>
 
- <!-- Projects as a dense synth rack. Every module's full description is visible; Patch routes it to the scope. -->
- <section class="band" id="rack" aria-labelledby="rack-title">
-  <div class="shell">
-   <div class="band-head"><div><p class="label">Projects</p><h2 id="rack-title">The build rack</h2></div><p class="hint">Patch a module to send its signal to the monitor.</p></div>
+ <section class="stage" id="education" aria-labelledby="edu-title">
+  <div class="shell rail">
+   <p class="silk"><span class="node res" aria-hidden="true"></span>IN 02 · Education</p>
+   <div class="edu">
+    <h2 id="edu-title">Cornell University</h2>
+    <p class="meta">B.S. Electrical &amp; Computer Engineering · Expected May 2029</p>
+    <p class="honors">3.6 GPA · Dean’s List · Cornell Tradition Fellow</p>
+    <ul class="courses"><li><b>CS 1110</b>Intro to Computing (Python)</li><li><b>MATH 1910</b>Calculus for Engineers</li><li><b>PHYS 1112</b>Physics I: Mechanics &amp; Heat</li><li><b>ENGR</b>Engineering Operations: Data Science &amp; Decision Making</li></ul>
+   </div>
+  </div>
+ </section>
+
+ <section class="stage" id="projects" aria-labelledby="rack-title">
+  <div class="shell rail">
+   <p class="silk"><span class="node jack" aria-hidden="true"></span>MOD · Projects</p>
+   <div class="stage-head"><h2 id="rack-title">The build rack</h2><p class="hint">Patch a module to send its signal down the trace.</p></div>
+   <div class="now">
+    <p class="mini">Now building</p>
+    <p class="now-title"><a href="#m2">Freedge</a>, a live inventory app for Cornell’s community free fridge</p>
+    <p class="now-sub">Kappa Theta Pi × Food Recovery Network. I lead user research and product requirements on a team of three.</p>
+   </div>
    <div class="rack">
-    <div class="rail" aria-hidden="true"><span>AD-01 MODULAR</span><span>4 SLOTS · 1 OPEN</span></div>
+    <div class="rail-strip" aria-hidden="true"><span>AD-01 Modular</span><span>4 slots · 1 open</span></div>
     <div class="modules">
      <article class="module patched" data-wave="square" aria-labelledby="m1">
       <p class="mod-top">MOD 01<span class="led" aria-hidden="true"></span></p>
       <h3 id="m1">Circuit Lab</h3><p class="mod-sub">Science Olympiad · 2021</p>
       <p class="mod-desc">DC and RC circuit analysis under competition time limits.</p>
       <p class="mod-detail">DC circuit analysis, measurement, Ohm’s and Kirchhoff’s laws, resistor networks, RC circuits. Placed 4th statewide and 3rd regionally.</p>
-      <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob" style="--v:.85"><i></i></span>STATE<b>4TH</b></span><span class="knob-wrap"><span class="knob sage" style="--v:.92"><i></i></span>REGION<b>3RD</b></span></div>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="true"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patched</span><span class="sr-only"> Circuit Lab to the monitor</span></button></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="true"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patched</span><span class="sr-only"> Circuit Lab to the trace</span></button></div>
      </article>
      <article class="module terra" data-wave="sine" aria-labelledby="m2">
       <p class="mod-top">MOD 02<span class="led" aria-hidden="true"></span></p>
       <h3 id="m2">Freedge</h3><p class="mod-sub">KTP × FRN · 2026</p>
       <p class="mod-desc">Live fridge inventory. Node, Express, SQLite. Working MVP.</p>
       <p class="mod-detail">A mobile-first app showing what’s in the community free fridge, replacing a GroupMe thread. Three tiers: HTML/CSS/JS client, Node.js + Express REST API, SQLite. It records “take 2,” not “set to 8,” so simultaneous pickups never overwrite each other. I run user interviews and write requirements.</p>
-      <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob sage" style="--v:.33"><i></i></span>TEAM<b>3</b></span><span class="knob-wrap"><span class="knob" style="--v:.7"><i></i></span>STAGE<b>MVP</b></span></div>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> Freedge to the monitor</span></button><a href="https://github.com/claregartz/KTPhoodRecovery" target="_blank" rel="noopener">Code ↗</a></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> Freedge to the trace</span></button><a href="https://github.com/claregartz/KTPhoodRecovery" target="_blank" rel="noopener">Code ↗</a></div>
      </article>
      <article class="module mustard" data-wave="saw" aria-labelledby="m3">
       <p class="mod-top">MOD 03<span class="led" aria-hidden="true"></span></p>
       <h3 id="m3">This site</h3><p class="mod-sub">Personal · 2026</p>
       <p class="mod-desc">From scratch: Web Audio synth, canvas scope, no framework.</p>
-      <p class="mod-detail">Hand-built in HTML, CSS and JavaScript with no framework. The pads are a real Web Audio synth: three oscillators per note through a low-pass filter and a piano-style envelope. The scope is drawn live on a canvas.</p>
-      <div class="dials" aria-hidden="true"><span class="knob-wrap"><span class="knob" style="--v:0"><i></i></span>DEPS<b>0</b></span><span class="knob-wrap"><span class="knob sage" style="--v:.6"><i></i></span>OSC<b>3</b></span></div>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> this site to the monitor</span></button><a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">Code ↗</a></div>
+      <p class="mod-detail">Hand-built in HTML, CSS and JavaScript with no framework. The instrument at the top of the page is a Web Audio synth, and the trace down the left side is drawn live on a canvas.</p>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> this site to the trace</span></button><a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">Code ↗</a></div>
      </article>
      <article class="module sage empty" data-wave="flat" aria-labelledby="m4">
       <p class="mod-top">MOD 04<span class="led" aria-hidden="true"></span></p>
       <h3 id="m4">Open slot</h3><p class="mod-sub">Next hardware build</p>
       <p class="mod-desc">Spring 2027. Patch me in.</p>
       <p class="mod-detail">Reserved for my first hardware build at Cornell, Spring 2027. If your project team needs another pair of hands, this slot is yours.</p>
-      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> the open slot to the monitor</span></button></div>
+      <div class="mod-foot"><button class="patch" type="button" aria-pressed="false"><span class="jack" aria-hidden="true"></span><span class="patch-text">Patch</span><span class="sr-only"> the open slot to the trace</span></button></div>
      </article>
     </div>
-    <!-- Monitor: shows whichever module is patched. The cable is drawn only when the modules sit in one row. -->
-    <div class="monitor">
-     <span class="monitor-in" id="monitor-in" aria-hidden="true"></span>
-     <div class="monitor-screen"><canvas id="monitor" aria-hidden="true"></canvas><span class="tag" id="monitor-tag" aria-hidden="true">IN · SQUARE</span></div>
-     <div class="monitor-read"><p class="label">Monitor</p><p class="monitor-name" id="monitor-name" aria-live="polite">Circuit Lab</p><p class="monitor-meta" id="monitor-meta">MOD 01 · Square wave</p></div>
-    </div>
-    <svg class="cable off" id="cable" aria-hidden="true" focusable="false"><path class="cable-shadow"/><path class="cable-line"/><circle class="plug" r="6.5"/><circle class="plug" r="6.5"/></svg>
    </div>
   </div>
  </section>
 
- <!-- Experience. Stage 4 turns these into mixer channel strips. -->
- <section class="band" id="record" aria-labelledby="record-title">
-  <div class="shell">
-   <div class="band-head"><div><p class="label">Experience</p><h2 id="record-title">The record</h2></div></div>
+ <section class="stage" id="experience" aria-labelledby="record-title">
+  <div class="shell rail">
+   <p class="silk"><span class="node led lit" aria-hidden="true"></span>CH · Experience</p>
+   <div class="stage-head"><h2 id="record-title">The record</h2></div>
    <div class="roles">
     <article class="role" aria-labelledby="r-see">
      <h3 id="r-see">SEE Alliance</h3><p class="meta">Chief of Staff &amp; Co-Founder · 2022–2026</p>
-     <div class="metrics"><div><b>$1M+</b><span>revenue</span></div><div><b>2,000</b><span>volunteers</span></div><div><b>67</b><span>districts</span></div></div>
-     <ul><li>Processed Florida statewide voter files for text and phone outreach for a campaign that reached 5.25 million voters.</li><li>Built and maintained outreach spreadsheets of 10,000+ rows tracking contacts, volunteers, and follow-ups.</li><li>Built internal systems for hiring, training, finance, and reporting across 30 staff and all 67 Florida school districts.</li></ul>
+     <div class="metrics"><div><b>30</b><span>staff</span></div><div><b>2,000</b><span>volunteers</span></div><div><b>67</b><span>districts</span></div></div>
+     <ul><li>Processed Florida statewide voter files for text and phone outreach for a campaign that reached 5.25 million voters.</li><li>Built and maintained outreach spreadsheets of 10,000+ rows tracking contacts, volunteers, and follow-ups.</li><li>Built internal systems for hiring, training, finance, and reporting across the staff, volunteers, and Florida school districts.</li></ul>
      <p class="press">Coverage: <a href="https://abcnews.com/US/moms-liberty-founder-faces-calls-resignation-school-board/story?id=107071594" target="_blank" rel="noopener">ABC News ↗</a><a href="https://www.teenvogue.com/story/florida-students-walkout-learn" target="_blank" rel="noopener">Teen Vogue ↗</a></p>
     </article>
     <article class="role" aria-labelledby="r-farmlink">
      <h3 id="r-farmlink">The Farmlink Project</h3><p class="meta">Nationwide Food Program Lead · 2022–2023</p>
-     <div class="metrics"><div><b>10→30</b><span>team</span></div><div><b>600</b><span>calls / week</span></div><div><b>+200%</b><span>donations</span></div></div>
-     <ul><li>Cleaned up and restructured a poorly set-up HubSpot CRM so the team could sort, segment, and target partners.</li><li>Maintained outreach tracking across HubSpot and shared spreadsheets as weekly partner calls tripled, from 200 to 600.</li><li>Coordinated logistics for 21 truckloads, about one million pounds of surplus avocados, the organization’s largest donation of 2022.</li></ul>
+     <div class="metrics"><div><b>10→30</b><span>team</span></div><div><b>200→600</b><span>calls / week</span></div><div><b>+200%</b><span>donations</span></div></div>
+     <ul><li>Cleaned up and restructured a poorly set-up HubSpot CRM so the team could sort, segment, and target partners.</li><li>Maintained outreach tracking across HubSpot and shared spreadsheets as weekly partner calls tripled.</li><li>Coordinated logistics for 21 truckloads, about one million pounds of surplus avocados, the organization’s largest donation of 2022.</li></ul>
      <p class="press">Coverage: <a href="https://www.washingtonpost.com/food/2022/10/19/avocado-giveaway-surplus-philly/" target="_blank" rel="noopener">The Washington Post ↗</a><a href="https://www.vpm.org/npr-news/2022-10-20/avoggedon-strikes-philadelphia-one-nonprofit-gives-away-thousands-of-avocados/" target="_blank" rel="noopener">NPR ↗</a></p>
     </article>
     <article class="role" aria-labelledby="r-nafsn">
      <h3 id="r-nafsn">North American Food Systems Network</h3><p class="meta">Member Engagement Manager · 2026–now</p>
-          <ul><li>Leading the rollout of Circle as NAFSN’s online community platform, starting Fall 2026.</li><li>Mapping what members need onto the platform’s structure, onboarding, permissions, groups and automations.</li></ul>
+     <ul><li>Leading the rollout of Circle as NAFSN’s online community platform, starting Fall 2026.</li><li>Mapping what members need onto the platform’s structure, onboarding, permissions, groups and automations.</li></ul>
     </article>
    </div>
   </div>
  </section>
 
- <section class="band" id="play" aria-label="Play, off the clock, and earlier wins">
-  <div class="shell play-row">
-   <!-- Piano pads: C major pentatonic, so any combination sounds good. -->
-   <div class="machine">
-    <div class="machine-head"><p class="label" id="play-title">Play</p><div class="modes" role="group" aria-label="Sound"><button type="button" class="mode" data-mode="piano" aria-pressed="true">Piano</button><button type="button" class="mode" data-mode="voice" aria-pressed="false">A cappella</button></div></div>
-    <div class="pads" id="pads" role="group" aria-labelledby="play-title"></div>
-    <div class="pad-foot"><span><span id="mode-note">Classically trained. Your turn.</span><br>Keys 1–4 · Q–R · A–F · Z–V</span><output id="note-out"></output></div>
-   </div>
-   <div>
-    <p class="label" id="off-title">Off the clock</p>
+ <section class="stage" id="notebook" aria-labelledby="off-title">
+  <div class="shell rail">
+   <h2 class="silk" id="off-title"><span class="node cap" aria-hidden="true"></span>Notebook · Off the clock</h2>
+   <div class="notebook">
     <ul class="list" aria-labelledby="off-title"><li><span>Snow</span>Cornell Nordic ski team</li><li><span>Sings</span>Mediocre Melodies, Cornell’s comedy a cappella group. Bad singers, good cause.</li><li><span>Court</span>Competitive tennis</li><li><span>Keys</span>Classical piano</li><li><span>Trail</span>Run · hike · travel</li><li><span>Speaks</span>Russian · French</li></ul>
-   </div>
-   <div>
-    <p class="label" id="earlier-title">Earlier wins</p>
-    <ul class="list" aria-labelledby="earlier-title"><li><span>2022</span>Winning product concept, produced and sold at the Cornell Dairy Bar</li><li><span>2021</span>Science Olympiad: Agricultural Biotechnology, 2nd statewide</li></ul>
+    <div><p class="mini" id="earlier-title">Earlier wins</p>
+    <ul class="list" aria-labelledby="earlier-title"><li><span>2022</span>Winning product concept, produced and sold at the Cornell Dairy Bar</li><li><span>2021</span>Science Olympiad: Agricultural Biotechnology, 2nd statewide</li></ul></div>
    </div>
   </div>
  </section>
 
- <section class="band" aria-labelledby="skills-title">
-  <div class="shell">
-   <div class="band-head"><div><p class="label" id="skills-title">Toolkit</p></div></div>
+ <section class="stage" id="toolkit" aria-labelledby="skills-title">
+  <div class="shell rail">
+   <h2 class="silk" id="skills-title"><span class="node res" aria-hidden="true"></span>Parts · Toolkit</h2>
    <div class="toolkit">
     <div><h3>Technical</h3><p>Python · HTML · CSS · JS · Web Audio · DC circuit analysis · Circuit troubleshooting · Excel · Sheets · Airtable</p></div>
     <div><h3>Product &amp; systems</h3><p>User research · Product requirements · Process design · Project management</p></div>
@@ -443,355 +182,17 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
   </div>
  </section>
 
- <section class="contact" id="contact" aria-labelledby="contact-title">
-  <div class="shell">
-   <div><p class="label">Contact</p><h2 id="contact-title">Let’s build something.</h2><p>Looking for Summer 2027 internships and Cornell project teams in engineering and technology. Glad to talk about any of the work above.</p></div>
-   <div><a class="email" href="mailto:aad238@cornell.edu">aad238@cornell.edu</a><p class="links"><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p></div>
+ <section class="stage contact" id="contact" aria-labelledby="contact-title">
+  <div class="shell rail">
+   <p class="silk"><span class="node jack end" id="end-node" aria-hidden="true"></span>OUT · Contact</p>
+   <div class="contact-grid">
+    <div><h2 id="contact-title">Let’s build something.</h2><p>Looking for Summer 2027 internships and Cornell project teams in engineering and technology. Glad to talk about any of the work above.</p></div>
+    <div><a class="email" href="mailto:aad238@cornell.edu">aad238@cornell.edu</a><p class="links"><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p></div>
+   </div>
   </div>
  </section>
 </main>
 
-<footer><div class="shell"><span>Anya Dennison · Ithaca, NY</span><span>Built from scratch in HTML, CSS, JS &amp; Web Audio · <a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">source ↗</a> · Rev 2026.10</span></div></footer>
-
-<script>
-(() => {
- const reduced = matchMedia('(prefers-reduced-motion: reduce)');
- const state = { freq: .45, amp: .7, wave: 'sine', note: 0, hit: 0, keyNote: 0, keyHit: 0 };
-
- /* ---------- Audio. Sound only starts from a click or key press. ---------- */
- let audio, master;
- const volume = () => .15 + state.amp * .55;
- const initAudio = () => {
-  if (!audio) {
-   audio = new (window.AudioContext || window.webkitAudioContext)();
-   master = audio.createGain();
-   master.connect(audio.destination);
-  }
-  if (audio.state === 'suspended') audio.resume();
-  master.gain.value = volume();
- };
- const pianoTone = midi => {
-  initAudio();
-  const t = audio.currentTime, f = 440 * 2 ** ((midi - 69) / 12);
-  const env = audio.createGain(), tone = audio.createBiquadFilter();
-  tone.type = 'lowpass';
-  tone.frequency.setValueAtTime(Math.min(9000, f * 9), t);
-  tone.frequency.exponentialRampToValueAtTime(Math.max(500, f * 2.5), t + 1.2);
-  env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(.35, t + .006);
-  env.gain.exponentialRampToValueAtTime(.12, t + .25);
-  env.gain.exponentialRampToValueAtTime(.0005, t + 2.2);
-  tone.connect(env).connect(master);
-  [[1, 'triangle', 1, 0], [2, 'sine', .32, 3], [3, 'sine', .1, -4]].forEach(([mult, type, level, detune]) => {
-   const osc = audio.createOscillator(), g = audio.createGain();
-   osc.type = type; osc.frequency.value = f * mult; osc.detune.value = detune; g.gain.value = level;
-   osc.connect(g).connect(tone); osc.start(t); osc.stop(t + 2.3);
-  });
-  state.note = f; state.hit = 1; wake();
- };
- /* Function generator: the hero keys play a plain oscillator in the selected shape, no filter. */
- const LEVEL = { sine: .42, triangle: .4, square: .14, saw: .16 }; // evens out loudness across shapes
- const genTone = midi => {
-  initAudio();
-  const t = audio.currentTime, f = 440 * 2 ** ((midi - 69) / 12);
-  const osc = audio.createOscillator(), env = audio.createGain();
-  osc.type = state.wave === 'saw' ? 'sawtooth' : state.wave;
-  osc.frequency.value = f;
-  env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(LEVEL[state.wave], t + .012);
-  env.gain.setValueAtTime(LEVEL[state.wave], t + .28);
-  env.gain.exponentialRampToValueAtTime(.0005, t + 1.1);
-  osc.connect(env).connect(master);
-  osc.start(t); osc.stop(t + 1.15);
-  state.keyNote = f; state.keyHit = 1; wake();
- };
- /* A cappella mode: a sung "aah"/"ooh" from formant filters, a little off-key on purpose. */
- const vowels = [[800, 1150, 2900], [450, 800, 2830], [350, 600, 2700]];
- const voiceTone = midi => {
-  initAudio();
-  const t = audio.currentTime;
-  const cents = (Math.random() - .5) * 70; // Mediocre by design.
-  const f = 440 * 2 ** ((midi - 69) / 12) * 2 ** (cents / 1200);
-  const osc = audio.createOscillator(), lfo = audio.createOscillator(), depth = audio.createGain(), env = audio.createGain();
-  osc.type = 'sawtooth'; osc.frequency.value = f;
-  lfo.frequency.value = 5 + Math.random(); depth.gain.value = f * .014;
-  lfo.connect(depth).connect(osc.frequency);
-  env.gain.setValueAtTime(0, t);
-  env.gain.linearRampToValueAtTime(.9, t + .09);
-  env.gain.setValueAtTime(.9, t + .35);
-  env.gain.exponentialRampToValueAtTime(.0005, t + 1.5);
-  env.connect(master);
-  vowels[Math.floor(Math.random() * vowels.length)].forEach((formant, i) => {
-   const band = audio.createBiquadFilter(), g = audio.createGain();
-   band.type = 'bandpass'; band.frequency.value = formant; band.Q.value = 9;
-   g.gain.value = [1, .55, .22][i];
-   osc.connect(band).connect(g).connect(env);
-  });
-  osc.start(t); lfo.start(t); osc.stop(t + 1.6); lfo.stop(t + 1.6);
-  state.note = f; state.hit = 1; wake();
- };
- let mode = 'piano';
- const modeNote = document.getElementById('mode-note');
- document.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
-  mode = b.dataset.mode;
-  document.querySelectorAll('.mode').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
-  modeNote.textContent = mode === 'voice' ? 'Mediocre Melodies mode. Slightly off-key, by design.' : 'Classically trained. Your turn.';
- }));
-
- /* ---------- Pads: 16 notes of C major pentatonic, lowest on the bottom row ---------- */
- const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
- const scale = [0, 2, 4, 7, 9];
- const notes = Array.from({ length: 16 }, (_, i) => 60 + 12 * Math.floor(i / 5) + scale[i % 5]);
- const layout = [notes.slice(12, 16), notes.slice(8, 12), notes.slice(4, 8), notes.slice(0, 4)].flat();
- const keyRows = '1234qwerasdfzxcv';
- const padsEl = document.getElementById('pads');
- const out = document.getElementById('note-out');
- const label = m => names[m % 12] + (Math.floor(m / 12) - 1);
- layout.forEach((m, i) => {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'pad c' + (i % 4); // one color per column, like an old drum machine
-  b.dataset.note = m;
-  b.innerHTML = `<span>${label(m)}</span><kbd aria-hidden="true">${keyRows[i].toUpperCase()}</kbd>`;
-  b.setAttribute('aria-label', `Play ${label(m)}, key ${keyRows[i].toUpperCase()}`);
-  padsEl.appendChild(b);
- });
- const pads = [...padsEl.children];
- const readout = document.getElementById('readout');
- const showNote = m => {
-  const name = label(m);
-  out.textContent = name;
-  readout.textContent = `${name} · ${(440 * 2 ** ((m - 69) / 12)).toFixed(1)} Hz`;
- };
- const press = el => {
-  el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
-  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 140);
- };
- const strike = pad => {
-  (mode === 'voice' ? voiceTone : pianoTone)(Number(pad.dataset.note));
-  showNote(Number(pad.dataset.note));
-  press(pad);
- };
- padsEl.addEventListener('pointerdown', e => { const p = e.target.closest('.pad'); if (p) strike(p); });
- padsEl.addEventListener('click', e => { const p = e.target.closest('.pad'); if (p && e.detail === 0) strike(p); });
- addEventListener('keydown', e => {
-  if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
-  const i = keyRows.indexOf(e.key.toLowerCase());
-  if (i < 0) return;
-  // Only from the keyboard while the pads are on screen, so typing elsewhere stays quiet.
-  const r = padsEl.getBoundingClientRect();
-  if (r.bottom < 0 || r.top > innerHeight) return;
-  strike(pads[i]);
- });
-
- /* ---------- Hero keys: one octave of C major, same synth, same scope ---------- */
- const keysEl = document.getElementById('keys');
- [60, 62, 64, 65, 67, 69, 71, 72].forEach(m => {
-  const k = document.createElement('button');
-  k.type = 'button'; k.className = 'key'; k.dataset.note = m; k.textContent = label(m);
-  k.setAttribute('aria-label', 'Play ' + label(m));
-  keysEl.appendChild(k);
- });
- const playKey = k => {
-  const m = Number(k.dataset.note);
-  genTone(m);
-  showNote(m);
-  press(k);
- };
- keysEl.addEventListener('pointerdown', e => { const k = e.target.closest('.key'); if (k) playKey(k); });
- keysEl.addEventListener('click', e => { const k = e.target.closest('.key'); if (k && e.detail === 0) playKey(k); });
-
- /* ---------- Rack modules ---------- */
- const modules = [...document.querySelectorAll('.module')];
- const select = (mod, animate) => {
-  modules.forEach(m => {
-   const on = m === mod, btn = m.querySelector('.patch');
-   m.classList.toggle('patched', on);
-   btn.setAttribute('aria-pressed', String(on));
-   btn.querySelector('.patch-text').textContent = on ? 'Patched' : 'Patch';
-  });
-  patchMonitor(mod, animate);
- };
- modules.forEach(m => m.querySelector('.patch').addEventListener('click', () => select(m, true)));
-
- /* ---------- Scope knobs ---------- */
- const knob = (el, key) => {
-  const set = v => {
-   state[key] = Math.max(0, Math.min(1, v));
-   el.style.setProperty('--v', state[key]);
-   el.setAttribute('aria-valuenow', Math.round(state[key] * 100));
-   if (key === 'amp' && master) master.gain.value = volume();
-   wake();
-  };
-  let startY = 0, startV = 0;
-  el.addEventListener('pointerdown', e => { el.setPointerCapture(e.pointerId); startY = e.clientY; startV = state[key]; });
-  el.addEventListener('pointermove', e => { if (el.hasPointerCapture(e.pointerId)) set(startV + (startY - e.clientY) / 150); });
-  el.addEventListener('wheel', e => { e.preventDefault(); set(state[key] - e.deltaY / 800); }, { passive: false });
-  el.addEventListener('keydown', e => {
-   const d = { ArrowUp: .05, ArrowRight: .05, ArrowDown: -.05, ArrowLeft: -.05, PageUp: .2, PageDown: -.2 }[e.key];
-   if (d) { e.preventDefault(); set(state[key] + d); }
-   if (e.key === 'Home') { e.preventDefault(); set(0); }
-   if (e.key === 'End') { e.preventDefault(); set(1); }
-  });
- };
- knob(document.getElementById('k-freq'), 'freq');
- knob(document.getElementById('k-amp'), 'amp');
-
- /* ---------- Waveform selector: drives both the hero trace and the hero keys' sound ---------- */
- const scopeTag = document.getElementById('scope-tag');
- document.querySelectorAll('input[name="wave"]').forEach(r => r.addEventListener('change', () => {
-  state.wave = r.value;
-  scopeTag.textContent = 'CH1 · ' + r.value.toUpperCase();
-  wake();
- }));
-
- /* ---------- Oscilloscope (stage 2 makes it react to cursor and scroll) ---------- */
- const canvas = document.getElementById('scope');
- const ctx = canvas.getContext('2d');
- const MUSTARD = '#D9A93B', SAGE = '#A9B89A';
- let w = 0, h = 0, phase = 0, raf = 0, visible = true, last = 0;
- const size = () => {
-  const r = canvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
-  w = r.width; h = r.height;
-  canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  wake();
- };
- const shape = (wave, x) => {
-  const p = x - Math.floor(x);
-  if (wave === 'square') return p < .5 ? 1 : -1;
-  if (wave === 'saw') return 2 * p - 1;
-  if (wave === 'triangle') return p < .5 ? 4 * p - 1 : 3 - 4 * p;
-  return Math.sin(2 * Math.PI * x);
- };
- const trace = (wave, cycles, a, color, width) => {
-  ctx.beginPath();
-  for (let px = 0; px <= w; px += 1.5) {
-   const y = h / 2 - shape(wave, px / w * cycles + phase) * a;
-   px ? ctx.lineTo(px, y) : ctx.moveTo(px, y);
-  }
-  ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineJoin = 'round'; ctx.stroke();
- };
- const draw = () => {
-  ctx.clearRect(0, 0, w, h);
-  ctx.strokeStyle = 'rgba(169,184,154,.16)'; ctx.lineWidth = 1;
-  ctx.beginPath();
-  for (let i = 1; i < 10; i++) { const x = Math.round(w * i / 10) + .5; ctx.moveTo(x, 0); ctx.lineTo(x, h); }
-  for (let i = 1; i < 8; i++) { const y = Math.round(h * i / 8) + .5; ctx.moveTo(0, y); ctx.lineTo(w, y); }
-  ctx.stroke();
-  ctx.strokeStyle = 'rgba(169,184,154,.38)';
-  ctx.beginPath(); ctx.moveTo(0, h / 2 + .5); ctx.lineTo(w, h / 2 + .5); ctx.stroke();
-  // Channel 1: the selected shape. A played key pulls it to that note's pitch, then it settles back.
-  const idle = 1.5 + state.freq * 7;
-  const played = state.keyNote / 65 * (.6 + state.freq * .8);
-  const cycles = idle + (played - idle) * state.keyHit;
-  const amp = h * .36 * (.25 + state.amp * .75) * (1 + .18 * state.keyHit);
-  trace(state.wave, cycles, Math.min(h * .44, amp), MUSTARD, 2.25);
-  // The last note played rides on channel 2 in sage and fades out.
-  if (state.hit > .01) { ctx.globalAlpha = .35 + state.hit * .65; trace('sine', state.note / 65, h * .32 * state.hit, SAGE, 1.8); ctx.globalAlpha = 1; }
- };
- const frame = now => {
-  raf = 0;
-  const dt = Math.min(50, now - (last || now)); last = now;
-  if (!reduced.matches) phase += dt * (.0004 + state.freq * .0012);
-  state.hit *= Math.pow(.9965, dt);
-  state.keyHit *= Math.pow(.9975, dt);
-  draw();
-  if (visible && (!reduced.matches || state.hit > .01 || state.keyHit > .01)) raf = requestAnimationFrame(frame); else last = 0;
- };
- function wake() { if (!raf && w) raf = requestAnimationFrame(frame); }
- if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) wake(); }).observe(canvas);
- addEventListener('resize', size, { passive: true });
- size();
-
- /* ---------- Rack monitor and patch cable ---------- */
- const rack = document.querySelector('.rack');
- const monCanvas = document.getElementById('monitor');
- const mctx = monCanvas.getContext('2d');
- const cable = document.getElementById('cable');
- const [cableShadow, cableLine] = cable.querySelectorAll('path');
- const plugs = cable.querySelectorAll('.plug');
- const inJack = document.getElementById('monitor-in');
- const WAVE_NAME = { square: 'Square wave', sine: 'Sine wave', saw: 'Sawtooth wave', flat: 'No signal yet' };
- const mon = { wave: 'square', phase: 0, w: 0, h: 0, raf: 0, last: 0, visible: true, patched: null };
- const sizeMonitor = () => {
-  const r = monCanvas.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
-  mon.w = r.width; mon.h = r.height;
-  monCanvas.width = Math.round(mon.w * dpr); monCanvas.height = Math.round(mon.h * dpr);
-  mctx.setTransform(dpr, 0, 0, dpr, 0, 0);
- };
- const drawMonitor = () => {
-  const { w: mw, h: mh } = mon;
-  mctx.clearRect(0, 0, mw, mh);
-  mctx.strokeStyle = 'rgba(169,184,154,.16)'; mctx.lineWidth = 1; mctx.beginPath();
-  for (let i = 1; i < 12; i++) { const x = Math.round(mw * i / 12) + .5; mctx.moveTo(x, 0); mctx.lineTo(x, mh); }
-  for (let i = 1; i < 4; i++) { const y = Math.round(mh * i / 4) + .5; mctx.moveTo(0, y); mctx.lineTo(mw, y); }
-  mctx.stroke();
-  mctx.beginPath();
-  for (let px = 0; px <= mw; px += 1.5) {
-   const y = mon.wave === 'flat' ? mh / 2 + (Math.random() - .5) * 3 : mh / 2 - shape(mon.wave, px / mw * 4 + mon.phase) * mh * .32;
-   px ? mctx.lineTo(px, y) : mctx.moveTo(px, y);
-  }
-  mctx.strokeStyle = MUSTARD; mctx.lineWidth = 2; mctx.lineJoin = 'round'; mctx.stroke();
- };
- const monFrame = now => {
-  mon.raf = 0;
-  const dt = Math.min(50, now - (mon.last || now)); mon.last = now;
-  mon.phase += dt * .0006;
-  drawMonitor();
-  if (mon.visible && !reduced.matches) mon.raf = requestAnimationFrame(monFrame); else mon.last = 0;
- };
- const wakeMonitor = () => { if (reduced.matches) drawMonitor(); else if (!mon.raf) mon.raf = requestAnimationFrame(monFrame); };
-
- // The cable runs from the patched module's jack to the monitor's IN jack.
- // It only makes sense when the modules sit side by side; when they stack, the lit module and the readout carry it.
- const routeCable = animate => {
-  const mod = mon.patched;
-  const tops = modules.map(m => m.offsetTop);
-  if (!mod || Math.max(...tops) !== Math.min(...tops)) { cable.classList.add('off'); return; }
-  cable.classList.remove('off');
-  const box = rack.getBoundingClientRect();
-  const a = mod.querySelector('.patch .jack').getBoundingClientRect();
-  const b = inJack.getBoundingClientRect();
-  const x1 = a.left + a.width / 2 - box.left, y1 = a.top + a.height / 2 - box.top;
-  const x2 = b.left + b.width / 2 - box.left, y2 = b.top + b.height / 2 - box.top;
-  // Drop straight out of the module, sweep through the gap, and settle into the IN jack from above.
-  const d = `M${x1} ${y1} C${x1} ${y1 + 62} ${x2 + (x1 - x2) * .32} ${y2 + 8} ${x2} ${y2}`;
-  [cableShadow, cableLine].forEach(p => p.setAttribute('d', d));
-  plugs[0].setAttribute('cx', x1); plugs[0].setAttribute('cy', y1);
-  plugs[1].setAttribute('cx', x2); plugs[1].setAttribute('cy', y2);
-  cable.classList.remove('drawing');
-  if (animate && !reduced.matches) {
-   const len = cableLine.getTotalLength();
-   [cableShadow, cableLine].forEach(p => { p.style.strokeDasharray = len; p.style.strokeDashoffset = len; });
-   cable.getBoundingClientRect();
-   cable.classList.add('drawing');
-   [cableShadow, cableLine].forEach(p => { p.style.strokeDashoffset = 0; });
-  } else {
-   [cableShadow, cableLine].forEach(p => { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; });
-  }
- };
- const patchMonitor = (mod, animate) => {
-  mon.patched = mod;
-  mon.wave = mod.dataset.wave;
-  document.getElementById('monitor-tag').textContent = mon.wave === 'flat' ? 'IN · NO SIGNAL' : 'IN · ' + mon.wave.toUpperCase();
-  document.getElementById('monitor-name').textContent = mod.querySelector('h3').textContent;
-  document.getElementById('monitor-meta').textContent = mod.querySelector('.mod-top').textContent.trim() + ' · ' + WAVE_NAME[mon.wave];
-  // Feedback: the patched module's knobs sweep up from zero.
-  if (animate && !reduced.matches) mod.querySelectorAll('.dials .knob').forEach(k => {
-   const v = k.style.getPropertyValue('--v');
-   k.style.setProperty('--v', 0); k.getBoundingClientRect(); k.style.setProperty('--v', v);
-  });
-  routeCable(animate);
-  wakeMonitor();
- };
- if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { mon.visible = e.isIntersecting; if (mon.visible) wakeMonitor(); }).observe(monCanvas);
- const relayout = () => { sizeMonitor(); routeCable(false); wakeMonitor(); };
- if ('ResizeObserver' in window) new ResizeObserver(relayout).observe(rack);
- document.fonts && document.fonts.ready.then(relayout);
- sizeMonitor();
- select(modules[0]);
-})();
-</script>
+<footer><div class="shell rail"><span>Anya Dennison · Ithaca, NY</span><span>Built from scratch in HTML, CSS, JS &amp; Web Audio · <a href="https://github.com/anyadennison/anyadennison.github.io" target="_blank" rel="noopener">source ↗</a> · Rev 2026.10</span></div></footer>
 </body>
 </html>
