@@ -34,27 +34,52 @@
   state.keyNote = hz(midi); state.keyHit = 1; wake();
  };
 
- /* ---------- Keys (stage 2 adds the black keys and keyboard shortcuts) ---------- */
+ /* ---------- Keys: C4 to C5, white and black, with the usual computer-keyboard layout ---------- */
  const keysEl = document.getElementById('keys');
  const readout = document.getElementById('readout');
- [60, 62, 64, 65, 67, 69, 71, 72].forEach(m => {
+ const KEYS = [
+  [60, 'a'], [61, 'w'], [62, 's'], [63, 'e'], [64, 'd'], [65, 'f'], [66, 't'],
+  [67, 'g'], [68, 'y'], [69, 'h'], [70, 'u'], [71, 'j'], [72, 'k']
+ ];
+ const byShortcut = {};
+ let whiteIndex = 0;
+ KEYS.forEach(([m, shortcut]) => {
+  const black = names[m % 12].includes('#');
   const k = document.createElement('button');
-  k.type = 'button'; k.className = 'key'; k.dataset.note = m; k.textContent = label(m);
-  k.setAttribute('aria-label', 'Play ' + label(m));
+  k.type = 'button';
+  k.className = 'key ' + (black ? 'black' : 'white');
+  k.dataset.note = m;
+  k.innerHTML = `<kbd aria-hidden="true">${shortcut.toUpperCase()}</kbd>${black ? '' : `<span>${label(m)}</span>`}`;
+  k.setAttribute('aria-label', `Play ${label(m).replace('#', ' sharp ')}, shortcut ${shortcut.toUpperCase()}`);
+  if (black) k.style.left = `${whiteIndex / 8 * 100}%`; else whiteIndex++;
   keysEl.appendChild(k);
+  byShortcut[shortcut] = k;
  });
  const press = el => {
   el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
   clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 140);
  };
+ const noteListeners = []; // the trace subscribes to notes in stage 3
  const playKey = k => {
   const m = Number(k.dataset.note);
   genTone(m);
   readout.textContent = `${label(m)} · ${hz(m).toFixed(1)} Hz`;
   press(k);
+  noteListeners.forEach(fn => fn(m));
  };
  keysEl.addEventListener('pointerdown', e => { const k = e.target.closest('.key'); if (k) playKey(k); });
  keysEl.addEventListener('click', e => { const k = e.target.closest('.key'); if (k && e.detail === 0) playKey(k); });
+ // Shortcuts only respond while the instrument is on screen, so typing elsewhere stays silent.
+ const instrument = document.querySelector('.instrument');
+ addEventListener('keydown', e => {
+  if (e.repeat || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = byShortcut[e.key.toLowerCase()];
+  if (!k) return;
+  const r = instrument.getBoundingClientRect();
+  if (r.bottom < 0 || r.top > innerHeight) return;
+  e.preventDefault();
+  playKey(k);
+ });
 
  /* ---------- Knobs ---------- */
  const knob = (el, key) => {
@@ -140,8 +165,9 @@
  addEventListener('resize', size, { passive: true });
  size();
 
- /* ---------- Rack: patching lights the module (stage 4 sends it down the trace) ---------- */
+ /* ---------- Rack: patching lights the module and reshapes the trace beside Projects ---------- */
  const modules = [...document.querySelectorAll('.module')];
+ state.patchWave = 'square';
  modules.forEach(mod => mod.querySelector('.patch').addEventListener('click', () => {
   modules.forEach(m => {
    const on = m === mod, btn = m.querySelector('.patch');
@@ -149,7 +175,131 @@
    btn.setAttribute('aria-pressed', String(on));
    btn.querySelector('.patch-text').textContent = on ? 'Patched' : 'Patch';
   });
+  state.patchWave = mod.dataset.wave;
+  wakeTrace();
  }));
+
+
+ /* ---------- Live trace ----------
+    The spine is resampled into points every ~2px, each with its arc length and a normal.
+    Each frame draws only the points inside the viewport, displaced along their normal by:
+    an idle wave, the patched module's wave beside Projects, and any notes travelling down the page. */
+ const traceCanvas = document.createElement('canvas');
+ traceCanvas.className = 'trace-canvas';
+ traceCanvas.setAttribute('aria-hidden', 'true');
+ document.body.appendChild(traceCanvas);
+ const tctx = traceCanvas.getContext('2d');
+ const projects = document.getElementById('projects').querySelector('.rail');
+ let pts = [], total = 0, railTop = 0, railBottom = 0, proj = { top: 0, bottom: 0 }, traceRaf = 0, tw = 0, th = 0;
+ const pulses = [];
+ const INK = '#2B2A26', TERRA = '#C2643C';
+ const SPEED = .9, DELAY = 140, SPAN = 280; // px per ms, ms before the signal leaves the jack, pulse length in px
+
+ const sizeTrace = () => {
+  const dpr = Math.min(2, devicePixelRatio || 1);
+  tw = innerWidth; th = innerHeight;
+  traceCanvas.width = Math.round(tw * dpr); traceCanvas.height = Math.round(th * dpr);
+  tctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+ };
+ function buildTrace(ox, oy, hy, rx, ey, r) {
+  pts = []; total = 0;
+  const add = (x, y) => {
+   if (pts.length) { const q = pts[pts.length - 1]; total += Math.hypot(x - q.x, y - q.y); }
+   pts.push({ x, y, s: total, nx: 0, ny: 0 });
+  };
+  const line = (x0, y0, x1, y1) => { const n = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) / 2)); for (let i = 1; i <= n; i++) add(x0 + (x1 - x0) * i / n, y0 + (y1 - y0) * i / n); };
+  const quad = (x0, y0, cx, cy, x1, y1) => { for (let i = 1; i <= 12; i++) { const t = i / 12, u = 1 - t; add(u * u * x0 + 2 * u * t * cx + t * t * x1, u * u * y0 + 2 * u * t * cy + t * t * y1); } };
+  add(ox, oy);
+  line(ox, oy, ox, hy - r); quad(ox, hy - r, ox, hy, ox - r, hy);
+  line(ox - r, hy, rx + r, hy); quad(rx + r, hy, rx, hy, rx, hy + r);
+  line(rx, hy + r, rx, ey);
+  pts.forEach((p, i) => {
+   const a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)];
+   const tx = b.x - a.x, ty = b.y - a.y, len = Math.hypot(tx, ty) || 1;
+   p.nx = -ty / len; p.ny = tx / len;
+  });
+  railTop = hy + r; railBottom = ey;
+  const pr = projects.getBoundingClientRect();
+  proj = { top: pr.top + scrollY, bottom: pr.bottom + scrollY };
+  sizeTrace();
+  document.documentElement.classList.add('trace-live');
+  wakeTrace();
+ }
+ const smooth = x => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+ // Index of the first point at or below page y (the path never climbs, so y is sorted).
+ const indexAt = y => { let lo = 0, hi = pts.length - 1; while (lo < hi) { const mid = (lo + hi) >> 1; if (pts[mid].y < y) lo = mid + 1; else hi = mid; } return lo; };
+
+ const offset = (p, t) => {
+  const ends = smooth(Math.min(p.s, total - p.s) / 40);
+  const live = !reduced.matches;
+  let d = 2.2 * Math.sin(2 * Math.PI * (p.s / 90 - (live ? t * .00035 : 0)));
+  // Beside Projects the trace carries the patched module's waveform.
+  if (p.y > proj.top && p.y < proj.bottom && p.y > railTop) {
+   const k = smooth((p.y - proj.top) / 60) * smooth((proj.bottom - p.y) / 60);
+   const m = state.patchWave === 'flat' ? (live ? (Math.random() - .5) * 1.6 : 0) : 7 * shape(state.patchWave, p.s / 44 - (live ? t * .0006 : 0));
+   d += (m - d) * k;
+  }
+  let pulse = 0;
+  for (const q of pulses) {
+   const front = (t - q.t0 - DELAY) * SPEED, dist = front - p.s;
+   if (dist < 0 || dist > SPAN) continue;
+   const env = Math.sin(Math.PI * dist / SPAN) * Math.exp(-(t - q.t0) / 2600);
+   pulse += 10 * env * shape(q.wave, p.s / q.lambda - t * .002);
+  }
+  return { d: (d + pulse) * ends, pulse: Math.abs(pulse) };
+ };
+
+ const drawTrace = t => {
+  tctx.clearRect(0, 0, tw, th);
+  if (!pts.length) return;
+  const top = scrollY - 40, bottom = scrollY + th + 40;
+  let i = indexAt(top);
+  if (i > 0) i--;
+  const seg = [];
+  for (; i < pts.length && pts[i].y <= bottom; i++) {
+   const p = pts[i], o = offset(p, t);
+   seg.push({ x: p.x + p.nx * o.d - scrollX, y: p.y + p.ny * o.d - scrollY, pulse: o.pulse });
+  }
+  if (!seg.length) return;
+  tctx.lineJoin = 'round'; tctx.lineCap = 'round';
+  tctx.beginPath();
+  seg.forEach((q, j) => j ? tctx.lineTo(q.x, q.y) : tctx.moveTo(q.x, q.y));
+  tctx.strokeStyle = INK; tctx.lineWidth = 2; tctx.stroke();
+  // Notes in flight are drawn again in terracotta so the travelling signal reads clearly.
+  if (pulses.length) {
+   tctx.beginPath();
+   let on = false;
+   seg.forEach(q => { if (q.pulse > .35) { on ? tctx.lineTo(q.x, q.y) : tctx.moveTo(q.x, q.y); on = true; } else on = false; });
+   tctx.strokeStyle = TERRA; tctx.lineWidth = 2.6; tctx.stroke();
+  }
+  // The probe follows the reader down the rail.
+  const py = scrollY + th * .45;
+  if (py > railTop && py < railBottom) {
+   const p = pts[indexAt(py)], o = offset(p, t);
+   const x = p.x + p.nx * o.d - scrollX, y = py - scrollY;
+   tctx.beginPath(); tctx.moveTo(x - 13, y); tctx.lineTo(x - 8, y); tctx.moveTo(x + 8, y); tctx.lineTo(x + 13, y);
+   tctx.strokeStyle = INK; tctx.lineWidth = 1.5; tctx.stroke();
+   tctx.beginPath(); tctx.arc(x, y, 5.5, 0, Math.PI * 2);
+   tctx.fillStyle = '#F4EFE3'; tctx.fill();
+   tctx.strokeStyle = TERRA; tctx.lineWidth = 2.5; tctx.stroke();
+  }
+ };
+ const traceFrame = t => {
+  traceRaf = 0;
+  for (let j = pulses.length - 1; j >= 0; j--) if ((t - pulses[j].t0 - DELAY) * SPEED - SPAN > total || t - pulses[j].t0 > 9000) pulses.splice(j, 1);
+  drawTrace(t);
+  if (!reduced.matches && !document.hidden) traceRaf = requestAnimationFrame(traceFrame);
+ };
+ function wakeTrace() { if (!traceRaf) traceRaf = requestAnimationFrame(traceFrame); }
+ // Reduced motion: the trace stays still and notes only move the hero scope.
+ noteListeners.push(m => {
+  if (reduced.matches) return;
+  pulses.push({ t0: performance.now(), wave: state.wave, lambda: Math.max(36, 30000 / hz(m)) });
+  wakeTrace();
+ });
+ addEventListener('scroll', wakeTrace, { passive: true });
+ document.addEventListener('visibilitychange', wakeTrace);
+ reduced.addEventListener && reduced.addEventListener('change', wakeTrace);
 
  /* ---------- The spine: instrument output, under the hero, down the rail, into OUT ---------- */
  const main = document.getElementById('main');
@@ -166,6 +316,8 @@
   const hy = heroGrid.getBoundingClientRect().bottom - box.top + 40; // runs under both hero columns
   const r = 14;
   spinePath.setAttribute('d', `M${ox} ${oy} V${hy - r} Q${ox} ${hy} ${ox - r} ${hy} H${rx + r} Q${rx} ${hy} ${rx} ${hy + r} V${ey}`);
+  const dx = box.left + scrollX, dy = box.top + scrollY;
+  buildTrace(ox + dx, oy + dy, hy + dy, rx + dx, ey + dy, r);
  };
  if ('ResizeObserver' in window) new ResizeObserver(routeSpine).observe(main);
  addEventListener('resize', routeSpine, { passive: true });

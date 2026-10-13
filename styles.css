@@ -54,6 +54,9 @@ button {font:inherit;color:inherit}
 /* The spine is drawn in script from the instrument's output to the OUT node. */
 .spine {position:absolute;inset:0;z-index:1;width:100%;height:100%;overflow:visible;pointer-events:none}
 .spine path {fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+/* Once script is running, the live canvas trace replaces the static line. */
+.trace-canvas {position:fixed;inset:0;z-index:1;width:100%;height:100%;pointer-events:none}
+.trace-live .spine path {stroke:transparent}
 
 /* Each stage's padding lives on its rail so the divider rule can start right of the trace. */
 .stage .rail {padding-block:clamp(56px,7vw,92px)}
@@ -95,9 +98,15 @@ button {font:inherit;color:inherit}
 .wave-select svg {width:20px;height:10px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round;overflow:visible}
 .wave-select input:checked + span {background:var(--ink);color:var(--cream)}
 .wave-select input:focus-visible + span {outline:2.5px solid var(--terra-text);outline-offset:2px}
-.keys {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:10px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.key {height:46px;display:flex;align-items:flex-end;justify-content:center;padding:0 0 6px;font:600 10px/1 var(--mono);color:var(--ink);background:#FBF8F0;border:1.5px solid var(--ink);border-radius:0 0 5px 5px;box-shadow:0 3px 0 var(--ink);cursor:pointer;transition:transform 80ms,box-shadow 80ms,background 80ms;-webkit-tap-highlight-color:transparent}
-.key.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--mustard)}
+/* One octave, C4 to C5: eight white keys with five black keys laid over the gaps. */
+.keys {position:relative;display:flex;height:76px;margin-top:10px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.key {position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;padding:0 0 6px;font:600 10px/1 var(--mono);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform 70ms,box-shadow 70ms,background 70ms}
+.key.white {flex:1;color:var(--ink);background:#FBF8F0;border:1.5px solid var(--ink);border-right-width:0;border-radius:0 0 5px 5px;box-shadow:0 3px 0 var(--ink)}
+.key.white:last-of-type {border-right-width:1.5px}
+.key.black {position:absolute;z-index:1;top:0;width:8.5%;height:58%;transform:translateX(-50%);padding-bottom:5px;color:var(--cream);background:var(--ink);border:1.5px solid var(--ink);border-radius:0 0 4px 4px;box-shadow:0 2px 0 #11110F}
+.key kbd {font:500 9px/1 var(--mono);opacity:.55}
+.key.white.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--mustard)}
+.key.black.on {transform:translateX(-50%) translateY(2px);box-shadow:none;background:var(--olive)}
 .panel-foot {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:12px}
 .readout {font:12px/1.5 var(--mono)}
 .readout span {display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -217,7 +226,8 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
 }
 @media print {
  html,body,* {-webkit-print-color-adjust:exact;print-color-adjust:exact}
- .top,.skip {display:none!important}
+ .top,.skip,.trace-canvas {display:none!important}
+ .spine path {stroke:var(--ink)!important}
  .instrument,.module,.role,.rack .rail-strip,.contact-grid > div,.toolkit > div,.notebook > * {break-inside:avoid;page-break-inside:avoid}
  .stage .rail {padding-block:32px}
 }
