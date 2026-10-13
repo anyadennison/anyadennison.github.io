@@ -206,6 +206,12 @@ button {font:inherit;color:inherit}
 .pad.on {transition:none;background:var(--c);color:#111;box-shadow:0 0 26px -2px var(--g);transform:scale(.96)}
 .pad-foot {display:flex;justify-content:space-between;gap:12px;margin-top:14px;font:12px/1.5 var(--mono);color:var(--muted)}
 .pad-foot output {color:var(--green);min-width:4ch;text-align:right}
+.play-head {display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.modes {display:flex;padding:3px;border-radius:999px;background:var(--tile-2);border:1px solid var(--edge);margin-top:-6px}
+.mode {font:600 11px/1 var(--mono);padding:7px 11px;border:0;border-radius:999px;background:none;color:var(--muted);cursor:pointer}
+.mode[aria-pressed="true"] {background:var(--lav);color:#111}
+.mode[data-mode="piano"][aria-pressed="true"] {background:var(--green)}
+.off li span {flex:none}
 
 /* Small tiles */
 .off ul {list-style:none;margin:0;padding:0;display:grid;gap:12px}
@@ -376,14 +382,14 @@ footer a {color:var(--muted)}
 
  <!-- Piano pads: C major pentatonic, so any combination sounds good. -->
  <section class="tile span-2" id="play" aria-labelledby="play-title">
-  <p class="label" id="play-title">Play</p>
+  <div class="play-head"><p class="label" id="play-title">Play</p><div class="modes" role="group" aria-label="Sound"><button type="button" class="mode" data-mode="piano" aria-pressed="true">Piano</button><button type="button" class="mode" data-mode="voice" aria-pressed="false">A cappella</button></div></div>
   <div class="pads" id="pads" role="group" aria-label="Piano pads, C major pentatonic"></div>
-  <div class="pad-foot"><span>Classically trained. Your turn.<br>Keys 1–4 · Q–R · A–F · Z–V</span><output id="note-out">—</output></div>
+  <div class="pad-foot"><span><span id="mode-note">Classically trained. Your turn.</span><br>Keys 1–4 · Q–R · A–F · Z–V</span><output id="note-out">—</output></div>
  </section>
 
  <section class="tile off" aria-labelledby="off-title">
   <p class="label lav" id="off-title">Off the clock</p>
-  <ul><li><span>Court</span>Competitive tennis</li><li><span>Keys</span>Classical piano</li><li><span>Trail</span>Run · ski · hike</li><li><span>Away</span>Travel, anywhere outside</li><li><span>Speaks</span>Russian · French</li></ul>
+  <ul><li><span>Snow</span>Cornell Nordic ski team</li><li><span>Sings</span>Mediocre Melodies, Cornell’s comedy a cappella group. Bad singers, good cause.</li><li><span>Court</span>Competitive tennis</li><li><span>Keys</span>Classical piano</li><li><span>Trail</span>Run · hike · travel</li><li><span>Speaks</span>Russian · French</li></ul>
  </section>
 
  <section class="tile earlier" aria-labelledby="earlier-title">
@@ -415,13 +421,7 @@ footer a {color:var(--muted)}
  let audio, master;
  const volume = () => .15 + state.amp * .55;
  const pianoTone = midi => {
-  if (!audio) {
-   audio = new (window.AudioContext || window.webkitAudioContext)();
-   master = audio.createGain();
-   master.connect(audio.destination);
-  }
-  if (audio.state === 'suspended') audio.resume();
-  master.gain.value = volume();
+  pianoTone.init();
   const t = audio.currentTime, f = 440 * 2 ** ((midi - 69) / 12);
   const env = audio.createGain(), tone = audio.createBiquadFilter();
   tone.type = 'lowpass';
@@ -439,6 +439,49 @@ footer a {color:var(--muted)}
   });
   state.note = f; state.hit = 1; wake();
  };
+
+ pianoTone.init = () => {
+  if (!audio) {
+   audio = new (window.AudioContext || window.webkitAudioContext)();
+   master = audio.createGain();
+   master.connect(audio.destination);
+  }
+  if (audio.state === 'suspended') audio.resume();
+  master.gain.value = volume();
+ };
+
+ /* A cappella mode: a sung "aah"/"ooh" from formant filters, a little off-key on purpose. */
+ const vowels = [[800, 1150, 2900], [450, 800, 2830], [350, 600, 2700]];
+ const voiceTone = midi => {
+  pianoTone.init();
+  const t = audio.currentTime;
+  const cents = (Math.random() - .5) * 70; // Mediocre by design.
+  const f = 440 * 2 ** ((midi - 69) / 12) * 2 ** (cents / 1200);
+  const osc = audio.createOscillator(), lfo = audio.createOscillator(), depth = audio.createGain(), env = audio.createGain();
+  osc.type = 'sawtooth'; osc.frequency.value = f;
+  lfo.frequency.value = 5 + Math.random(); depth.gain.value = f * .014;
+  lfo.connect(depth).connect(osc.frequency);
+  env.gain.setValueAtTime(0, t);
+  env.gain.linearRampToValueAtTime(.9, t + .09);
+  env.gain.setValueAtTime(.9, t + .35);
+  env.gain.exponentialRampToValueAtTime(.0005, t + 1.5);
+  env.connect(master);
+  vowels[Math.floor(Math.random() * vowels.length)].forEach((formant, i) => {
+   const band = audio.createBiquadFilter(), g = audio.createGain();
+   band.type = 'bandpass'; band.frequency.value = formant; band.Q.value = 9;
+   g.gain.value = [1, .55, .22][i];
+   osc.connect(band).connect(g).connect(env);
+  });
+  osc.start(t); lfo.start(t); osc.stop(t + 1.6); lfo.stop(t + 1.6);
+  state.note = f; state.hit = 1; wake();
+ };
+ let mode = 'piano';
+ const modeNote = document.getElementById('mode-note');
+ document.querySelectorAll('.mode').forEach(b => b.addEventListener('click', () => {
+  mode = b.dataset.mode;
+  document.querySelectorAll('.mode').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+  modeNote.textContent = mode === 'voice' ? 'Mediocre Melodies mode. Slightly off-key, by design.' : 'Classically trained. Your turn.';
+ }));
 
  /* ---------- Pads: 16 notes of C major pentatonic, lowest on the bottom row ---------- */
  const names = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -460,7 +503,7 @@ footer a {color:var(--muted)}
  });
  const pads = [...padsEl.children];
  const strike = pad => {
-  pianoTone(Number(pad.dataset.note));
+  (mode === 'voice' ? voiceTone : pianoTone)(Number(pad.dataset.note));
   out.textContent = pad.firstChild.textContent;
   pad.classList.remove('on'); void pad.offsetWidth; pad.classList.add('on');
   clearTimeout(pad._t); pad._t = setTimeout(() => pad.classList.remove('on'), 160);
