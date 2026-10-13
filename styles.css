@@ -159,20 +159,28 @@ button {font:inherit;color:inherit}
 .module.empty {border-style:dashed;background:repeating-linear-gradient(-45deg,var(--module) 0 9px,#E6DFCD 9px 18px)}
 .module.empty::before {background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
 
-/* Experience (channel strips arrive in stage 4) */
-.roles {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.roles > * {padding-right:clamp(18px,3vw,36px)}
-.roles > * + * {border-left:1px solid var(--rule);padding-left:clamp(18px,3vw,36px)}
+/* Experience: mixer channel strips hanging off a bus that taps the trace */
+.roles {position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+/* The bus: from the trace across the top of the strips, with a drop into each one. */
+.roles::before {content:"";position:absolute;top:-22px;left:calc(var(--trace-x) - var(--rail-w));right:0;height:2px;background:var(--ink)}
+.strip::before {content:"";position:absolute;top:-22px;left:28px;width:2px;height:22px;background:var(--ink)}
+.strip {position:relative;z-index:2;display:flex;flex-direction:column;padding:12px 16px 18px;background:var(--panel);border:2px solid var(--ink);border-radius:6px;box-shadow:5px 5px 0 var(--ink)}
+.strip-top {display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -16px 14px;padding:0 16px 10px;border-bottom:1.5px solid var(--ink);font:600 10px/1 var(--mono);letter-spacing:.14em}
+.status {display:inline-flex;align-items:center;gap:7px;color:var(--muted);letter-spacing:.06em}
+.status .led {width:11px;height:11px;border-radius:50%;background:#D6CFBC;border:1.5px solid var(--ink)}
+.status .led.lit {background:var(--olive)}
+.strip.current {box-shadow:5px 5px 0 var(--olive-text)}
 .role h3 {font-size:22px;letter-spacing:-.02em;line-height:1.15}
 .role .meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:4px}
-.metrics {display:flex;flex-wrap:wrap;gap:12px 20px;margin:18px 0;padding:12px 0;border-block:1px solid var(--rule)}
-.metrics b {display:block;font-size:24px;line-height:1.1;letter-spacing:-.03em}
-.metrics span {display:block;font:600 10px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:3px}
-.role ul {margin:18px 0 0;padding-left:18px;font-size:15px}
-.metrics + ul {margin-top:0}
+/* Segment-style readouts: mustard digits on the scope screen colour */
+.readouts {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:16px 0 4px}
+.readouts div {min-width:0;display:flex;flex-direction:column}
+.readouts dd {margin:0;padding:7px 6px 6px;background:var(--screen);border:1.5px solid var(--ink);border-radius:3px;color:var(--mustard);font:600 clamp(14px,1.45vw,18px)/1 var(--mono);letter-spacing:.02em;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.readouts dt {order:2;font:600 9px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px;text-align:center}
+.role ul {margin:16px 0 0;padding-left:18px;font-size:15px}
 .role li + li {margin-top:8px}
 .role li::marker {color:var(--terra-text)}
-.press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:14px}
+.press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:auto;padding-top:14px}
 .press a {color:var(--ink);margin-right:12px}
 
 /* Notebook (graph paper arrives in stage 5) */
@@ -210,8 +218,11 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
 }
 @media (max-width:760px){
  .roles,.contact-grid,.toolkit,.notebook {grid-template-columns:minmax(0,1fr)}
- .roles > *,.toolkit > div {padding-right:0}
- .roles > * + *,.toolkit > div + div {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
+ .toolkit > div {padding-right:0}
+ .toolkit > div + div {border-left:0;padding-left:0;margin-top:28px;padding-top:28px;border-top:1px solid var(--rule)}
+ .roles {gap:26px;margin-top:20px}
+ .roles::before {display:none}
+ .strip::before {top:22px;left:calc(var(--trace-x) - var(--rail-w) - 2px);width:calc(var(--rail-w) - var(--trace-x));height:2px}
  .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
 }
 @media (max-width:560px){
@@ -228,7 +239,7 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
  html,body,* {-webkit-print-color-adjust:exact;print-color-adjust:exact}
  .top,.skip,.trace-canvas {display:none!important}
  .spine path {stroke:var(--ink)!important}
- .instrument,.module,.role,.rack .rail-strip,.contact-grid > div,.toolkit > div,.notebook > * {break-inside:avoid;page-break-inside:avoid}
+ .instrument,.module,.strip,.rack .rail-strip,.contact-grid > div,.toolkit > div,.notebook > * {break-inside:avoid;page-break-inside:avoid}
  .stage .rail {padding-block:32px}
 }
 @media (prefers-reduced-motion:reduce){
