@@ -92,7 +92,11 @@ button {font:inherit;color:inherit}
 .screen .tag {position:absolute;left:10px;top:8px;font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--mustard)}
 .scope-foot {display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:12px}
 .readout {font:12px/1.5 var(--mono);color:var(--ink);min-width:0}
-.readout span {display:block;color:var(--muted)}
+.readout span {display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.readout output {display:block;font-size:15px;font-weight:600;color:var(--ink)}
+.keys {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;margin-top:10px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.key {height:46px;display:flex;align-items:flex-end;justify-content:center;padding:0 0 6px;font:600 10px/1 var(--mono);color:var(--ink);background:#FBF8F0;border:1.5px solid var(--ink);border-radius:0 0 5px 5px;box-shadow:0 3px 0 var(--ink);cursor:pointer;transition:transform 80ms,box-shadow 80ms,background 80ms;-webkit-tap-highlight-color:transparent}
+.key.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--mustard)}
 .scope-knobs {display:flex;gap:14px}
 .scope-knobs .knob {width:48px;height:48px;cursor:ns-resize;touch-action:none}
 .scope-knobs .knob i {width:33px;height:33px;transition:none}
@@ -172,12 +176,12 @@ button {font:inherit;color:inherit}
 .mode {font:600 11px/1 var(--mono);padding:7px 12px;border:0;background:var(--cream);cursor:pointer}
 .mode + .mode {border-left:1.5px solid var(--ink)}
 .mode[aria-pressed="true"] {background:var(--ink);color:var(--cream)}
-.pads {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
-.pad {aspect-ratio:1.45;display:flex;align-items:flex-end;justify-content:space-between;padding:7px 9px;border:1.5px solid var(--ink);border-radius:6px;box-shadow:0 3px 0 var(--ink);cursor:pointer;font:600 11px/1 var(--mono);transition:transform 80ms,box-shadow 80ms;-webkit-tap-highlight-color:transparent}
+.pads {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:10px 10px 13px;background:var(--ink);border-radius:6px;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.pad {aspect-ratio:2.9;display:flex;align-items:center;justify-content:space-between;padding:4px 9px;border:1.5px solid var(--ink);border-radius:5px;box-shadow:0 3px 0 #11110F;cursor:pointer;font:600 11px/1 var(--mono);transition:transform 80ms,box-shadow 80ms;-webkit-tap-highlight-color:transparent}
 .pad.c0 {background:var(--terra-text);color:var(--cream)}.pad.c1 {background:var(--mustard);color:var(--ink)}
 .pad.c2 {background:var(--sage);color:var(--ink)}.pad.c3 {background:var(--olive-text);color:var(--cream)}
 .pad kbd {font:inherit;opacity:.8}
-.pad.on {transform:translateY(3px);box-shadow:0 0 0 var(--ink);background:var(--ink);color:var(--cream)}
+.pad.on {transform:translateY(3px);box-shadow:0 0 0 #11110F;background:var(--cream);color:var(--ink)}
 .pad-foot {display:flex;justify-content:space-between;gap:12px;margin-top:14px;font:12px/1.5 var(--mono);color:var(--muted)}
 .pad-foot output {font-weight:600;color:var(--ink);min-width:4ch;text-align:right}
 .list {list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
@@ -227,6 +231,14 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
  .scope-knobs {justify-content:flex-start}
  .knob-hint {text-align:left}
 }
+@media print {
+ html,body,* {-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ html {scroll-padding-top:0}
+ .top,.skip {display:none!important}
+ .bench-scope,.machine,.module,.role,.rack .rail,.contact .shell > div,.toolkit > div,.play-row > * {break-inside:avoid;page-break-inside:avoid}
+ .band,.contact .shell {padding-block:32px}
+ .hero .shell {padding-block:32px}
+}
 @media (prefers-reduced-motion:reduce){
  html {scroll-behavior:auto}
  *,*::before,*::after {animation:none!important;transition:none!important}
@@ -246,14 +258,15 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
     <p class="label">Electrical &amp; Computer Engineering · Cornell ’29</p>
     <h1 id="hero-title">Anya<br>Dennison</h1>
     <p class="lede">Engineering student at Cornell. Previously co-founded and scaled a $1M+ national nonprofit.</p>
-    <p class="sub">As Chief of Staff, I built the operating systems behind 30 staff and 2,000 volunteers. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p>
+    <p class="sub">As Chief of Staff, I built the internal systems behind 30 staff and 2,000 volunteers. Now I’m studying Electrical &amp; Computer Engineering to build the technical side myself.</p>
     <p class="links"><a href="mailto:aad238@cornell.edu">Email</a><a href="https://www.linkedin.com/in/anya-dennison" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/anyadennison" target="_blank" rel="noopener">GitHub ↗</a><a href="resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></p>
    </div>
    <div class="bench-scope">
     <div class="scope-head" aria-hidden="true"><span>AD-01 OSCILLOSCOPE</span><span>CH1 · CH2</span></div>
     <div class="screen"><canvas id="scope" aria-hidden="true"></canvas><span class="tag" id="scope-tag" aria-hidden="true">CH1 · SQUARE</span></div>
+    <div class="keys" id="keys" role="group" aria-label="Playable keys, C4 to C5"></div>
     <div class="scope-foot">
-     <p class="readout" id="readout" aria-live="polite"></p>
+     <p class="readout"><span>Note</span><output id="readout">Play a key</output></p>
      <div>
       <div class="scope-knobs">
        <span class="knob-wrap"><span class="knob" id="k-freq" role="slider" tabindex="0" aria-label="Scope frequency" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" style="--v:.45"><i></i></span>FREQ</span>
@@ -345,19 +358,18 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
     <article class="role" aria-labelledby="r-see">
      <h3 id="r-see">SEE Alliance</h3><p class="meta">Chief of Staff &amp; Co-Founder · 2022–2026</p>
      <div class="metrics"><div><b>$1M+</b><span>revenue</span></div><div><b>2,000</b><span>volunteers</span></div><div><b>67</b><span>districts</span></div></div>
-     <ul><li>Processed Florida statewide voter files for text and phone outreach for a campaign that reached 5.25 million voters.</li><li>Built and maintained outreach spreadsheets of 10,000+ rows tracking contacts, volunteers, and follow-ups.</li><li>Built internal systems for hiring, training, finance, and reporting across 30 staff, 2,000 volunteers, and all 67 Florida school districts.</li></ul>
+     <ul><li>Processed Florida statewide voter files for text and phone outreach for a campaign that reached 5.25 million voters.</li><li>Built and maintained outreach spreadsheets of 10,000+ rows tracking contacts, volunteers, and follow-ups.</li><li>Built internal systems for hiring, training, finance, and reporting across 30 staff and all 67 Florida school districts.</li></ul>
      <p class="press">Coverage: <a href="https://abcnews.com/US/moms-liberty-founder-faces-calls-resignation-school-board/story?id=107071594" target="_blank" rel="noopener">ABC News ↗</a><a href="https://www.teenvogue.com/story/florida-students-walkout-learn" target="_blank" rel="noopener">Teen Vogue ↗</a></p>
     </article>
     <article class="role" aria-labelledby="r-farmlink">
      <h3 id="r-farmlink">The Farmlink Project</h3><p class="meta">Nationwide Food Program Lead · 2022–2023</p>
      <div class="metrics"><div><b>10→30</b><span>team</span></div><div><b>600</b><span>calls / week</span></div><div><b>+200%</b><span>donations</span></div></div>
-     <ul><li>Cleaned and restructured the outreach CRM after a poor HubSpot import, reimporting contact records so the team could sort, segment, and target partners.</li><li>Maintained outreach tracking across HubSpot and shared spreadsheets as weekly partner calls tripled, from 200 to 600.</li><li>Coordinated logistics for 21 truckloads, about one million pounds of surplus avocados, the organization’s largest donation of 2022.</li></ul>
+     <ul><li>Cleaned up and restructured a poorly set-up HubSpot CRM so the team could sort, segment, and target partners.</li><li>Maintained outreach tracking across HubSpot and shared spreadsheets as weekly partner calls tripled, from 200 to 600.</li><li>Coordinated logistics for 21 truckloads, about one million pounds of surplus avocados, the organization’s largest donation of 2022.</li></ul>
      <p class="press">Coverage: <a href="https://www.washingtonpost.com/food/2022/10/19/avocado-giveaway-surplus-philly/" target="_blank" rel="noopener">The Washington Post ↗</a><a href="https://www.vpm.org/npr-news/2022-10-20/avoggedon-strikes-philadelphia-one-nonprofit-gives-away-thousands-of-avocados/" target="_blank" rel="noopener">NPR ↗</a></p>
     </article>
     <article class="role" aria-labelledby="r-nafsn">
      <h3 id="r-nafsn">North American Food Systems Network</h3><p class="meta">Member Engagement Manager · 2026–now</p>
-     <div class="metrics"><div><b>Circle</b><span>platform</span></div><div><b>Live</b><span>status</span></div><div><b>Ongoing</b><span>in play</span></div></div>
-     <ul><li>Leading the rollout of Circle as NAFSN’s online community platform, starting Fall 2026.</li><li>Mapping what members need onto the platform’s structure, onboarding, permissions, groups and automations.</li></ul>
+          <ul><li>Leading the rollout of Circle as NAFSN’s online community platform, starting Fall 2026.</li><li>Mapping what members need onto the platform’s structure, onboarding, permissions, groups and automations.</li></ul>
     </article>
    </div>
   </div>
@@ -491,11 +503,20 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
   padsEl.appendChild(b);
  });
  const pads = [...padsEl.children];
+ const readout = document.getElementById('readout');
+ const showNote = m => {
+  const name = label(m);
+  out.textContent = name;
+  readout.textContent = `${name} · ${(440 * 2 ** ((m - 69) / 12)).toFixed(1)} Hz`;
+ };
+ const press = el => {
+  el.classList.remove('on'); void el.offsetWidth; el.classList.add('on');
+  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('on'), 140);
+ };
  const strike = pad => {
   (mode === 'voice' ? voiceTone : pianoTone)(Number(pad.dataset.note));
-  out.textContent = pad.firstChild.textContent;
-  pad.classList.remove('on'); void pad.offsetWidth; pad.classList.add('on');
-  clearTimeout(pad._t); pad._t = setTimeout(() => pad.classList.remove('on'), 140);
+  showNote(Number(pad.dataset.note));
+  press(pad);
  };
  padsEl.addEventListener('pointerdown', e => { const p = e.target.closest('.pad'); if (p) strike(p); });
  padsEl.addEventListener('click', e => { const p = e.target.closest('.pad'); if (p && e.detail === 0) strike(p); });
@@ -509,9 +530,25 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
   strike(pads[i]);
  });
 
+ /* ---------- Hero keys: one octave of C major, same synth, same scope ---------- */
+ const keysEl = document.getElementById('keys');
+ [60, 62, 64, 65, 67, 69, 71, 72].forEach(m => {
+  const k = document.createElement('button');
+  k.type = 'button'; k.className = 'key'; k.dataset.note = m; k.textContent = label(m);
+  k.setAttribute('aria-label', 'Play ' + label(m));
+  keysEl.appendChild(k);
+ });
+ const playKey = k => {
+  const m = Number(k.dataset.note);
+  (mode === 'voice' ? voiceTone : pianoTone)(m);
+  showNote(m);
+  press(k);
+ };
+ keysEl.addEventListener('pointerdown', e => { const k = e.target.closest('.key'); if (k) playKey(k); });
+ keysEl.addEventListener('click', e => { const k = e.target.closest('.key'); if (k && e.detail === 0) playKey(k); });
+
  /* ---------- Rack modules ---------- */
  const modules = [...document.querySelectorAll('.module')];
- const readout = document.getElementById('readout');
  const scopeTag = document.getElementById('scope-tag');
  const select = mod => {
   modules.forEach(m => {
@@ -522,10 +559,6 @@ footer .shell {display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px
   });
   state.wave = mod.dataset.wave;
   scopeTag.textContent = 'CH1 · ' + (state.wave === 'flat' ? 'NO SIGNAL' : state.wave.toUpperCase());
-  readout.replaceChildren(mod.querySelector('h3').textContent);
-  const sub = document.createElement('span');
-  sub.textContent = mod.querySelector('.mod-sub').textContent;
-  readout.append(sub);
   wake();
  };
  modules.forEach(m => m.querySelector('.patch').addEventListener('click', () => select(m)));
