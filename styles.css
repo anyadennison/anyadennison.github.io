@@ -177,15 +177,20 @@ button {font:inherit;color:inherit}
 .role .meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:4px}
 /* Press: a clippings list, each row a link to the piece */
 .press-lede {max-width:720px;font-size:17px;line-height:1.6;color:var(--muted);margin-bottom:22px}
-.clips {list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
-.clips li {border-bottom:1px solid var(--rule)}
-.clips a {display:grid;grid-template-columns:200px minmax(0,1fr) auto;align-items:baseline;gap:6px 24px;padding:16px 4px;text-decoration:none;color:var(--ink)}
-.clips a:hover {background:var(--panel)}
-.clips a:hover .headline {color:var(--terra-text)}
 .outlet {font:600 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text)}
-.headline {font-size:clamp(17px,1.7vw,20px);font-weight:600;letter-spacing:-.01em;line-height:1.3}
-.when {font:600 11px/1.4 var(--mono);color:var(--muted);white-space:nowrap}
-.when.me {padding:3px 7px;border-radius:3px;background:var(--olive-text);color:var(--cream)}
+.covers {list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 18px}
+.cover a {display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
+.cover .shot {position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border:2px solid var(--ink);border-radius:6px;background:var(--screen);box-shadow:4px 4px 0 var(--ink);margin-bottom:6px;transition:transform 140ms,box-shadow 140ms}
+.cover img {display:block;width:100%;height:100%;object-fit:cover}
+.cover a:hover .shot {transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.cover a:hover .headline {color:var(--terra-text)}
+.cover.video .shot::after {content:"";position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:rgba(43,42,38,.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M7 5l9 5-9 5z' fill='%23F4EFE3'/%3E%3C/svg%3E") center/26px no-repeat;border:2px solid var(--cream)}
+.cover.feature {grid-column:span 2;grid-row:span 2}
+.cover.feature .headline {font-size:clamp(20px,2.2vw,26px)}
+.cover.type .shot {display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:10px;padding:0 22px;background:var(--terra-text)}
+.cover.type b {font-size:clamp(40px,5vw,60px);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--cream)}
+.cover.type em {font:600 11px/1 var(--mono);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);border:1.5px solid var(--cream);border-radius:3px;padding:5px 7px}
+.headline {font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
 
 /* Segment-style readouts: mustard digits on the scope screen colour */
 .readouts {display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;margin:16px 0 4px;max-width:560px}
@@ -256,13 +261,14 @@ footer .shell {padding-block:28px 40px}
  .plate-grid div:nth-child(3) {border-left:0}
  .plate-grid div:nth-child(n+3) {border-top:1px solid var(--rule)}
  .roles {margin-top:20px}
- .clips a {grid-template-columns:minmax(0,1fr) auto}
- .clips .headline {grid-column:1/-1;grid-row:2}
+ .covers {grid-template-columns:repeat(2,minmax(0,1fr))}
  .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
 }
 @media (max-width:560px){
  /* Phone: the trace keeps a narrow gutter of its own and never shares space with text. */
  :root {--edge:12px;--rail-w:36px;--trace-x:12px}
+ .covers {grid-template-columns:minmax(0,1fr)}
+ .cover.feature {grid-column:auto;grid-row:auto}
  .node.jack {width:18px;height:18px}
  .node.end {width:22px;height:22px}
  .instrument,.rack {box-shadow:4px 4px 0 var(--ink)}
