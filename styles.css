@@ -175,27 +175,24 @@ button {font:inherit;color:inherit}
 .strip.current {box-shadow:5px 5px 0 var(--olive-text)}
 .role h3 {font-size:22px;letter-spacing:-.02em;line-height:1.15}
 .role .meta {font:12px/1.5 var(--mono);color:var(--muted);margin-top:4px}
-/* Press: a wall of names */
-.wall + .wall {margin-top:30px}
-.names {list-style:none;margin:10px 0 0;padding:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 0}
-.names li {font-size:clamp(22px,3vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1.2}
-.names li:not(:last-child)::after {content:"/";margin:0 .45em;font-weight:500;color:var(--terra)}
-.wall-note {margin-top:30px;padding-top:14px;border-top:1px solid var(--rule);font:600 12px/1.6 var(--mono);letter-spacing:.04em;color:var(--muted);max-width:720px}
+/* Press: a clippings list, each row a link to the piece */
+.press-lede {max-width:720px;font-size:17px;line-height:1.6;color:var(--muted);margin-bottom:22px}
+.clips {list-style:none;margin:0;padding:0;border-top:1.5px solid var(--ink)}
+.clips li {border-bottom:1px solid var(--rule)}
+.clips a {display:grid;grid-template-columns:200px minmax(0,1fr) auto;align-items:baseline;gap:6px 24px;padding:16px 4px;text-decoration:none;color:var(--ink)}
+.clips a:hover {background:var(--panel)}
+.clips a:hover .headline {color:var(--terra-text)}
+.outlet {font:600 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--olive-text)}
+.headline {font-size:clamp(17px,1.7vw,20px);font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.when {font:600 11px/1.4 var(--mono);color:var(--muted);white-space:nowrap}
+.when.me {padding:3px 7px;border-radius:3px;background:var(--olive-text);color:var(--cream)}
 
 /* Segment-style readouts: mustard digits on the scope screen colour */
-.readouts {display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;margin:16px 0 4px}
+.readouts {display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:6px;margin:16px 0 4px;max-width:560px}
 .readouts div {min-width:0;display:flex;flex-direction:column}
 .readouts dd {margin:0;padding:7px 6px 6px;background:var(--screen);border:1.5px solid var(--ink);border-radius:3px;color:var(--mustard);font:600 clamp(14px,1.45vw,18px)/1 var(--mono);letter-spacing:.02em;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip}
 .readouts dt {order:2;font:600 9px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px;text-align:center}
-.role ul {margin:16px 0 0;padding-left:18px;font-size:15px}
-/* Wide screens: name and numbers on the left, bullets on the right, so long and short roles both fill their strip. */
-@media (min-width:1001px){
- .strip {display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;column-gap:36px;padding-bottom:20px}
- .strip-top {grid-column:1/-1}
- .strip h3,.strip .meta,.strip .readouts,.strip .press {grid-column:1}
- .strip .press {align-self:end}
- .strip ul {grid-column:2;grid-row:2/-1;margin-top:0;align-self:start}
-}
+.role ul {margin:16px 0 0;padding-left:18px;font-size:15px;max-width:860px}
 .role li + li {margin-top:8px}
 .role li::marker {color:var(--terra-text)}
 .press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:auto;padding-top:14px}
@@ -259,6 +256,8 @@ footer .shell {padding-block:28px 40px}
  .plate-grid div:nth-child(3) {border-left:0}
  .plate-grid div:nth-child(n+3) {border-top:1px solid var(--rule)}
  .roles {margin-top:20px}
+ .clips a {grid-template-columns:minmax(0,1fr) auto}
+ .clips .headline {grid-column:1/-1;grid-row:2}
  .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
 }
 @media (max-width:560px){
