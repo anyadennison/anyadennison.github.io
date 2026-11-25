@@ -359,7 +359,7 @@
  const dockLabel = dockBtn.querySelector('.dock-label');
  // Spotify's embed sometimes renders "Page not found" and never posts its ready message,
  // so if no ready arrives in time, load a fresh frame (a few tries at most).
- const EMBED = 'https://open.spotify.com/embed/playlist/0pYbkT41pkd7Tx0zTM0xLh';
+ const EMBED = 'https://open.spotify.com/embed/artist/08GQAI4eElDnROBrJRGE0X';
  let dockFrame = null, dockReady = false, dockTries = 0;
  addEventListener('message', e => {
   if (dockFrame && e.source === dockFrame.contentWindow && /"type":"ready"|type.?:.?ready/.test(typeof e.data === 'string' ? e.data : JSON.stringify(e.data))) dockReady = true;
@@ -368,7 +368,7 @@
   dockReady = false;
   dockTries++;
   const f = document.createElement('iframe');
-  f.title = 'Spotify player for my playlist, winter in the mountains';
+  f.title = 'Spotify player: Fleetwood Mac top tracks';
   f.src = EMBED;
   f.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
   if (dockFrame) dockFrame.replaceWith(f); else dockPanel.querySelector('.dock-frame').append(f);
