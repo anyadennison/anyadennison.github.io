@@ -357,14 +357,26 @@
  const dockBtn = document.getElementById('dock-btn');
  const dockPanel = document.getElementById('dock-panel');
  const dockLabel = dockBtn.querySelector('.dock-label');
+ // Spotify's embed sometimes renders "Page not found" and never posts its ready message,
+ // so if no ready arrives in time, load a fresh frame (a few tries at most).
+ const EMBED = 'https://open.spotify.com/embed/playlist/0pYbkT41pkd7Tx0zTM0xLh';
+ let dockFrame = null, dockReady = false, dockTries = 0;
+ addEventListener('message', e => {
+  if (dockFrame && e.source === dockFrame.contentWindow && /"type":"ready"|type.?:.?ready/.test(typeof e.data === 'string' ? e.data : JSON.stringify(e.data))) dockReady = true;
+ });
+ function loadDockFrame() {
+  dockReady = false;
+  dockTries++;
+  const f = document.createElement('iframe');
+  f.title = 'Spotify player for my playlist, winter in the mountains';
+  f.src = EMBED;
+  f.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+  if (dockFrame) dockFrame.replaceWith(f); else dockPanel.querySelector('.dock-frame').append(f);
+  dockFrame = f;
+  setTimeout(() => { if (!dockReady && dockFrame === f && dockTries < 5) loadDockFrame(); }, 4500);
+ }
  function setDock(open) {
-  if (open && !dockPanel.querySelector('iframe')) {
-   const f = document.createElement('iframe');
-   f.title = 'Spotify player for my playlist, winter in the mountains';
-   f.src = 'https://open.spotify.com/embed/playlist/0pYbkT41pkd7Tx0zTM0xLh';
-   f.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-   dockPanel.querySelector('.dock-frame').append(f);
-  }
+  if (open && !dockFrame) loadDockFrame();
   dockPanel.classList.toggle('shut', !open);
   dockBtn.setAttribute('aria-expanded', open);
   dockBtn.classList.toggle('on', open || dockBtn.classList.contains('on'));

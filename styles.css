@@ -214,7 +214,9 @@ button {font:inherit;color:inherit}
 .dock-panel {width:100%;background:var(--panel);border:2px solid var(--ink);border-radius:10px;box-shadow:4px 4px 0 var(--ink);overflow:hidden;transition:opacity 160ms,transform 160ms}
 .dock-panel.shut {visibility:hidden;opacity:0;transform:translateY(8px);height:0;border-width:0;box-shadow:none}
 .dock-head {display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 6px 6px 12px;font:600 11px/1.3 var(--mono);border-bottom:1.5px solid var(--ink)}
-.dock-x {width:26px;height:26px;border:1.5px solid var(--ink);border-radius:50%;background:var(--cream);font:600 14px/1 var(--mono);cursor:pointer}
+.dock-head > span {flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dock-open {font-size:10px;white-space:nowrap}
+.dock-x {flex:none;width:26px;height:26px;border:1.5px solid var(--ink);border-radius:50%;background:var(--cream);font:600 14px/1 var(--mono);cursor:pointer}
 .dock-frame iframe {display:block;width:100%;height:152px;border:0}
 
 /* Segment-style readouts: mustard digits on the scope screen colour */
