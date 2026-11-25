@@ -164,10 +164,9 @@ button {font:inherit;color:inherit}
 .module.empty::before {background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
 
 /* Experience: mixer channel strips hanging off a bus that taps the trace */
-.roles {position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:40px}
-/* The bus: from the trace across the top of the strips, with a drop into each one. */
-.roles::before {content:"";position:absolute;top:-22px;left:calc(var(--trace-x) - var(--rail-w));right:0;height:2px;background:var(--ink)}
-.strip::before {content:"";position:absolute;top:-22px;left:28px;width:2px;height:22px;background:var(--ink)}
+.roles {position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:26px;margin-top:24px}
+/* Each strip taps the trace with its own short lead. */
+.strip::before {content:"";position:absolute;top:22px;left:calc(var(--trace-x) - var(--rail-w) - 2px);width:calc(var(--rail-w) - var(--trace-x));height:2px;background:var(--ink)}
 .strip {position:relative;z-index:2;display:flex;flex-direction:column;padding:12px 16px 18px;background:var(--panel);border:2px solid var(--ink);border-radius:6px;box-shadow:5px 5px 0 var(--ink)}
 .strip-top {display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -16px 14px;padding:0 16px 10px;border-bottom:1.5px solid var(--ink);font:600 10px/1 var(--mono);letter-spacing:.14em}
 .status {display:inline-flex;align-items:center;gap:7px;color:var(--muted);letter-spacing:.06em}
@@ -198,6 +197,14 @@ button {font:inherit;color:inherit}
 .readouts dd {margin:0;padding:7px 6px 6px;background:var(--screen);border:1.5px solid var(--ink);border-radius:3px;color:var(--mustard);font:600 clamp(14px,1.45vw,18px)/1 var(--mono);letter-spacing:.02em;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:clip}
 .readouts dt {order:2;font:600 9px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:5px;text-align:center}
 .role ul {margin:16px 0 0;padding-left:18px;font-size:15px}
+/* Wide screens: name and numbers on the left, bullets on the right, so long and short roles both fill their strip. */
+@media (min-width:1001px){
+ .strip {display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;column-gap:36px;padding-bottom:20px}
+ .strip-top {grid-column:1/-1}
+ .strip h3,.strip .meta,.strip .readouts,.strip .press {grid-column:1}
+ .strip .press {align-self:end}
+ .strip ul {grid-column:2;grid-row:2/-1;margin-top:0;align-self:start}
+}
 .role li + li {margin-top:8px}
 .role li::marker {color:var(--terra-text)}
 .press {font:12px/1.6 var(--mono);color:var(--muted);margin-top:auto;padding-top:14px}
@@ -261,9 +268,7 @@ footer .shell {padding-block:28px 40px}
  .plate-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
  .plate-grid div:nth-child(3) {border-left:0}
  .plate-grid div:nth-child(n+3) {border-top:1px solid var(--rule)}
- .roles {gap:26px;margin-top:20px}
- .roles::before {display:none}
- .strip::before {top:22px;left:calc(var(--trace-x) - var(--rail-w) - 2px);width:calc(var(--rail-w) - var(--trace-x));height:2px}
+ .roles {margin-top:20px}
  .top nav {gap:14px;font-size:13px}.top nav .hide-sm {display:none}
 }
 @media (max-width:560px){
@@ -285,7 +290,7 @@ footer .shell {padding-block:28px 40px}
  .top,.skip,.trace-canvas,.spine {display:none!important}
  /* The trace prints as one plain line down the rail. */
  .stage .rail,footer .rail {background:linear-gradient(var(--ink),var(--ink)) var(--trace-x) 0/2px 100% no-repeat!important}
- .roles::before,.strip::before {display:none}
+ .strip::before {display:none}
  .instrument,.module,.strip,.rack .rail-strip,.notebook,.board,.bin,.out-row,.plate {break-inside:avoid;page-break-inside:avoid}
  .stage .rail {padding-block:32px}
 }
