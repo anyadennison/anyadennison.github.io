@@ -361,7 +361,7 @@
   if (open && !dockPanel.querySelector('iframe')) {
    const f = document.createElement('iframe');
    f.title = 'Spotify player for my playlist, winter in the mountains';
-   f.src = 'https://open.spotify.com/embed/playlist/0pYbkT41pkd7Tx0zTM0xLh?utm_source=generator';
+   f.src = 'https://open.spotify.com/embed/playlist/0pYbkT41pkd7Tx0zTM0xLh';
    f.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
    dockPanel.querySelector('.dock-frame').append(f);
   }
