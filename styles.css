@@ -132,6 +132,7 @@ button {font:inherit;color:inherit}
 .honors {font:600 12px/1.5 var(--mono);color:var(--olive-text);margin-top:12px}
 .courses {margin:18px 0 0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
 .courses b {display:inline-block;min-width:92px;font:600 12px var(--mono)}
+.edu .next {margin-top:12px;font:600 12px/1.5 var(--mono);color:var(--muted)}
 
 .now {max-width:720px;margin-bottom:28px;padding-left:14px;border-left:3px solid var(--olive)}
 .now-title {font-size:21px;line-height:1.3;font-weight:500;margin-top:6px}
@@ -154,6 +155,7 @@ button {font:inherit;color:inherit}
 .mod-detail {font-size:13px;line-height:1.5;color:var(--muted)}
 .mod-foot {margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:10px;border-top:1px solid var(--rule)}
 .mod-foot a {font-size:13px}
+.mod-foot .patch {margin-right:auto}
 .patch {display:inline-flex;align-items:center;gap:8px;padding:6px 10px 6px 7px;font:600 11px/1 var(--mono);letter-spacing:.06em;background:var(--cream);border:1.5px solid var(--ink);border-radius:999px;cursor:pointer}
 .patch .jack {width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,var(--ink) 0 3px,#9C9585 3.5px 5px,var(--ink) 5.5px)}
 .patch:hover {background:#FFFDF6}
