@@ -353,4 +353,23 @@
  addEventListener('resize', routeSpine, { passive: true });
  document.fonts && document.fonts.ready.then(routeSpine);
  routeSpine();
+ /* ---------- Music dock: loads Spotify only when opened, and minimizing keeps it playing ---------- */
+ const dockBtn = document.getElementById('dock-btn');
+ const dockPanel = document.getElementById('dock-panel');
+ const dockLabel = dockBtn.querySelector('.dock-label');
+ function setDock(open) {
+  if (open && !dockPanel.querySelector('iframe')) {
+   const f = document.createElement('iframe');
+   f.title = 'Spotify player for my playlist, winter in the mountains';
+   f.src = 'https://open.spotify.com/embed/playlist/0pYbkT41pkd7Tx0zTM0xLh?utm_source=generator';
+   f.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+   dockPanel.querySelector('.dock-frame').append(f);
+  }
+  dockPanel.classList.toggle('shut', !open);
+  dockBtn.setAttribute('aria-expanded', open);
+  dockBtn.classList.toggle('on', open || dockBtn.classList.contains('on'));
+  dockLabel.textContent = open ? 'Hide player' : 'Show player';
+ }
+ dockBtn.addEventListener('click', () => setDock(dockPanel.classList.contains('shut')));
+ document.getElementById('dock-x').addEventListener('click', () => { setDock(false); dockBtn.focus(); });
 })();
